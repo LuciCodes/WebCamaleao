@@ -1,0 +1,26 @@
+[
+  {
+    "id": 100,
+    "name": "Luciana de Almeida",
+    "dateOfBirth": "16/06/1990",
+    "cpf": "384.122.778-30",
+    "phoneNumber": "(11) 97109-2650",
+    "avatarUrl": "/assets/img/people/01.jpg"
+  },
+  {
+    "id": 101,
+    "name": "Mariana Antunes Vega",
+    "dateOfBirth": "16/06/1989",
+    "cpf": "384.122.778-30",
+    "phoneNumber": "(11) 97412-4750",
+    "avatarUrl": "/assets/img/people/02.jpg"
+  },
+  {
+    "id": 102,
+    "name": "Júlia Barros",
+    "dateOfBirth": "01/06/1989",
+    "cpf": "384.122.778-30",
+    "phoneNumber": "(11) 91122-3556",
+    "avatarUrl": "/assets/img/people/03.jpg"
+  }
+]

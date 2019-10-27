@@ -1,0 +1,186 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+
+.m-0 { margin: 0px; }
+.m-10 { margin: 10px; }
+.m-20 { margin: 20px; }
+
+
+.no-pad { padding: 0px; }
+.p-5 { padding: 5px; }
+.p-10 { padding: 10px; }
+.p-20 { padding: 20px; }
+.p-30 { padding: 30px; }
+
+.p-t-0 { padding-top: 0px !important; }
+.p-t-1 { padding-top: 1px !important; }
+.p-t-2 { padding-top: 2px !important; }
+.p-t-3 { padding-top: 3px !important; }
+.p-t-5 { padding-top: 5px !important; }
+.p-t-10 { padding-top: 10px !important; }
+.p-t-15 { padding-top: 15px !important; }
+.p-t-20 { padding-top: 20px !important; }
+.p-t-30 { padding-top: 30px !important; }
+.p-t-60 { padding-top: 60px !important; }
+
+.p-b-0 { padding-bottom: 0px !important; }
+.p-b-1 { padding-bottom: 1px !important; }
+.p-b-2 { padding-bottom: 2px !important; }
+.p-b-3 { padding-bottom: 3px !important; }
+.p-b-5 { padding-bottom: 5px !important; }
+.p-b-10 { padding-bottom: 10px !important; }
+.p-b-15 { padding-bottom: 15px !important; }
+.p-b-20 { padding-bottom: 20px !important; }
+.p-b-30 { padding-bottom: 30px !important; }
+.p-b-60 { padding-bottom: 60px !important; }
+
+.p-l-0 { padding-left: 0px !important; }
+.p-l-1 { padding-left: 1px !important; }
+.p-l-2 { padding-left: 2px !important; }
+.p-l-3 { padding-left: 3px !important; }
+.p-l-5 { padding-left: 5px !important; }
+.p-l-10 { padding-left: 10px !important; }
+.p-l-15 { padding-left: 15px !important; }
+.p-l-20 { padding-left: 20px !important; }
+.p-l-30 { padding-left: 30px !important; }
+.p-l-60 { padding-left: 60px !important; }
+
+.p-r-0 { padding-right: 0px !important; }
+.p-r-1 { padding-right: 1px !important; }
+.p-r-2 { padding-right: 2px !important; }
+.p-r-3 { padding-right: 3px !important; }
+.p-r-5 { padding-right: 5px !important; }
+.p-r-10 { padding-right: 10px !important; }
+.p-r-15 { padding-right: 15px !important; }
+.p-r-20 { padding-right: 20px !important; }
+.p-r-30 { padding-right: 30px !important; }
+.p-r-60 { padding-right: 60px !important; }
+
+.m-t-0 { margin-top: 0px !important; }
+.m-t-1 { margin-top: 1px !important; }
+.m-t-2 { margin-top: 2px !important; }
+.m-t-5 { margin-top: 5px !important; }
+.m-t-10 { margin-top: 10px !important; }
+.m-t-20 { margin-top: 20px !important; }
+.m-t-30 { margin-top: 30px !important; }
+.m-t-60 { margin-top: 60px !important; }
+
+.m-b-0 { margin-bottom: 0px !important; }
+.m-b-1 { margin-bottom: 1px !important; }
+.m-b-2 { margin-bottom: 2px !important; }
+.m-b-5 { margin-bottom: 5px !important; }
+.m-b-10 { margin-bottom: 10px !important; }
+.m-b-20 { margin-bottom: 20px !important; }
+.m-b-30 { margin-bottom: 30px !important; }
+.m-b-60 { margin-bottom: 60px !important; }
+
+.m-l-0 { margin-left: 0px !important; }
+.m-l-1 { margin-left: 1px !important; }
+.m-l-2 { margin-left: 2px !important; }
+.m-l-5 { margin-left: 5px !important; }
+.m-l-10 { margin-left: 10px !important; }
+.m-l-20 { margin-left: 20px !important; }
+.m-l-30 { margin-left: 30px !important; }
+.m-l-60 { margin-left: 60px !important; }
+
+.m-r-0 { margin-right: 0px !important; }
+.m-r-1 { margin-right: 1px !important; }
+.m-r-2 { margin-right: 2px !important; }
+.m-r-5 { margin-right: 5px !important; }
+.m-r-10 { margin-right: 10px !important; }
+.m-r-20 { margin-right: 20px !important; }
+.m-r-30 { margin-right: 30px !important; }
+.m-r-60 { margin-right: 60px !important; }
+
+.txt-sm { font-size: 0.8em !important; }
+.txt-xsm { font-size: 0.7em !important; }
+.txt-xxsm { font-size: 0.6em !important; }
+.txt-xxxsm { font-size: 0.5em !important; }
+
+.txt-lg { font-size: 1.1em !important; }
+.txt-xlg { font-size: 1.2em !important; }
+.txt-xxlg { font-size: 1.3em !important; }
+.txt-xxxlg { font-size: 1.5em !important; }
+
+.btn-clear {
+  border: none;
+  background-color: transparent;
+  outline: none;
+}
+
+.btn-xsm {
+  font-size: 0.8em !important;
+  padding: 0.2em 0.4em;
+}
+
+.btn-xsm .fa { position: relative; top: -1px;}
+
+
+
+.mat-card-actions {
+  text-align: center;
+}
+
+.mat-card-header-text {
+
+  margin-left: 0 !important;
+}
+
+.small-chips .mat-standard-chip {
+
+  font-size: 0.8em !important;
+  padding: 0.2em 1em;
+}
+
+.large-avatar .mat-list-avatar {
+
+  width: 72px !important;
+  height: 72px !important;
+}
+
+
+.no-items {
+
+  padding: 2em 1em;
+  text-align: center;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.shipping-card {
+  min-width: 120px;
+  margin: 20px auto;
+}
+
+.mat-radio-button {
+  display: block;
+  margin: 5px 0;
+}
+
+
+.loader-panel {
+
+  padding: 2em 1em;
+  text-align: center;
+  font-size: 2em;
+  opacity: 0.7;
+}
+
+.job-list .mat-list-item-content {
+
+  background-color:#fff !important;
+  
+  margin-bottom: 1.42em;
+  
+  border-radius: 5px;
+  
+  border: 1px solid #b7b7b7;
+  
+  box-shadow: 0px 2px 2px rgba(100, 100, 100, 0.1);
+}

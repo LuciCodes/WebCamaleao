@@ -121,8 +121,37 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
 
+.app-content {
+
+  padding: 0em 1em;
+}
+
+.user-card {
+
+  display: block;
+  position: absolute;
+  right: 10px;
+
+  top: 0.8em;
+  text-align: right;
+
+  width: 70%;
+
+  height: 30px;
+}
+
+.user-card a {
+
+  color:#fff;
+}
+
 .mat-card-actions {
   text-align: center;
+}
+
+.mat-card > .mat-card-actions:last-child {
+
+  margin-bottom: 0 !important;
 }
 
 .mat-card-header-text {

@@ -6,15 +6,28 @@ import { IndexVagasComponent } from './views/vagas/index-vagas/index-vagas.compo
 import { EditarVagasComponent } from './views/vagas/editar-vagas/editar-vagas.component';
 import { HomeVagasComponent } from './views/vagas/home-vagas/home-vagas.component';
 
+import { LoggedUserRouteActivator } from './etc/loggedUserRouteActivator';
+import { LoginComponent } from './views/login/login.component';
+import { AppIndexComponent } from './views/app-index/app-index.component';
+import { LogoutComponent } from './views/logout/logout.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'vagas', component: IndexVagasComponent, children: [
-    { path: '', component: HomeVagasComponent },
-    { path: 'abrir', component: EditarVagasComponent },
-    { path: 'editar/:id', component: EditarVagasComponent },
-    { path: 'buscar', component: BuscarVagasComponent }
-  ] }
+  { path: 'login', component: LoginComponent,  },
+  { path: 'logout', component: LogoutComponent,  },
+  { path: '', component: AppIndexComponent, canActivate: [LoggedUserRouteActivator], children: [
+    { path: '', component: HomeComponent },
+    { path: 'vagas',
+      component: IndexVagasComponent,
+      canActivate: [LoggedUserRouteActivator],
+      children: [
+          { path: '', component: HomeVagasComponent },
+          { path: 'abrir', component: EditarVagasComponent },
+          { path: 'editar/:id', component: EditarVagasComponent },
+          { path: 'buscar', component: BuscarVagasComponent }
+        ]
+      }
+    ]
+  }
 ];
 
 @NgModule({

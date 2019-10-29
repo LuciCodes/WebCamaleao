@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
-import { AppConstants } from '../../../services/appConstants';
+import { AppConstants } from '../../../etc/appConstants';
 import { WebApiService } from 'src/app/services/webApi.service';
 
 @Component({

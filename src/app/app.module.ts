@@ -29,8 +29,17 @@ import { BuscarVagasComponent } from './views/vagas/buscar-vagas/buscar-vagas.co
 import { EditarVagasComponent } from './views/vagas/editar-vagas/editar-vagas.component';
 import { HomeVagasComponent } from './views/vagas/home-vagas/home-vagas.component';
 import { IndexVagasComponent } from './views/vagas/index-vagas/index-vagas.component';
-import { WebApiService } from './services/webApi.service';
+
 import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './views/login/login.component';
+
+import { AppAuthenticationService } from './services/appAuthentication.service';
+import { WebApiService } from './services/webApi.service';
+
+import { LoggedUserRouteActivator } from './etc/loggedUserRouteActivator';
+import { AppIndexComponent } from './views/app-index/app-index.component';
+import { LogoutComponent } from './views/logout/logout.component';
+import { SignupComponent } from './views/signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +48,11 @@ import { HttpClientModule } from '@angular/common/http';
     BuscarVagasComponent,
     EditarVagasComponent,
     HomeVagasComponent,
-    IndexVagasComponent
+    IndexVagasComponent,
+    LoginComponent,
+    AppIndexComponent,
+    LogoutComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
@@ -64,6 +77,8 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule
   ],
   providers: [
+    AppAuthenticationService,
+    LoggedUserRouteActivator,
     WebApiService
   ],
   bootstrap: [AppComponent]

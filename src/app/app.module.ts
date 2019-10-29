@@ -2,12 +2,11 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { NgModule } from '@angular/core';
 
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 
-import { AngularFireModule } from '@angular/fire';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 //import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
@@ -85,7 +84,7 @@ import { SignupComponent } from './views/signup/signup.component';
     BrowserModule,
     AppRoutingModule,
     FontAwesomeModule,
-    NgbModule,
+    FlexLayoutModule,
     HttpClientModule,
     BrowserAnimationsModule,
     MatChipsModule,

@@ -8,86 +8,35 @@
 <div class="row">
   <div class="col-6 offset-3">
 
-    <form [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit()">
+    <ngx-auth-firebaseui
+      [providers]="[providers.Email]"
+      guestEnabled="false"
+      signInTabText="Login"
+      signInCardTitleText="Entrar"
+      loginButtonText="Login"
+      forgotPasswordButtonText="Esqueci a senha"
+      nameText="Nome"
+      nameErrorRequiredText="Campo obrigatório"
+      nameErrorMinLengthText="Mínimo 5 caracteres"
+      nameErrorMaxLengthText="Máximo 50 caracteres"
+      emailText="Email"
+      emailErrorRequiredText="Campo obrigatório"
+      emailErrorPatternText="Email inválido"
+      passwordText="Senha"
+      passwordErrorRequiredText="Campo obrigatório"
+      registerTabText="Cadastre-se"
+      registerCardTitleText="Cadastro"
+      registerButtonText="Realizar Cadastro"
+      resetPasswordTabText="Resetar Senha"
+      resetPasswordInputText="Senha"
+      resetPasswordErrorRequiredText="Campo obrigatório"
+      resetPasswordErrorPatternText="Senha inválida"
+      resetPasswordActionButtonText="Resetar Senha"
+      emailConfirmationTitle="Confirmar"
+      emailConfirmationText="Confirmar e-mail"
+      (onSuccess)="printUser($event)" (onError)="printError()">
+    </ngx-auth-firebaseui>
 
-      <mat-card class="shipping-card">
-        <mat-card-header>
-          <mat-card-title>
-          
-            Login
-          
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-
-          <div class="row" *ngIf="flagLoading">
-            <div class="col txt-center" style="padding: 3em; font-size: 3em">
-
-              <fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon>
-
-            </div>
-          </div>
-
-          <div class="row" *ngIf="!flagLoading">
-            <div class="col">
-              <mat-form-field class="full-width">
-
-                <input matInput placeholder="Email" formControlName="email">
-
-                <mat-error *ngIf="loginForm.controls.email.invalid">{{ emailErrorMessage }}</mat-error>
-
-              </mat-form-field>
-            </div>
-          </div>
-
-          <div class="row m-t-20" *ngIf="!flagLoading">
-            <div class="col">
-              <mat-form-field class="full-width">
-
-                <input
-                  matInput
-                  minlength="5"
-                  placeholder="Senha"
-                  type="password"
-                  formControlName="password"
-                >
-                
-                <mat-error *ngIf="loginForm.controls.password.invalid">{{ passwordErrorMessage }}</mat-error>
-
-              </mat-form-field>
-            </div>
-          </div>
-
-        </mat-card-content>
-        <mat-card-actions>
-
-          <button
-            mat-raised-button
-            color="primary"
-            type="submit"
-          >
-            <i class="fa fa-users"></i>
-            Login
-          </button>
-
-        </mat-card-actions>
-      </mat-card>
-    </form>
-
-    <div class="row m-t-20">
-      <div class="col txt-center">
-
-        Junte-se a nós! 
-
-        <a
-          href="javascript:;"
-          routerLink="/cadastro"
-        >
-            Cadastre-se no Camaleao.co
-        </a>
-
-      </div>
-    </div>
 
   </div>
 </div>

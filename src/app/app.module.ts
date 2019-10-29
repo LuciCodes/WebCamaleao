@@ -7,6 +7,14 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+//import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { environment } from '../environments/environment';
+
+import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -55,6 +63,25 @@ import { SignupComponent } from './views/signup/signup.component';
     SignupComponent
   ],
   imports: [
+    //AngularFireModule.initializeApp(environment.firebase),
+    NgxAuthFirebaseUIModule.forRoot(environment.firebase,
+      () => 'camaleao',
+     {
+       enableFirestoreSync: true, // enable/disable autosync users with firestore
+       toastMessageOnAuthSuccess: true, // whether to open/show a snackbar message on auth success - default : true
+       toastMessageOnAuthError: true, // whether to open/show a snackbar message on auth error - default : true
+       authGuardFallbackURL: '/login', // url for unauthenticated users - to use in combination with canActivate feature on a route
+       authGuardLoggedInURL: '/', // url for authenticated users - to use in combination with canActivate feature on a route
+       passwordMaxLength: 50, // `min/max` input parameters in components should be within this range.
+       passwordMinLength: 5, // Password length min/max in forms independently of each componenet min/max.
+       nameMaxLength: 50,
+       nameMinLength: 2,
+       // If set, sign-in/up form is not available until email has been verified.
+       // Plus protected routes are still protected even though user is connected.
+       guardProtectedRoutesUntilEmailIsVerified: false
+     }),
+    AngularFirestoreModule,
+    AngularFireAuthModule,
     BrowserModule,
     AppRoutingModule,
     FontAwesomeModule,

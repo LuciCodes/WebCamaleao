@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppAuthenticationService } from 'src/app/services/appAuthentication.service';
 import { Router } from '@angular/router';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-logout',
@@ -8,12 +9,24 @@ import { Router } from '@angular/router';
 })
 export class LogoutComponent implements OnInit {
 
-  constructor(private appAuth: AppAuthenticationService, private router: Router) { }
+  constructor(public afa: AngularFireAuth, private router: Router) { }
 
-  ngOnInit() {
+  async ngOnInit() {
 
-    this.appAuth.logout();
+    await this.signOut();
 
     this.router.navigateByUrl('/login');
+  }
+
+  async signOut() {
+
+    try {
+
+      await this.afa.auth.signOut();
+
+    } catch (e) {
+
+      console.error('An error happened while signing out!', e);
+    }
   }
 }

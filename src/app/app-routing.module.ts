@@ -6,19 +6,20 @@ import { IndexVagasComponent } from './views/vagas/index-vagas/index-vagas.compo
 import { EditarVagasComponent } from './views/vagas/editar-vagas/editar-vagas.component';
 import { HomeVagasComponent } from './views/vagas/home-vagas/home-vagas.component';
 
-import { LoggedUserRouteActivator } from './etc/loggedUserRouteActivator';
 import { LoginComponent } from './views/login/login.component';
 import { AppIndexComponent } from './views/app-index/app-index.component';
 import { LogoutComponent } from './views/logout/logout.component';
 
+import {LoggedInGuard} from 'ngx-auth-firebaseui';
+
 const routes: Routes = [
   { path: 'login', component: LoginComponent,  },
   { path: 'logout', component: LogoutComponent,  },
-  { path: '', component: AppIndexComponent, canActivate: [LoggedUserRouteActivator], children: [
+  { path: '', component: AppIndexComponent, canActivate: [LoggedInGuard], children: [
     { path: '', component: HomeComponent },
     { path: 'vagas',
       component: IndexVagasComponent,
-      canActivate: [LoggedUserRouteActivator],
+      canActivate: [LoggedInGuard],
       children: [
           { path: '', component: HomeVagasComponent },
           { path: 'abrir', component: EditarVagasComponent },

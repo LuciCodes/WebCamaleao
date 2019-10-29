@@ -10,10 +10,16 @@ import {AuthProvider} from 'ngx-auth-firebaseui';
 })
 export class LoginComponent {
 
-
   providers = AuthProvider;
 
   constructor(private router: Router) {
 
+  }
+
+  redirectUser(user: any) {
+
+    console.log('Redirecting user...', user);
+
+    this.router.navigateByUrl('/');
   }
 }

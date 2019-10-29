@@ -14,6 +14,7 @@
       signInTabText="Login"
       signInCardTitleText="Entrar"
       loginButtonText="Login"
+      homeButtonText="Home"
       forgotPasswordButtonText="Esqueci a senha"
       nameText="Nome"
       nameErrorRequiredText="Campo obrigatório"
@@ -32,9 +33,13 @@
       resetPasswordErrorRequiredText="Campo obrigatório"
       resetPasswordErrorPatternText="Senha inválida"
       resetPasswordActionButtonText="Resetar Senha"
+
       emailConfirmationTitle="Confirmar"
       emailConfirmationText="Confirmar e-mail"
-      (onSuccess)="printUser($event)" (onError)="printError()">
+      messageOnAuthSuccess="Login realizado com sucesso!"
+      (onSuccess)="redirectUser($event)"
+      (onError)="printError()"
+    >
     </ngx-auth-firebaseui>
 
 

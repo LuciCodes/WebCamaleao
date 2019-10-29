@@ -1,9 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output, Input } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { AppUser } from 'src/app/models/AppUser';
-import { AppAuthenticationService } from 'src/app/services/appAuthentication.service';
+
+import {User} from 'firebase';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { MatDialog } from '@angular/material';
+import { LinkMenuItem } from 'ngx-auth-firebaseui';
 
 @Component({
   selector: 'app-app-index',
@@ -11,11 +14,15 @@ import { AppAuthenticationService } from 'src/app/services/appAuthentication.ser
   styleUrls: ['./app-index.component.css']
 })
 export class AppIndexComponent {
+  @Input()
+  canLogout = true;
 
-  get user(): AppUser {
+  @Input()
+  links: LinkMenuItem[];
 
-    return this.appAuth.user;
-  }
+  user: User;
+  user$: Observable<User | null>;
+  displayNameInitials: string;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -23,7 +30,30 @@ export class AppIndexComponent {
       shareReplay()
     );
 
-  constructor(private appAuth: AppAuthenticationService,
-              private breakpointObserver: BreakpointObserver) {}
+  constructor(public afa: AngularFireAuth,
+              public dialog: MatDialog,
+              private breakpointObserver: BreakpointObserver) {
+  }
 
+  ngOnInit() {
+    this.user$ = this.afa.user;
+    this.user$.subscribe((user: User) => {
+      this.user = user;
+      this.displayNameInitials = user ? this.getDisplayNameInitials(user.displayName) : null;
+    });
+  }
+
+  getDisplayNameInitials(displayName: string): string {
+    if (!displayName) {
+      return null;
+    }
+    const initialsRegExp: RegExpMatchArray = displayName.match(/\b\w/g) || [];
+    const initials = ((initialsRegExp.shift() || '') + (initialsRegExp.pop() || '')).toUpperCase();
+    return initials;
+  }
+
+  openProfile() {
+
+    //this.dialog.open(UserComponent);
+  }
 }

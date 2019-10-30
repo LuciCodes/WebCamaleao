@@ -11,11 +11,13 @@ import { AppIndexComponent } from './views/app-index/app-index.component';
 import { LogoutComponent } from './views/logout/logout.component';
 
 import {LoggedInGuard} from 'ngx-auth-firebaseui';
+import { OnboardComponent } from './views/onboard/onboard.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent,  },
   { path: 'logout', component: LogoutComponent,  },
-  { path: '', component: AppIndexComponent, canActivate: [LoggedInGuard], children: [
+  { path: 'cadastro', component: OnboardComponent },
+  { path: '', component: AppIndexComponent, children: [
     { path: '', component: HomeComponent },
     { path: 'vagas',
       component: IndexVagasComponent,

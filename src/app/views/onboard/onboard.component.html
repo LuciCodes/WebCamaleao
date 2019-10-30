@@ -1,0 +1,352 @@
+
+<app-header></app-header>
+
+<div fxLayout="row">
+  <div fxFlex="50%" fxFlexOffset="25%">
+  
+    <mat-horizontal-stepper [linear]="isLinear" #stepper>
+
+      <mat-step [stepControl]="frmPersonType">
+
+        <form [formGroup]="frmPersonType">
+
+          <ng-template matStepLabel>
+            Tipo de Pessoa
+          </ng-template>
+          
+          <mat-card class="default-card">
+            <mat-card-header>
+              <mat-card-title>Eu sou...</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+
+              <div fxLayout="row" class="m-t-20">
+                <div fxFlex="80%" fxFlexOffset="10%">
+
+                  <button
+                    color="primary"
+                    class="w-100"
+                    mat-stroked-button
+                    matStepperNext
+                    (click)="chooseType('PRO')"
+                  >
+                    Profissional LGBT+
+                  </button>
+
+                </div>  
+              </div>  
+              
+              <div fxLayout="row" class="m-t-0">
+                <div fxFlex="80%" fxFlexOffset="10%">
+                  
+                  <button
+                    color="primary"
+                    class="w-100"
+                    mat-stroked-button
+                    matStepperNext
+                    (click)="chooseType('CO')"
+                  >
+                    Empresa
+                  </button>
+                  
+                </div>  
+              </div>
+              
+            </mat-card-content>
+          </mat-card> 
+
+        </form>
+
+      </mat-step>
+      <mat-step [stepControl]="frmPersonalData">
+
+        <form [formGroup]="frmPersonalData">
+
+          <ng-template matStepLabel>
+            Dados Pessoais
+          </ng-template>
+          
+          <mat-card class="default-card">
+            <mat-card-content>
+              
+              <div fxLayout="row">
+                <div fxFlex>
+
+                  <mat-form-field>
+                    <mat-label>
+                      Como te chamamos?
+                    </mat-label>
+                    <input
+                      matInput
+                      placeholder="Seu Nome"
+                      name="txtName"
+                      formControlName="name"
+                      required
+                    >
+                  </mat-form-field>
+
+                </div>
+              </div>
+
+              <div fxLayout="row">
+                <div fxFlex>
+
+                  <mat-form-field>
+                    <mat-label>
+                      Quando você nasceu?
+                    </mat-label>
+                    <input
+                      matInput
+                      placeholder="dd/mm/aaaa"
+                      [textMask]="ptBrDateMask"
+                      formControlName="dateOfBirth"
+                      required
+                    >
+                  </mat-form-field>
+                  
+                </div>
+              </div>
+              
+              <div fxLayout="row">
+                <div fxFlex>
+
+                  <mat-form-field>
+                    <mat-label>
+                      Qual seu CPF?
+                    </mat-label>
+                    <input
+                      matInput
+                      placeholder="111.222.333-44"
+                      [textMask]="documentMask"
+                      formControlName="document"
+                      required
+                    >
+                  </mat-form-field>
+
+                </div>
+              </div>
+              
+              <div fxLayout="row">
+                <div fxFlex>
+
+                  <mat-form-field>
+                    <mat-label>
+                      Qual seu Telefone?
+                    </mat-label>
+                    <input
+                      matInput
+                      placeholder="(00) 11111-2222"
+                      [textMask]="phoneMask"
+                      formControlName="phoneNumber"
+                      required
+                    >
+                  </mat-form-field>
+
+                </div>
+              </div>
+              
+              <div fxLayout="row">
+                <div fxFlex="40%">
+
+                  <mat-form-field>
+                    <mat-label>
+                      Onde você mora?
+                    </mat-label>
+                      
+                    <mat-select formControlName="currentState">
+                      <mat-option
+                        [value]="state.abrev"
+                        *ngFor="let state of states"
+                      >
+                        {{ state.name }}
+                      </mat-option>
+                    </mat-select>
+                    
+                    <mat-hint>Estado</mat-hint>
+
+                  </mat-form-field>
+
+                </div>
+                <div fxFlex="55%" fxFlexOffset="5%">
+
+                  <mat-form-field *ngIf="hasState">
+                    <mat-label>
+                      &nbsp;
+                    </mat-label>
+                      
+                    <mat-select formControlName="currentCity">
+                      <mat-option
+                        [value]="city"
+                        *ngFor="let city of cities"
+                      >
+                        {{ city }}
+                      </mat-option>
+                    </mat-select>
+                    
+                    <mat-hint>Cidade</mat-hint>
+
+                  </mat-form-field>
+                  
+                </div>
+              </div>
+
+              <div fxLayout="row" class="m-t-10">
+                <div fxFlex="80%" fxFlexOffset="10%">
+                  
+                  <button
+                    color="primary"
+                    class="w-100"
+                    mat-flat-button
+                    matStepperNext
+                    [disabled]="!frmPersonalData.valid"
+                    (click)="proceedFromPersonalData($event)"
+                  >
+                    Próximo
+                  </button>
+                  
+                </div>  
+              </div>  
+
+              
+            </mat-card-content>
+          </mat-card>
+          
+        </form>
+      </mat-step>
+      <mat-step>
+
+        <form [formGroup]="frmOrientation">
+
+          <ng-template matStepLabel>
+            Finalizar
+          </ng-template>
+          
+          <mat-card class="default-card">
+            <mat-card-content>
+              
+              <div fxLayout="row">
+                <div fxFlex>
+
+                  <mat-form-field>
+                    <mat-label>
+                      Como você se identifica?
+                    </mat-label>
+                    <mat-select formControlName="gender">
+                      <mat-option value="0">Homem Cisgênero</mat-option>
+                      <mat-option value="1">Homem Transexual</mat-option>
+                      <mat-option value="2">Mulher Cisgênero</mat-option>
+                      <mat-option value="3">Mulher Transexual</mat-option>
+                      <mat-option value="4">Não Binário</mat-option>
+                      <mat-option value="5">Não desejo  me identificar</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                </div>
+              </div>
+
+              <div fxLayout="row">
+                <div fxFlex>
+
+                  <mat-form-field>
+                    <mat-label>
+                      Qual sua orientação sexual?
+                    </mat-label>
+                    <mat-select formControlName="sex">
+                      <mat-option value="0">Assexual</mat-option>
+                      <mat-option value="1">Bissexual</mat-option>
+                      <mat-option value="2">Demissexual</mat-option>
+                      <mat-option value="3">Heterossexual</mat-option>
+                      <mat-option value="4">Homossexual</mat-option>
+                      <mat-option value="5">Panssexual</mat-option>
+                      <mat-option value="6">Não desejo  me identificar</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                </div>
+              </div>
+
+              <div fxLayout="row">
+                <div fxFlex>
+
+                  <mat-form-field>
+                    <mat-label>
+                      Qual sua auto declaração de etnia?
+                    </mat-label>
+                    <mat-select formControlName="etnicity">
+                      <mat-option value="0">Amarelo</mat-option>
+                      <mat-option value="1">Branco</mat-option>
+                      <mat-option value="2">Indígena</mat-option>
+                      <mat-option value="3">Negro</mat-option>
+                      <mat-option value="4">Pardo</mat-option>
+                      <mat-option value="5">Não desejo  me identificar</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                </div>
+              </div>
+              
+              <div fxLayout="row">
+                <div fxFlex>
+
+                  <mat-radio-group
+                    aria-label="Pessoa com deficiência?"
+                    formControlName="hasDisability"
+                  >
+                    <mat-label>
+                      Você é uma pessoa com deficiência?
+                    </mat-label>
+                    <br>
+                    <mat-radio-button value="true">Sim</mat-radio-button>
+                    &nbsp;&nbsp;
+                    <mat-radio-button value="false">Não</mat-radio-button>
+                  </mat-radio-group>
+
+                </div>
+              </div>
+              
+              <div fxLayout="row" *ngIf="personHasDisability">
+                <div fxFlex>
+
+                  <mat-form-field>
+                    <mat-label>
+                      Necessita quais recursos especiais?
+                    </mat-label>
+                    <input
+                      matInput
+                      formControlName="specialNeeds"
+                    >
+                  </mat-form-field>
+
+                </div>
+              </div>
+              
+              <div fxLayout="row">
+                <div fxFlex="80%" fxFlexOffset="10%">
+                  
+                  <button
+                    color="primary"
+                    class="w-100"
+                    mat-flat-button
+                    matStepperNext
+                    [disabled]="!mayProceedFromOrientation"
+                    (click)="proceedFromOrientation($event)"
+                  >
+                    Finalizar
+                  </button>
+                  
+                </div>  
+              </div>  
+
+              
+            </mat-card-content>
+          </mat-card>
+          
+        </form>
+        
+
+      </mat-step>
+    </mat-horizontal-stepper>
+
+
+  </div>
+</div>

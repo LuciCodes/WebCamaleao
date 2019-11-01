@@ -1,26 +1,53 @@
 [
   {
     "id": 100,
-    "name": "Luciana de Almeida",
-    "dateOfBirth": "16/06/1990",
+    "birth": "16/06/1990",
     "cpf": "384.122.778-30",
-    "phoneNumber": "(11) 97109-2650",
-    "avatarUrl": "/assets/img/people/01.jpg"
+    "ethinicity": "Negro",
+    "gender": "Homossexual",
+    "location": "São Paulo",
+    "name": "Luciana de Almeida",
+    "pcd": false,
+    "pcdNote": "",
+    "phone": "(11) 97109-2650",
+    "photoUrl": "/assets/img/people/01.jpg",
+    "region": "",
+    "sex": "Mulher Transexual",
+    "signUpState": "COMPLETED",
+    "state": "SP"
   },
   {
     "id": 101,
+    "birth": "16/06/1989",
+    "cpf": "384.555.888-30",
+    "ethinicity": "Branco",
+    "gender": "Homossexual",
+    "location": "São Paulo",
     "name": "Mariana Antunes Vega",
-    "dateOfBirth": "16/06/1989",
-    "cpf": "384.122.778-30",
-    "phoneNumber": "(11) 97412-4750",
-    "avatarUrl": "/assets/img/people/02.jpg"
+    "pcd": false,
+    "pcdNote": "",
+    "phone": "(11) 97109-2650",
+    "photoUrl": "/assets/img/people/02.jpg",
+    "region": "",
+    "sex": "Mulher Cisgênero",
+    "signUpState": "COMPLETED",
+    "state": "SP"
   },
   {
-    "id": 102,
+    "id": 101,
+    "birth": "01/06/1989",
+    "cpf": "123.774.112-30",
+    "ethinicity": "Branco",
+    "gender": "Bissexual",
+    "location": "São Paulo",
     "name": "Júlia Barros",
-    "dateOfBirth": "01/06/1989",
-    "cpf": "384.122.778-30",
-    "phoneNumber": "(11) 91122-3556",
-    "avatarUrl": "/assets/img/people/03.jpg"
+    "pcd": false,
+    "pcdNote": "",
+    "phone": "(11) 97109-2650",
+    "photoUrl": "/assets/img/people/02.jpg",
+    "region": "",
+    "sex": "Mulher Cisgênero",
+    "signUpState": "COMPLETED",
+    "state": "SP"
   }
 ]

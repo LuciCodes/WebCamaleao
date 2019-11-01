@@ -6,9 +6,9 @@
   
     <mat-horizontal-stepper [linear]="isLinear" #stepper>
 
-      <mat-step [stepControl]="frmPersonType">
+      <mat-step [stepControl]="frmUserType">
 
-        <form [formGroup]="frmPersonType">
+        <form [formGroup]="frmUserType">
 
           <ng-template matStepLabel>
             Tipo de Pessoa
@@ -28,7 +28,7 @@
                     class="w-100"
                     mat-stroked-button
                     matStepperNext
-                    (click)="chooseType('PRO')"
+                    (click)="chooseType('CANDIDATE')"
                   >
                     Profissional LGBT+
                   </button>
@@ -44,7 +44,7 @@
                     class="w-100"
                     mat-stroked-button
                     matStepperNext
-                    (click)="chooseType('CO')"
+                    (click)="chooseType('COMPANY')"
                   >
                     Empresa
                   </button>
@@ -99,7 +99,7 @@
                       matInput
                       placeholder="dd/mm/aaaa"
                       [textMask]="ptBrDateMask"
-                      formControlName="dateOfBirth"
+                      formControlName="birth"
                       required
                     >
                   </mat-form-field>
@@ -117,8 +117,8 @@
                     <input
                       matInput
                       placeholder="111.222.333-44"
-                      [textMask]="documentMask"
-                      formControlName="document"
+                      [textMask]="cpfMask"
+                      formControlName="cpf"
                       required
                     >
                   </mat-form-field>
@@ -137,7 +137,7 @@
                       matInput
                       placeholder="(00) 11111-2222"
                       [textMask]="phoneMask"
-                      formControlName="phoneNumber"
+                      formControlName="phone"
                       required
                     >
                   </mat-form-field>
@@ -153,7 +153,7 @@
                       Onde você mora?
                     </mat-label>
                       
-                    <mat-select formControlName="currentState">
+                    <mat-select formControlName="state">
                       <mat-option
                         [value]="state.abrev"
                         *ngFor="let state of states"
@@ -290,7 +290,7 @@
 
                   <mat-radio-group
                     aria-label="Pessoa com deficiência?"
-                    formControlName="hasDisability"
+                    formControlName="pcd"
                   >
                     <mat-label>
                       Você é uma pessoa com deficiência?
@@ -304,7 +304,7 @@
                 </div>
               </div>
               
-              <div fxLayout="row" *ngIf="personHasDisability">
+              <div fxLayout="row" *ngIf="flagIsPcd">
                 <div fxFlex>
 
                   <mat-form-field>
@@ -313,7 +313,7 @@
                     </mat-label>
                     <input
                       matInput
-                      formControlName="specialNeeds"
+                      formControlName="pcdNote"
                     >
                   </mat-form-field>
 

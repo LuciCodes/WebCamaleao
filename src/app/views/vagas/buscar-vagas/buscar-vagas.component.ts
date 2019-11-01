@@ -11,6 +11,8 @@ import { WebApiService } from 'src/app/services/webApi.service';
 })
 export class BuscarVagasComponent {
 
+  get cepMask() { return AppConstants.cepMask; }
+
   flagLoadingData: boolean = false;
 
   jobList: Array<any>;

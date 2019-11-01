@@ -22,6 +22,7 @@ export class AppIndexComponent {
 
   user: User;
   user$: Observable<User | null>;
+
   displayNameInitials: string;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -36,19 +37,28 @@ export class AppIndexComponent {
   }
 
   ngOnInit() {
+
     this.user$ = this.afa.user;
+
     this.user$.subscribe((user: User) => {
+
       this.user = user;
+
       this.displayNameInitials = user ? this.getDisplayNameInitials(user.displayName) : null;
+
     });
   }
 
   getDisplayNameInitials(displayName: string): string {
+
     if (!displayName) {
       return null;
     }
+
     const initialsRegExp: RegExpMatchArray = displayName.match(/\b\w/g) || [];
+
     const initials = ((initialsRegExp.shift() || '') + (initialsRegExp.pop() || '')).toUpperCase();
+
     return initials;
   }
 

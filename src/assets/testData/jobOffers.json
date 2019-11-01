@@ -4,7 +4,7 @@
     "company" : {
       "id": 5000,
       "name": "Apple, Inc",
-      "logoUrl": "logo-apple.png"
+      "logoUrl": "/assets/img/company-logos/logo-apple.png"
     },
     "jobTitle": "Desenvolvedore Mobile",
     "jobDescription": "Uma das maiores empresas de tecnologia do mundo precisa de desenvolvedores remotos para trabalhar nos testes do iOS",
@@ -18,7 +18,7 @@
     "company" : {
       "id": 5000,
       "name": "Apple, Inc",
-      "logoUrl": "logo-apple.png"
+      "logoUrl": "/assets/img/company-logos/logo-apple.png"
     },
     "jobTitle": "Analista de Marketing",
     "jobDescription": "Uma das maiores empresas de tecnologia do mundo precisa de analistas de marketing",
@@ -32,7 +32,7 @@
     "company" : {
       "id": 5001,
       "name": "Microsoft",
-      "logoUrl": "logo-microsoft.png"
+      "logoUrl": "/assets/img/company-logos/logo-microsoft.png"
     },
     "jobTitle": "Atendentes de Suporte",
     "jobDescription": "A Microsoft precisa de pessoas para prestar suporte técnico online de pacote Office",
@@ -46,7 +46,7 @@
     "company" : {
       "id": 5001,
       "name": "Microsoft",
-      "logoUrl": "logo-microsoft.png"
+      "logoUrl": "/assets/img/company-logos/logo-microsoft.png"
     },
     "jobTitle": "Analista de RH",
     "jobDescription": "A Microsoft procura pessoas para trabalhar no seu RH em São Paulo",
@@ -60,7 +60,7 @@
     "company" : {
       "id": 5002,
       "name": "Google",
-      "logoUrl": "logo-google.png"
+      "logoUrl": "/assets/img/company-logos/logo-google.png"
     },
     "jobTitle": "Especialista em AdWords (Marketing Digital)",
     "jobDescription": "A Google precisa de uma especialista em AdWords para melhorar seus rankings nas buscas",
@@ -74,7 +74,7 @@
     "company" : {
       "id": 5002,
       "name": "Google",
-      "logoUrl": "logo-google.png"
+      "logoUrl": "/assets/img/company-logos/logo-google.png"
     },
     "jobTitle": "DBA",
     "jobDescription": "A Google procura uma DBA para seus escritórios em São Paulo",
@@ -88,7 +88,7 @@
     "company" : {
       "id": 5003,
       "name": "Tesla Motors",
-      "logoUrl": "logo-tesla.png"
+      "logoUrl": "/assets/img/company-logos/logo-tesla.png"
     },
     "jobTitle": "Robot Manager",
     "jobDescription": "A Tesla procura uma especialista em robótica para a fábria na Califórnia",
@@ -102,7 +102,7 @@
     "company" : {
       "id": 5003,
       "name": "Tesla Motors",
-      "logoUrl": "logo-tesla.png"
+      "logoUrl": "/assets/img/company-logos/logo-tesla.png"
     },
     "jobTitle": "Representante Internacional (Relações Públicas)",
     "jobDescription": "A Tesla procura uma representante internacional para o Brasil",
@@ -116,7 +116,7 @@
     "company" : {
       "id": 5003,
       "name": "Tesla Motors",
-      "logoUrl": "logo-tesla.png"
+      "logoUrl": "/assets/img/company-logos/logo-tesla.png"
     },
     "jobTitle": "Representante Internacional Jr",
     "jobDescription": "A Tesla procura uma representante internacional jr para compor seu time de relações públicas no Brasil",
@@ -130,7 +130,7 @@
     "company" : {
       "id": 5004,
       "name": "Amazon",
-      "logoUrl": "logo-amazon.png"
+      "logoUrl": "/assets/img/company-logos/logo-amazon.png"
     },
     "jobTitle": "Especialista AWS",
     "jobDescription": "A Amazon Brasil precisa de uma especialista em serviços AWS",
@@ -144,7 +144,7 @@
     "company" : {
       "id": 5004,
       "name": "Amazon",
-      "logoUrl": "logo-amazon.png"
+      "logoUrl": "/assets/img/company-logos/logo-amazon.png"
     },
     "jobTitle": "Especialista em Rede",
     "jobDescription": "A Amazon Brasil precisa de uma especialista em rede para compor seu time em São Paulo",

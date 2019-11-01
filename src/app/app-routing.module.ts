@@ -7,8 +7,9 @@ import { EditarVagasComponent } from './views/vagas/editar-vagas/editar-vagas.co
 import { HomeVagasComponent } from './views/vagas/home-vagas/home-vagas.component';
 
 import { LoginComponent } from './views/login/login.component';
-import { AppIndexComponent } from './views/app-index/app-index.component';
 import { LogoutComponent } from './views/logout/logout.component';
+
+import { AppIndexComponent } from './views/app-index/app-index.component';
 
 import {LoggedInGuard} from 'ngx-auth-firebaseui';
 import { OnboardComponent } from './views/onboard/onboard.component';

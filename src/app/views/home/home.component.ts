@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { WebApiService } from 'src/app/services/webApi.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-home',
@@ -8,43 +7,16 @@ import { WebApiService } from 'src/app/services/webApi.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+
+  get userIsCandidate(): boolean {
+
+    return (this.userService && this.userService.hasUser && this.userService.user['type'] == 'CANDIDATE');
+  }
   
-  flagLoadingCandidates: boolean = false;
-  flagLoadingJobs: boolean = false;
-
-  jobList: Array<any>;
-  candidateList: Array<any>;
-
-  constructor(private webApi: WebApiService) {}
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
     
-    this.loadCandidates();
-    
-    this.loadJobs();
   }
 
-  loadCandidates() {
-
-    this.flagLoadingCandidates = true;
-    
-    this.webApi.getTopCandidates().then((candidates) => {
-
-      this.candidateList = candidates;
-  
-      this.flagLoadingJobs = false;
-    });
-  }
-
-  loadJobs() {
-    
-    this.flagLoadingJobs = true;
-
-    this.webApi.getTopJobOffers().then((offers) => {
-
-      this.jobList = offers;
-  
-      this.flagLoadingJobs = false;
-    });
-  }
 }

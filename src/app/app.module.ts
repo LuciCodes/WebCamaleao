@@ -45,14 +45,15 @@ import { TextMaskModule } from 'angular2-text-mask';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './views/login/login.component';
 
-import { AppAuthenticationService } from './services/appAuthentication.service';
 import { WebApiService } from './services/webApi.service';
+import { UserService } from './services/user.service';
 
-import { LoggedUserRouteActivator } from './etc/loggedUserRouteActivator';
 import { AppIndexComponent } from './views/app-index/app-index.component';
 import { LogoutComponent } from './views/logout/logout.component';
 import { OnboardComponent } from './views/onboard/onboard.component';
 import { AppHeaderComponent } from './views/app-common/app-header/app-header.component';
+import { CandidateHomeComponent } from './views/home/candidate-home/candidate-home.component';
+import { CompanyHomeComponent } from './views/home/company-home/company-home.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,9 @@ import { AppHeaderComponent } from './views/app-common/app-header/app-header.com
     AppIndexComponent,
     LogoutComponent,
     OnboardComponent,
-    AppHeaderComponent
+    AppHeaderComponent,
+    CandidateHomeComponent,
+    CompanyHomeComponent
   ],
   imports: [
     //AngularFireModule.initializeApp(environment.firebase),
@@ -114,9 +117,8 @@ import { AppHeaderComponent } from './views/app-common/app-header/app-header.com
     ReactiveFormsModule
   ],
   providers: [
-    AppAuthenticationService,
-    LoggedUserRouteActivator,
-    WebApiService
+    WebApiService,
+    UserService
   ],
   bootstrap: [AppComponent]
 })

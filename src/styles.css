@@ -106,6 +106,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .txt-xxlg { font-size: 1.3em !important; }
 .txt-xxxlg { font-size: 1.5em !important; }
 
+.txt-left { text-align: left !important; }
+.txt-center { text-align: center !important; }
+.txt-right { text-align: right !important; }
+
 .w-100 { width: 100%; }
 .w-90 { width: 90%; }
 .w-80 { width: 80%; }
@@ -173,6 +177,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   margin-left: 0 !important;
 }
 
+.mat-drawer-content {
+  min-height: 640px;
+}
+
 .small-chips .mat-standard-chip {
 
   font-size: 0.8em !important;
@@ -216,10 +224,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   padding-top: 0px;
 }
 
-.default-card mat-card-content > div:last-child {
+.mat-card-actions {
 
   padding-top: 20px;
   padding-bottom: 10px;
+}
+
+.mat-card-content h3 {
+
+  margin-top: 0;
 }
 
 .default-card mat-card-content > div:first-child .mat-form-field {

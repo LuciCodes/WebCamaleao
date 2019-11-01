@@ -1,6 +1,12 @@
 
 export class AppConstants {
 
+  
+  static ptBrDateMask = { mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /[1-2]/, /\d/, /\d/, /\d/] };
+  static cpfMask = { mask: [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/] };
+  static phoneMask = { mask: ['(', /[1-9]/, /[1-9]/, ')', ' ', /[1-9]/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/] };
+  static cepMask = { mask: [/\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/] };
+
   static professions = [
     
     "Administrador",

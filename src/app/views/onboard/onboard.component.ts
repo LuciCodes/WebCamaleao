@@ -9,22 +9,22 @@ import { AppConstants } from 'src/app/etc/appConstants';
 })
 export class OnboardComponent implements OnInit {
 
-  frmPersonType: FormGroup;
+  frmUserType: FormGroup;
   frmPersonalData: FormGroup;
   frmOrientation: FormGroup;
 
-  ptBrDateMask = { mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /[1-2]/, /\d/, /\d/, /\d/] };
-  documentMask = { mask: [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/] };
-  phoneMask = { mask: ['(', /[1-9]/, /[1-9]/, ')', ' ', /[1-9]/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/] };
+  get ptBrDateMask() { return AppConstants.ptBrDateMask; }
+  get cpfMask() { return AppConstants.cpfMask; }
+  get phoneMask() { return AppConstants.phoneMask; }
 
-  get personType(): string {
+  get userType(): string {
 
-    return this.frmPersonType.controls.personType.value;
+    return this.frmUserType.controls.userType.value;
   }
   
-  set personType(val: string) {
+  set userType(val: string) {
 
-    this.frmPersonType.controls.personType.setValue(val);
+    this.frmUserType.controls.userType.setValue(val);
   }
 
   get states(): Array<any> {
@@ -34,9 +34,9 @@ export class OnboardComponent implements OnInit {
   
   get cities(): Array<any> {
 
-    if (this.frmPersonalData.controls.currentState.valid) {
+    if (this.frmPersonalData.controls.state.valid) {
 
-      let theStateId = this.frmPersonalData.controls.currentState.value
+      let theStateId = this.frmPersonalData.controls.state.value
 
       let theState = AppConstants.brazilianStates.find(s => s.abrev == theStateId);
 
@@ -51,14 +51,14 @@ export class OnboardComponent implements OnInit {
 
   get hasState(): boolean {
 
-    return (this.frmPersonalData && this.frmPersonalData.controls.currentState.valid);
+    return (this.frmPersonalData && this.frmPersonalData.controls.state.valid);
   }
 
-  get personHasDisability(): boolean {
+  get flagIsPcd(): boolean {
     
     return (this.frmOrientation &&
-            this.frmOrientation.controls.hasDisability &&
-            this.frmOrientation.controls.hasDisability.value == 'true');
+            this.frmOrientation.controls.pcd &&
+            this.frmOrientation.controls.pcd.value == 'true');
   }
 
   get mayProceedFromOrientation(): boolean {
@@ -76,29 +76,30 @@ export class OnboardComponent implements OnInit {
 
     this.frmPersonalData = this.fb.group({
       name: ['', Validators.required],
-      dateOfBirth: ['', Validators.required],
-      document: ['', Validators.required],
-      phoneNumber: ['', Validators.required],
-      currentState: ['', Validators.required],
-      currentCity: ['', Validators.required]
+      birth: ['', Validators.required],
+      cpf: ['', Validators.required],
+      phone: ['', Validators.required],
+      state: ['', Validators.required],
+      currentCity: ['', Validators.required],
+      signupState: ['COMPLETED']
     });
     
-    this.frmPersonType = this.fb.group({
-      personType: ['']
+    this.frmUserType = this.fb.group({
+      userType: ['']
     });
     
     this.frmOrientation = this.fb.group({
       gender: ['', Validators.required],
       sex: ['', Validators.required],
       etnicity: ['', Validators.required],
-      hasDisability: ['false'],
-      specialNeeds: [''],
+      pcd: ['false'],
+      pcdNote: [''],
     });
   }
 
   chooseType(whichType: string) {
 
-    this.personType = whichType;
+    this.userType = whichType;
   }
 
   proceedFromPersonalData(evtObj) {

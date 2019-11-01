@@ -54,6 +54,7 @@ import { OnboardComponent } from './views/onboard/onboard.component';
 import { AppHeaderComponent } from './views/app-common/app-header/app-header.component';
 import { CandidateHomeComponent } from './views/home/candidate-home/candidate-home.component';
 import { CompanyHomeComponent } from './views/home/company-home/company-home.component';
+import { CamaleaoTagsComponent } from './views/app-common/camaleao-tags/camaleao-tags.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { CompanyHomeComponent } from './views/home/company-home/company-home.com
     OnboardComponent,
     AppHeaderComponent,
     CandidateHomeComponent,
-    CompanyHomeComponent
+    CompanyHomeComponent,
+    CamaleaoTagsComponent
   ],
   imports: [
     //AngularFireModule.initializeApp(environment.firebase),

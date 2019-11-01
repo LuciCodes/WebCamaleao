@@ -1,0 +1,60 @@
+
+.camaleao-tags {
+
+  background:aqua;
+}
+
+.camaleao-tags ul {
+
+  display: block;
+  float: left;
+  
+  width:auto;
+  height: 36px;
+
+  margin: 0;
+  padding: 0px 32px 0px 50px;
+  background: url('/assets/img/camaleao-be-azul-front-36.png') no-repeat top right,
+              url('/assets/img/camaleao-be-azul-tail-36.png') no-repeat top left;
+}
+
+.camaleao-tags ul li {
+  
+  display: block;
+  float: left;
+}
+
+.camaleao-tags ul li span {
+  
+  display: block;
+  float: left;
+  min-width: 36px;
+  
+  padding: 4px 4px 4px 4px;
+  margin: 6px 0px 0px 0px;
+
+  font-size: 11px;
+  text-align: center;
+  color:#fff;
+
+  text-transform: uppercase;
+  background-color: #278df2;
+}
+
+.camaleao-tags ul li:nth-child(1) span { background-color: #407cd6; }
+.camaleao-tags ul li:nth-child(2) span { background-color: #974475; }
+.camaleao-tags ul li:nth-child(3) span { background-color: #df1524; }
+.camaleao-tags ul li:nth-child(4) span { background-color: #fe0101; }
+.camaleao-tags ul li:nth-child(5) span { background-color: #ff4200; }
+.camaleao-tags ul li:nth-child(6) span { background-color: #ff8100; }
+.camaleao-tags ul li:nth-child(7) span { background-color: #ffde00; }
+.camaleao-tags ul li:nth-child(8) span { background-color: #a2f10c; }
+.camaleao-tags ul li:nth-child(9) span { background-color: #1dbc28; }
+.camaleao-tags ul li:nth-child(10) span { background-color: #00c16d; }
+.camaleao-tags ul li:nth-child(11) span { background-color: #00ead8; }
+.camaleao-tags ul li:nth-child(12) span { background-color: #00eafb; }
+.camaleao-tags ul li:nth-child(13) span { background-color: #0093df; }
+.camaleao-tags ul li:nth-child(14) span { background-color: #040090; }
+.camaleao-tags ul li:nth-child(15) span { background-color: #7900a2; }
+.camaleao-tags ul li:nth-child(16) span { background-color: #d200ba; }
+.camaleao-tags ul li:nth-child(17) span { background-color: #8251df; }

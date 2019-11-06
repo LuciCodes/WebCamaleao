@@ -52,9 +52,16 @@ import { AppIndexComponent } from './views/app-index/app-index.component';
 import { LogoutComponent } from './views/logout/logout.component';
 import { OnboardComponent } from './views/onboard/onboard.component';
 import { AppHeaderComponent } from './views/app-common/app-header/app-header.component';
-import { CandidateHomeComponent } from './views/home/candidate-home/candidate-home.component';
 import { CompanyHomeComponent } from './views/home/company-home/company-home.component';
 import { CamaleaoTagsComponent } from './views/app-common/camaleao-tags/camaleao-tags.component';
+import { CandidateIndexComponent } from './views/candidates/candidate-index/candidate-index.component';
+import { CandidateProfileComponent } from './views/candidates/candidate-profile/candidate-profile.component';
+import { CandidateExperiencesComponent } from './views/candidates/candidate-experiences/candidate-experiences.component';
+import { CandidateHabilitiesComponent } from './views/candidates/candidate-habilities/candidate-habilities.component';
+import { CandidateCertificationsComponent } from './views/candidates/candidate-certifications/candidate-certifications.component';
+import { CandidatePreferencesComponent } from './views/candidates/candidate-preferences/candidate-preferences.component';
+import { HomeCandidateComponent } from './views/home/home-candidate/home-candidate.component';
+import { HomeCompanyComponent } from './views/home/home-company/home-company.component';
 
 @NgModule({
   declarations: [
@@ -69,9 +76,16 @@ import { CamaleaoTagsComponent } from './views/app-common/camaleao-tags/camaleao
     LogoutComponent,
     OnboardComponent,
     AppHeaderComponent,
-    CandidateHomeComponent,
     CompanyHomeComponent,
-    CamaleaoTagsComponent
+    CamaleaoTagsComponent,
+    CandidateIndexComponent,
+    CandidateProfileComponent,
+    CandidateExperiencesComponent,
+    CandidateHabilitiesComponent,
+    CandidateCertificationsComponent,
+    CandidatePreferencesComponent,
+    HomeCandidateComponent,
+    HomeCompanyComponent
   ],
   imports: [
     //AngularFireModule.initializeApp(environment.firebase),

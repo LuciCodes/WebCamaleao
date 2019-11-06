@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { WebApiService } from 'src/app/services/webApi.service';
 
 @Component({
-  selector: 'app-candidate-home',
-  templateUrl: './candidate-home.component.html',
-  styleUrls: ['./candidate-home.component.css']
+  selector: 'app-home-candidate',
+  templateUrl: './home-candidate.component.html',
+  styleUrls: ['./home-candidate.component.css']
 })
-export class CandidateHomeComponent implements OnInit {
+export class HomeCandidateComponent implements OnInit {
 
   flagLoadingCandidates: boolean = false;
   flagLoadingJobs: boolean = false;

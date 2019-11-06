@@ -1,3 +1,6 @@
+import { CandidateCertifications } from './candidateCertifications';
+import { CandidateHabilities } from './candidateHabilities';
+import { CandidatePreferences } from './candidatePreferences';
 
 /*
 
@@ -19,6 +22,9 @@
 */
 export class Candidate {
 
+  id: string;
+  userId: string;
+
   birth: string;
   cpf: string;
   ethinicity: string;
@@ -33,4 +39,15 @@ export class Candidate {
   sex: string;
   signUpState: string;
   state: string;
+
+  certifications: CandidateCertifications;
+  habilities: CandidateHabilities;
+  preferences: CandidatePreferences;
+
+  constructor(baseObj?: any) {
+
+    if (baseObj) {
+      Object.assign(this, baseObj);
+    }
+  }
 }

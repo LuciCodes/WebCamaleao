@@ -13,6 +13,12 @@ import { AppIndexComponent } from './views/app-index/app-index.component';
 
 import {LoggedInGuard} from 'ngx-auth-firebaseui';
 import { OnboardComponent } from './views/onboard/onboard.component';
+import { CandidateIndexComponent } from './views/candidates/candidate-index/candidate-index.component';
+import { CandidateProfileComponent } from './views/candidates/candidate-profile/candidate-profile.component';
+import { CandidateExperiencesComponent } from './views/candidates/candidate-experiences/candidate-experiences.component';
+import { CandidateCertificationsComponent } from './views/candidates/candidate-certifications/candidate-certifications.component';
+import { CandidateHabilitiesComponent } from './views/candidates/candidate-habilities/candidate-habilities.component';
+import { CandidatePreferencesComponent } from './views/candidates/candidate-preferences/candidate-preferences.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent,  },
@@ -29,7 +35,18 @@ const routes: Routes = [
           { path: 'editar/:id', component: EditarVagasComponent },
           { path: 'buscar', component: BuscarVagasComponent }
         ]
-      }
+      },
+      { path: 'candidate',
+        component: CandidateIndexComponent,
+        canActivate: [LoggedInGuard],
+        children: [
+            { path: '', component: CandidateProfileComponent },
+            { path: 'certificacoes', component: CandidateCertificationsComponent },
+            { path: 'experiencias', component: CandidateExperiencesComponent },
+            { path: 'habilidades', component: CandidateHabilitiesComponent },
+            { path: 'preferencias', component: CandidatePreferencesComponent }
+          ]
+        }
     ]
   }
 ];

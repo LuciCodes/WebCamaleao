@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 
 import {AuthProvider} from 'ngx-auth-firebaseui';
 
+import { AngularFirestore } from '@angular/fire/firestore';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -12,12 +14,15 @@ export class LoginComponent {
 
   providers = AuthProvider;
 
-  constructor(private router: Router) {
+
+  constructor(private router: Router, private db: AngularFirestore ) {
+
 
   }
 
-  redirectUser(user: any) {
+  async redirectUser(user: any) {
 
+    //get the user profileInfo, 
     console.log('Redirecting user...', user);
 
     this.router.navigateByUrl('/');

@@ -58,9 +58,9 @@
         </form>
 
       </mat-step>
-      <mat-step [stepControl]="frmPersonalData">
+      <mat-step [stepControl]="frmCandidateBasicInfo">
 
-        <form [formGroup]="frmPersonalData">
+        <form [formGroup]="frmCandidateBasicInfo">
 
           <ng-template matStepLabel>
             Dados Pessoais
@@ -198,7 +198,7 @@
                     class="w-100"
                     mat-flat-button
                     matStepperNext
-                    [disabled]="!frmPersonalData.valid"
+                    [disabled]="!frmCandidateBasicInfo.valid"
                     (click)="proceedFromPersonalData($event)"
                   >
                     Próximo
@@ -215,7 +215,7 @@
       </mat-step>
       <mat-step>
 
-        <form [formGroup]="frmOrientation">
+        <form [formGroup]="frmCandidateDiversity">
 
           <ng-template matStepLabel>
             Finalizar

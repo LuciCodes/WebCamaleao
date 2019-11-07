@@ -11,20 +11,21 @@ export class HomeCandidateComponent implements OnInit {
   flagLoadingCandidates: boolean = false;
   flagLoadingJobs: boolean = false;
 
-  jobList: Array<any>;
-  candidateList: Array<any>;
+  jobList: Array<any> = [];
+  messageList: Array<any> = [];
 
   constructor(private webApi: WebApiService) {}
 
   ngOnInit(): void {
     
-    this.loadCandidates();
+    //this.loadCandidates();
     
     this.loadJobs();
   }
 
   loadCandidates() {
 
+    /*
     this.flagLoadingCandidates = true;
     
     this.webApi.getTopCandidates().then((candidates) => {
@@ -33,6 +34,7 @@ export class HomeCandidateComponent implements OnInit {
   
       this.flagLoadingJobs = false;
     });
+    */
   }
 
   loadJobs() {

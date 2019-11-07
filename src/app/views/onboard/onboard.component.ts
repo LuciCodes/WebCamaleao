@@ -10,8 +10,8 @@ import { AppConstants } from 'src/app/etc/appConstants';
 export class OnboardComponent implements OnInit {
 
   frmUserType: FormGroup;
-  frmPersonalData: FormGroup;
-  frmOrientation: FormGroup;
+  frmCandidateBasicInfo: FormGroup;
+  frmCandidateDiversity: FormGroup;
 
   get ptBrDateMask() { return AppConstants.ptBrDateMask; }
   get cpfMask() { return AppConstants.cpfMask; }
@@ -34,9 +34,9 @@ export class OnboardComponent implements OnInit {
   
   get cities(): Array<any> {
 
-    if (this.frmPersonalData.controls.state.valid) {
+    if (this.frmCandidateBasicInfo.controls.state.valid) {
 
-      let theStateId = this.frmPersonalData.controls.state.value
+      let theStateId = this.frmCandidateBasicInfo.controls.state.value
 
       let theState = AppConstants.brazilianStates.find(s => s.abrev == theStateId);
 
@@ -51,22 +51,22 @@ export class OnboardComponent implements OnInit {
 
   get hasState(): boolean {
 
-    return (this.frmPersonalData && this.frmPersonalData.controls.state.valid);
+    return (this.frmCandidateBasicInfo && this.frmCandidateBasicInfo.controls.state.valid);
   }
 
   get flagIsPcd(): boolean {
     
-    return (this.frmOrientation &&
-            this.frmOrientation.controls.pcd &&
-            this.frmOrientation.controls.pcd.value == 'true');
+    return (this.frmCandidateDiversity &&
+            this.frmCandidateDiversity.controls.pcd &&
+            this.frmCandidateDiversity.controls.pcd.value == 'true');
   }
 
   get mayProceedFromOrientation(): boolean {
 
-    return (this.frmPersonalData &&
-            this.frmPersonalData.valid && 
-            this.frmOrientation &&
-            this.frmOrientation.valid);
+    return (this.frmCandidateBasicInfo &&
+            this.frmCandidateBasicInfo.valid && 
+            this.frmCandidateDiversity &&
+            this.frmCandidateDiversity.valid);
   }
 
 
@@ -74,7 +74,7 @@ export class OnboardComponent implements OnInit {
 
   ngOnInit() {
 
-    this.frmPersonalData = this.fb.group({
+    this.frmCandidateBasicInfo = this.fb.group({
       name: ['', Validators.required],
       birth: ['', Validators.required],
       cpf: ['', Validators.required],
@@ -88,7 +88,7 @@ export class OnboardComponent implements OnInit {
       userType: ['']
     });
     
-    this.frmOrientation = this.fb.group({
+    this.frmCandidateDiversity = this.fb.group({
       gender: ['', Validators.required],
       sex: ['', Validators.required],
       etnicity: ['', Validators.required],

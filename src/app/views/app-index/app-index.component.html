@@ -42,10 +42,25 @@
     <mat-nav-list>
 
       <a mat-list-item href="javascript:;" routerLink="/">Home</a>
-      <a mat-list-item href="javascript:;" routerLink="/vagas/buscar">Buscar Vagas</a>
-      <a mat-list-item href="javascript:;" routerLink="/vagas">Minhas Vagas</a>
-      <a mat-list-item href="javascript:;" routerLink="/vagas/abrir">Abrir Vaga</a>
-      <a mat-list-item href="javascript:;" routerLink="/candidates">Candidates</a>
+
+      <ng-container *ngIf="userIsCandidate">
+
+        <a mat-list-item href="javascript:;" routerLink="/candidate">Dados Básicos</a>
+        <a mat-list-item href="javascript:;" routerLink="/candidate/perfil">Perfil</a>
+        <a mat-list-item href="javascript:;" routerLink="/candidate/escolaridade">Escolaridade</a>
+        <a mat-list-item href="javascript:;" routerLink="/candidate/habilidades">Habilidades</a>
+        <a mat-list-item href="javascript:;" routerLink="/candidate/preferencias">Preferências</a>
+        
+      </ng-container>
+      
+      <ng-container *ngIf="!userIsCandidate">
+      
+        <a mat-list-item href="javascript:;" routerLink="/vagas/buscar">Buscar Vagas</a>
+        <a mat-list-item href="javascript:;" routerLink="/vagas">Minhas Vagas</a>
+        <a mat-list-item href="javascript:;" routerLink="/vagas/abrir">Abrir Vaga</a>
+        <a mat-list-item href="javascript:;" routerLink="/candidates">Candidates</a>
+        
+      </ng-container>
 
     </mat-nav-list>
   </mat-sidenav>

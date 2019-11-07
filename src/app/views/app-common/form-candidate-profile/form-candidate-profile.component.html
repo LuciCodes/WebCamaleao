@@ -1,0 +1,124 @@
+
+<form [formGroup]="frmCandidateProfile">
+  
+  <mat-card class="default-card">
+    <mat-card-content>
+      
+      <div fxLayout="row">
+        <div fxFlex>
+
+          <mat-form-field>
+            <mat-label>
+              Como você se identifica?
+            </mat-label>
+            <mat-select formControlName="gender">
+              <mat-option value="0">Homem Cisgênero</mat-option>
+              <mat-option value="1">Homem Transexual</mat-option>
+              <mat-option value="2">Mulher Cisgênero</mat-option>
+              <mat-option value="3">Mulher Transexual</mat-option>
+              <mat-option value="4">Não Binário</mat-option>
+              <mat-option value="5">Não desejo  me identificar</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        </div>
+      </div>
+
+      <div fxLayout="row">
+        <div fxFlex>
+
+          <mat-form-field>
+            <mat-label>
+              Qual sua orientação sexual?
+            </mat-label>
+            <mat-select formControlName="sex">
+              <mat-option value="0">Assexual</mat-option>
+              <mat-option value="1">Bissexual</mat-option>
+              <mat-option value="2">Demissexual</mat-option>
+              <mat-option value="3">Heterossexual</mat-option>
+              <mat-option value="4">Homossexual</mat-option>
+              <mat-option value="5">Panssexual</mat-option>
+              <mat-option value="6">Não desejo  me identificar</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        </div>
+      </div>
+
+      <div fxLayout="row">
+        <div fxFlex>
+
+          <mat-form-field>
+            <mat-label>
+              Qual sua auto declaração de etnia?
+            </mat-label>
+            <mat-select formControlName="etnicity">
+              <mat-option value="0">Amarelo</mat-option>
+              <mat-option value="1">Branco</mat-option>
+              <mat-option value="2">Indígena</mat-option>
+              <mat-option value="3">Negro</mat-option>
+              <mat-option value="4">Pardo</mat-option>
+              <mat-option value="5">Não desejo  me identificar</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        </div>
+      </div>
+      
+      <div fxLayout="row">
+        <div fxFlex>
+
+          <mat-radio-group
+            aria-label="Pessoa com deficiência?"
+            formControlName="pcd"
+          >
+            <mat-label>
+              Você é uma pessoa com deficiência?
+            </mat-label>
+            <br>
+            <mat-radio-button value="true">Sim</mat-radio-button>
+            &nbsp;&nbsp;
+            <mat-radio-button value="false">Não</mat-radio-button>
+          </mat-radio-group>
+
+        </div>
+      </div>
+      
+      <div fxLayout="row" *ngIf="flagIsPcd">
+        <div fxFlex>
+
+          <mat-form-field>
+            <mat-label>
+              Necessita quais recursos especiais?
+            </mat-label>
+            <input
+              matInput
+              formControlName="pcdNote"
+            >
+          </mat-form-field>
+
+        </div>
+      </div>
+      
+      <div fxLayout="row">
+        <div fxFlex="80%" fxFlexOffset="10%">
+          
+          <button
+            color="primary"
+            class="w-100"
+            mat-flat-button
+            [disabled]="!mayProceedFromOrientation"
+            (click)="proceedFromOrientation($event)"
+          >
+            Salvar
+          </button>
+          
+        </div>  
+      </div>  
+
+      
+    </mat-card-content>
+  </mat-card>
+  
+</form>
+

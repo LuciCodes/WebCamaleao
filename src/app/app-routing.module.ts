@@ -16,9 +16,10 @@ import { OnboardComponent } from './views/onboard/onboard.component';
 import { CandidateIndexComponent } from './views/candidates/candidate-index/candidate-index.component';
 import { CandidateProfileComponent } from './views/candidates/candidate-profile/candidate-profile.component';
 import { CandidateExperiencesComponent } from './views/candidates/candidate-experiences/candidate-experiences.component';
-import { CandidateCertificationsComponent } from './views/candidates/candidate-certifications/candidate-certifications.component';
 import { CandidateHabilitiesComponent } from './views/candidates/candidate-habilities/candidate-habilities.component';
 import { CandidatePreferencesComponent } from './views/candidates/candidate-preferences/candidate-preferences.component';
+import { CandidateEducationComponent } from './views/candidates/candidate-education/candidate-education.component';
+import { CandidateBasicInfoComponent } from './views/candidates/candidate-basic-info/candidate-basic-info.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent,  },
@@ -40,8 +41,9 @@ const routes: Routes = [
         component: CandidateIndexComponent,
         canActivate: [LoggedInGuard],
         children: [
-            { path: '', component: CandidateProfileComponent },
-            { path: 'certificacoes', component: CandidateCertificationsComponent },
+            { path: '', component: CandidateBasicInfoComponent },
+            { path: 'perfil', component: CandidateProfileComponent },
+            { path: 'escolaridade', component: CandidateEducationComponent },
             { path: 'experiencias', component: CandidateExperiencesComponent },
             { path: 'habilidades', component: CandidateHabilitiesComponent },
             { path: 'preferencias', component: CandidatePreferencesComponent }

@@ -1,108 +1,117 @@
-<div class="row">
-  <div class="col">
+<div fxLayout="row">
+    <div fxFlex>
+  
+      <h1 class="m-t-20">
+        Início
+      </h1>
+  
+      <div fxLayout="row" fxLayoutGap="1%">
+        <div fxFlex="50%">
+      
+          <mat-card class="default-card">
+            <mat-card-header>
+              <mat-card-title>
+                <i class="fa fa-email"></i>  
+                Mensagens
+              </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+            
+              <div *ngIf="messageList.length == 0">
+                <p class="txt-center">
+                  Nenhuma mensagem nova.
+                </p>
+              </div>
 
-    <h1 class="m-t-20">
-      Início
-    </h1>
-
-    <div class="row">
-      <div class="col">
-
-        <mat-card class="default-card">
-          <mat-card-header>
-            <mat-card-title>Últimas Vagas Pesquisadas</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-
-            <mat-list>
-              <mat-list-item
-                *ngFor="let job of jobList"
-              >
-                <img
-                  matListAvatar
-                  src="assets/img/company-logos/{{ job.company.logoUrl }}"
-                  alt="..."
+              <mat-list>
+                <mat-list-item
+                  *ngFor="let message of messageList"
                 >
-                <h3 matLine>
-                  <a href="javascript:;" routerLink="/vagas/{{ job.id }}">
-                    {{ job.jobTitle }}
-                  </a>
-                </h3>
-        
-                <div matLine>
-                  <div class="row">
-                    <div class="col small-chips">
-        
-                      <mat-chip-list matLine>
-                        <mat-chip *ngFor="let tag of job.tags">{{ tag }}</mat-chip>
-                      </mat-chip-list>
-        
-                    </div>
-                  </div>
-        
-                </div>
-        
-              </mat-list-item>
-            </mat-list>
-
-          </mat-card-content>
-        </mat-card> 
-
-      </div>
-      <div class="col">
-        
-        <mat-card class="default-card">
-          <mat-card-header>
-            <mat-card-title>Empresas</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
+                  <!--img
+                    matListAvatar
+                    src="{{ person.photoUrl }}"
+                    alt="{{ person.name }}"
+                  >
+                  <h3 matLine>
+                      {{ person.name }}
+                  </h3>
           
-            <mat-list>
-              <mat-list-item
-                *ngFor="let person of candidateList"
-              >
-                <img
-                  matListAvatar
-                  src="{{ person.avatarUrl }}"
-                  alt="{{ person.name }}"
-                >
-                <h3 matLine>
-                    {{ person.name }}
-                </h3>
-        
-                <div matLine>
-                  <div class="row">
-                    <div class="col txt-xsm">
-
-                      <a
-                        href="javascript:;"
-                        routerLink="/candidates/{{ person.id }}"
-                      >
-                        <fa-icon [icon]="['fas', 'eye']"></fa-icon>
-                        ver perfil
-                      </a>
-
-                      <a
-                        href="javascript:;"
-                        routerLink="/candidates/{{ person.id }}"
-                        class="m-l-20"
-                      >
-                        <i class="far fa-star"></i>
-                        favoritar
-                      </a>
-
+                  <div matLine>
+                    <div fxLayout="row">
+                      <div fxFlex class="txt-xsm">
+  
+                        <a
+                          href="javascript:;"
+                          routerLink="/candidates/{{ person.id }}"
+                        >
+                          <fa-icon [icon]="['fas', 'eye']"></fa-icon>
+                          ver perfil
+                        </a>
+  
+                        <a
+                          href="javascript:;"
+                          routerLink="/candidates/{{ person.id }}"
+                          class="m-l-20"
+                        >
+                          <i class="far fa-star"></i>
+                          favoritar
+                        </a>
+  
+                      </div>
                     </div>
+                  </div-->
+                  
+                </mat-list-item>
+              </mat-list>
+  
+            </mat-card-content>
+          </mat-card> 
+  
+        </div>
+        <div fxFlex="50%">
+  
+          <mat-card class="default-card">
+            <mat-card-header>
+              <mat-card-title>Últimas Vagas Visitadas</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+  
+              <mat-list>
+                <mat-list-item
+                  *ngFor="let job of jobList"
+                >
+                  <img
+                    matListAvatar
+                    src="{{ job.company.logoUrl }}"
+                    alt="..."
+                  >
+                  <h3 matLine>
+                    <a href="javascript:;" routerLink="/vagas/{{ job.id }}">
+                      {{ job.jobTitle }}
+                    </a>
+                  </h3>
+          
+                  <div matLine>
+                    <div fxLayout="row">
+                      <div class="col small-chips">
+          
+                        <mat-chip-list matLine>
+                          <mat-chip *ngFor="let tag of job.tags">{{ tag }}</mat-chip>
+                        </mat-chip-list>
+          
+                      </div>
+                    </div>
+          
                   </div>
-                </div>
-                
-              </mat-list-item>
-            </mat-list>
-
-          </mat-card-content>
-        </mat-card> 
-
+          
+                </mat-list-item>
+              </mat-list>
+  
+            </mat-card-content>
+          </mat-card> 
+  
+        </div>
       </div>
+  
     </div>
-
   </div>
-</div>

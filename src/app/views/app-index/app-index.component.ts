@@ -7,6 +7,7 @@ import {User} from 'firebase';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { MatDialog } from '@angular/material';
 import { LinkMenuItem } from 'ngx-auth-firebaseui';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-app-index',
@@ -20,9 +21,16 @@ export class AppIndexComponent {
   @Input()
   links: LinkMenuItem[];
 
-  user: User;
-  user$: Observable<User | null>;
+  get user(): User {
 
+    return this.userService.user;
+  }
+  
+  get userIsCandidate(): boolean {
+
+    return this.userService.userIsCandidate;
+  }
+  
   displayNameInitials: string;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -33,20 +41,12 @@ export class AppIndexComponent {
 
   constructor(public afa: AngularFireAuth,
               public dialog: MatDialog,
+              private userService: UserService,
               private breakpointObserver: BreakpointObserver) {
   }
 
   ngOnInit() {
 
-    this.user$ = this.afa.user;
-
-    this.user$.subscribe((user: User) => {
-
-      this.user = user;
-
-      this.displayNameInitials = user ? this.getDisplayNameInitials(user.displayName) : null;
-
-    });
   }
 
   getDisplayNameInitials(displayName: string): string {

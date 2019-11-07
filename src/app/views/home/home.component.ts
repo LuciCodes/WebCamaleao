@@ -10,7 +10,7 @@ export class HomeComponent implements OnInit {
 
   get userIsCandidate(): boolean {
 
-    return (this.userService && this.userService.hasUser && this.userService.user['type'] == 'CANDIDATE');
+    return this.userService.userIsCandidate;
   }
   
   constructor(private userService: UserService) {}

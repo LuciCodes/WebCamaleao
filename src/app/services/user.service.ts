@@ -19,7 +19,9 @@ export class UserService {
 
   get userIsCandidate(): boolean {
 
-    return (this.hasUser && this.user['type'] == 'CANDIDATE');
+    // padronizando type em branco como CANDIDATE também
+    // no cadastro, salvar o user depois com a propriedade type
+    return (this.hasUser && (!this.user['type'] || this.user['type'] == 'CANDIDATE'));
   }
 
   constructor(private fireAuth: AngularFireAuth,

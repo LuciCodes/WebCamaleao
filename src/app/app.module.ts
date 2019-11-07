@@ -19,12 +19,14 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatChipsModule } from '@angular/material/chips'; 
 import { MatListModule } from '@angular/material/list';
@@ -52,16 +54,18 @@ import { AppIndexComponent } from './views/app-index/app-index.component';
 import { LogoutComponent } from './views/logout/logout.component';
 import { OnboardComponent } from './views/onboard/onboard.component';
 import { AppHeaderComponent } from './views/app-common/app-header/app-header.component';
-import { CompanyHomeComponent } from './views/home/company-home/company-home.component';
 import { CamaleaoTagsComponent } from './views/app-common/camaleao-tags/camaleao-tags.component';
 import { CandidateIndexComponent } from './views/candidates/candidate-index/candidate-index.component';
 import { CandidateProfileComponent } from './views/candidates/candidate-profile/candidate-profile.component';
 import { CandidateExperiencesComponent } from './views/candidates/candidate-experiences/candidate-experiences.component';
 import { CandidateHabilitiesComponent } from './views/candidates/candidate-habilities/candidate-habilities.component';
-import { CandidateCertificationsComponent } from './views/candidates/candidate-certifications/candidate-certifications.component';
 import { CandidatePreferencesComponent } from './views/candidates/candidate-preferences/candidate-preferences.component';
 import { HomeCandidateComponent } from './views/home/home-candidate/home-candidate.component';
 import { HomeCompanyComponent } from './views/home/home-company/home-company.component';
+import { CandidateEducationComponent } from './views/candidates/candidate-education/candidate-education.component';
+import { FormCandidateBasicInfoComponent } from './views/app-common/form-candidate-basic-info/form-candidate-basic-info.component';
+import { FormCandidateProfileComponent } from './views/app-common/form-candidate-profile/form-candidate-profile.component';
+import { CandidateBasicInfoComponent } from './views/candidates/candidate-basic-info/candidate-basic-info.component';
 
 @NgModule({
   declarations: [
@@ -76,16 +80,18 @@ import { HomeCompanyComponent } from './views/home/home-company/home-company.com
     LogoutComponent,
     OnboardComponent,
     AppHeaderComponent,
-    CompanyHomeComponent,
     CamaleaoTagsComponent,
     CandidateIndexComponent,
     CandidateProfileComponent,
     CandidateExperiencesComponent,
     CandidateHabilitiesComponent,
-    CandidateCertificationsComponent,
     CandidatePreferencesComponent,
-    HomeCandidateComponent,
-    HomeCompanyComponent
+    HomeCandidateComponent, 
+    HomeCompanyComponent,
+    CandidateEducationComponent,
+    FormCandidateBasicInfoComponent,
+    FormCandidateProfileComponent,
+    CandidateBasicInfoComponent
   ],
   imports: [
     //AngularFireModule.initializeApp(environment.firebase),
@@ -117,6 +123,7 @@ import { HomeCompanyComponent } from './views/home/home-company/home-company.com
     MatChipsModule,
     MatGridListModule,
     MatCardModule,
+    MatCheckboxModule,
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
@@ -124,6 +131,7 @@ import { HomeCompanyComponent } from './views/home/home-company/home-company.com
     MatMomentDateModule,
     LayoutModule,
     MatToolbarModule,
+    MatTabsModule,
     MatSidenavModule,
     MatListModule,
     MatInputModule,

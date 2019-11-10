@@ -1,3 +1,4 @@
+import { Skill } from '../models/skill';
 
 export class AppConstants {
 
@@ -302,6 +303,38 @@ export class AppConstants {
     { value: 'ZOOTECNOLOGIA', name:'Zootecnologia' },
     { value: 'CURSO_NO_EXTERIOR', name:'Curso no Exterior' },
     { value: 'OUTRO', name:'Outro' },
+  ];
+
+  static basicSkillsCategories: Array<string> = [
+    'Administrativas',
+    'Artísticas',
+    'Científicas',
+    'TI',
+    'Software'
+  ];
+
+  static basicSkills: Array<Skill> = [
+    new Skill('Administrativas', 'Administração de Empresas'),
+    new Skill('Administrativas', 'Contabilidade'),
+    new Skill('Administrativas', 'Gestão de Pessoas'),
+    new Skill('Administrativas', 'Planilhas'),
+    new Skill('Administrativas', 'Recrutamento'),
+    new Skill('Artísticas', 'Design Gráfico'),
+    new Skill('Artísticas', 'Design 3D'),
+    new Skill('Artísticas', 'Fotografia'),
+    new Skill('Científicas', 'Física'),
+    new Skill('Científicas', 'Química'),
+    new Skill('Científicas', 'Geologia'),
+    new Skill('Científicas', 'Matemática'),
+    new Skill('TI', 'Análise de Sistemas'),
+    new Skill('TI', 'Banco de Dados'),
+    new Skill('TI', 'Lógica'),
+    new Skill('TI', 'Planilhas'),
+    new Skill('TI', 'Programação'),
+    new Skill('Software', 'Edição de Vídeo'),
+    new Skill('Software', 'Edição de Áudio'),
+    new Skill('Software', 'Pacote Office'),
+    new Skill('Software', 'Photoshop')
   ];
 
   static professions = [

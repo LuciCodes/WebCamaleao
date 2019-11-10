@@ -1,0 +1,108 @@
+
+<h1>Redes Sociais</h1>
+
+<form [formGroup]="frmCandidateSocialNetworks">
+
+  <mat-card class="default-card">
+    <mat-card-content>
+
+      <div fxLayout="row">
+        <div fxFlex>
+
+          <mat-form-field>
+            <mat-label>
+              Seu Portfolio/Blog
+            </mat-label>
+            <input
+              matInput
+              formControlName="linkToPortfolio"
+            >
+          </mat-form-field>
+
+        </div>
+      </div>
+
+      <div fxLayout="row">
+        <div fxFlex>
+
+          <mat-form-field>
+            <mat-label>
+              Seu LinkedIn
+            </mat-label>
+            <input
+              matInput
+              formControlName="linkToLinkedIn"
+            >
+          </mat-form-field>
+
+        </div>
+      </div>
+      
+      <div fxLayout="row">
+        <div fxFlex>
+
+          <mat-form-field>
+            <mat-label>
+              Seu Facebook
+            </mat-label>
+            <input
+              matInput
+              formControlName="linkToFacebook"
+            >
+          </mat-form-field>
+
+        </div>
+      </div>
+      
+      <div fxLayout="row">
+        <div fxFlex>
+
+          <mat-form-field>
+            <mat-label>
+              Seu Git
+            </mat-label>
+            <input
+              matInput
+              formControlName="linkToStackOverflow"
+            >
+          </mat-form-field>
+
+        </div>
+      </div>
+      
+      <div fxLayout="row">
+        <div fxFlex>
+
+          <mat-form-field>
+            <mat-label>
+              Seu Behance
+            </mat-label>
+            <input
+              matInput
+              formControlName="linkToBehance"
+            >
+          </mat-form-field>
+
+        </div>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+  
+  <div fxLayout="row" class="m-t-30">
+    <div fxFlex="33%" fxFlexOffset="33%">
+      
+      <button
+        color="accent"
+        class="w-100"
+        mat-flat-button
+        (click)="save($event)"
+      >
+        Salvar Dados
+      </button>
+      
+    </div>  
+  </div>
+  
+</form>
+

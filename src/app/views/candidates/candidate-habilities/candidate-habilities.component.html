@@ -1,1 +1,91 @@
-<p>candidate-habilities works!</p>
+
+<h1>Habilidades</h1>
+
+<form [formGroup]="frmCandidateHabilities">
+
+  <mat-card class="default-card">
+    <mat-card-content>
+
+      <div fxLayout="row">
+        <div fxFlex>
+
+          <h3>
+            Quais suas principais habilidades?
+          </h3>
+          <p>
+            {{ skillList }}
+          </p>
+
+          <div fxLayout="row">
+            <div fxFlex="20%">
+              
+              <h3>Categoria</h3>
+
+              <div
+                fxLayout="row"
+                class="m-t-10"
+                *ngFor="let category of skillsCategories"
+              >
+                <div fxFlex>
+                      
+                  <button
+                    [color]="selectedCategory == category ? 'accent' : 'primary'"
+                    class="w-100"
+                    mat-flat-button
+                    (click)="selectedCategory = category"
+                  >
+                    {{ category }}
+                  </button>
+
+                </div>
+              </div>
+            
+            </div>
+            <div fxFlex="78%" fxFlexOffset="2%">
+
+              <h3>Habilidades</h3>
+
+              <div fxLayout="row">
+
+                <button
+                  mat-flat-button
+                  class="m-b-10 m-r-10"
+                  [color]="skill.uiSelected ? 'accent' : 'primary'"
+                  (click)="skill.uiSelected = !skill.uiSelected"
+                  *ngFor="let skill of currentSkills"
+                >
+                  {{ skill.name }}
+                </button>
+
+              </div>
+
+              <!--div fxLayout="row">
+                <div
+                  class="m-b-10"
+                  fxFlex="18%"
+                  fxFlexOffset="2%"
+                  *ngFor="let skill of currentSkills"
+                >
+
+                  <button
+                    [color]="skill.uiSelected ? 'accent' : 'primary'"
+                    class="w-100"
+                    mat-flat-button
+                    (click)="skill.uiSelected = !skill.uiSelected"
+                  >
+                    {{ skill.name }}
+                  </button>
+                  
+                </div>  
+              </div-->
+
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      
+    </mat-card-content>
+  </mat-card>
+
+</form>

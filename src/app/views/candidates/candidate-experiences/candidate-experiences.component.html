@@ -1,1 +1,179 @@
-<p>candidate-experiences works!</p>
+
+<h1>Experiências</h1>
+
+<form [formGroup]="frmCandidateExperience">
+
+  <mat-card class="default-card">
+    <mat-card-content>
+
+      <p>
+        Adicione abaixo suas experiências de trabalho.<br>
+        Os campos <strong>Empresa</strong>, <strong>Cargo</strong> e <strong>Descrição</strong> são obrigatórios.
+      </p>
+  
+      <div fxLayout="row">
+        <div fxFlex="50%">
+
+          <mat-form-field>
+            <mat-label>
+              Nome da Empresa
+            </mat-label>
+            <input
+              matInput
+              formControlName="companyName"
+            >
+          </mat-form-field>          
+
+        </div>
+        <div fxFlex="48%" fxFlexOffset="2%">
+
+          <mat-form-field>
+            <mat-label>
+              Seu Cargo
+            </mat-label>
+            <input
+              matInput
+              formControlName="roleName"
+            >
+          </mat-form-field>          
+
+        </div>
+      </div>
+
+      <div fxLayout="row">
+        <div fxFlex="25%">
+
+          <mat-form-field>
+            <mat-label>
+              Data de Início
+            </mat-label>
+            <input
+              matInput
+              formControlName="startDate"
+            >
+          </mat-form-field>
+
+        </div>
+        <div fxFlex="23%" fxFlexOffset="2%">
+
+          <mat-form-field>
+            <mat-label>
+              Data de Saída
+            </mat-label>
+            <input
+              matInput
+              formControlName="endDate"
+            >
+          </mat-form-field>    
+
+        </div>
+        <div fxFlex="48%" fxFlexOffset="2%">
+        
+          <mat-checkbox>
+            É meu emprego atual
+          </mat-checkbox>
+
+        </div>
+      </div>
+
+      <div fxLayout="row">          
+        <div fxFlex>
+
+          <mat-form-field>
+            <mat-label>
+              Descrição
+            </mat-label>
+            <input
+              matInput
+              formControlName="description"
+            >
+          </mat-form-field>          
+
+        </div>
+      </div>
+      
+      <div fxLayout="row" class="m-t-30">
+        <div fxFlex="33%" fxFlexOffset="33%">
+          
+          <button
+            color="accent"
+            class="w-100"
+            mat-flat-button
+            [disabled]="!newCourseFormValid"
+            (click)="addCourse($event)"
+          >
+            Adicionar Experiência
+          </button>
+          
+        </div>  
+      </div>  
+
+      <div fxLayout="row" class="m-t-10" *ngIf="experieces && experieces.length > 0">
+        <div fxFlex="100%">
+
+          <div fxLayout="row">
+            <div fxFlex="100%">
+
+              <h3>Experiências Cadastradas:</h3>
+
+            </div>
+          </div>
+
+          <div
+            fxLayout="row"
+            *ngFor="let experiece of experieces"
+          >
+            <div fxFlex="80%">
+              
+              <mat-card class="default-card">
+                <mat-card-content>
+
+                  <h2>{{ experiece.roleName }}</h2>
+                  
+                  <h3>{{ experiece.companyName }}</h3>
+
+                  <div fxLayout="row">
+                    <div fxFlex>
+                      
+                      <strong>Período:</strong>
+                      {{ experiece.startDate ? 'de ' + experiece.startDate : ''    }}
+                      {{ experiece.endDate ? ' até ' + experiece.endDate : ''  }}
+
+                    </div>
+                  </div>
+                  
+                  <div fxLayout="row">
+                    <div fxFlex>
+                      
+                      {{ experiece.description }}
+
+                    </div>
+                  </div>
+                  
+                </mat-card-content>
+              </mat-card>
+  
+            </div>
+            <div fxFlex="18%" fxFlexOffset="2%" class="p-t-20">
+
+              <button
+                color="warn"
+                class="w-100"
+                mat-flat-button
+                (click)="removeCourse()"
+              >
+                <i class="fa fa-trash"></i>
+                Excluir Experiência
+              </button>
+
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      
+    </mat-card-content>
+  </mat-card>
+  
+</form>
+

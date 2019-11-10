@@ -8,6 +8,4 @@ export class CandidateHabilities {
   otherSkills: Array<string> = [];
   
   specialties: Array<string> = [];
-  
-  timePerSkill: Array<string> = [];
 }

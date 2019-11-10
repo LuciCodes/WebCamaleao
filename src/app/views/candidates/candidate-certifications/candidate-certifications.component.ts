@@ -4,13 +4,13 @@ import { AppConstants } from 'src/app/etc/appConstants';
 import { Skill } from 'src/app/models/skill';
 
 @Component({
-  selector: 'app-candidate-education',
-  templateUrl: './candidate-education.component.html',
-  styleUrls: ['./candidate-education.component.css']
+  selector: 'app-candidate-certifications',
+  templateUrl: './candidate-certifications.component.html',
+  styleUrls: ['./candidate-certifications.component.css']
 })
-export class CandidateEducationComponent implements OnInit {
+export class CandidateCertificationsComponent implements OnInit {
 
-  public frmCandidateEducation: FormGroup;
+  public frmCandidateCertification: FormGroup;
 
   public get educationalLevels(): Array<any> {
 
@@ -27,42 +27,9 @@ export class CandidateEducationComponent implements OnInit {
     return AppConstants.brazilianStates;
   }
   
-  public get newCourseFormValid(): boolean {
-
-    return ( this.frmCandidateEducation.controls.newCourseName.valid
-          && this.frmCandidateEducation.controls.newCourseLevel.valid
-           );
-  }
-  
   public get newCertificationFormValid(): boolean {
 
-    return (this.frmCandidateEducation.controls.newCertificationName.valid);
-  }
-
-  public get courses(): Array<any> {
-
-    return [
-      {
-        name: 'Ensino Médio',
-        institution: 'Iluminati',
-        level: 'ENSINO_MEDIO',
-        startDate: 'Jan/2001',
-        endDate: 'Jan/2004',
-        duration: '3 anos',
-        state: 'SP'
-      },
-      {
-        name: 'Superior em Ciência da Computação',
-        description: 'Ciência da Computação',
-        institution: 'UNIVAP',
-        level: 'SUPERIOR_COMPLETO',
-        startDate: 'Jan/2004',
-        endDate: 'Jan/2009',
-        duration: '5 anos',
-        state: 'SP',
-        area: 'TECNOLOGIA_REDE_DE_COMPUTADORES'
-      }
-    ]
+    return (this.frmCandidateCertification.controls.newCertificationName.valid);
   }
 
   public get certifications(): Array<any> {
@@ -138,32 +105,13 @@ export class CandidateEducationComponent implements OnInit {
 
   ngOnInit() {
 
-    this.frmCandidateEducation = this.fb.group({
-
-      level: ['', Validators.required],
-      newCourseName: ['', Validators.required],
-      newCourseInstitution: [''],
-      newCourseLevel: ['', Validators.required],
-      newCourseStartDate: [''],
-      newCourseEndDate: [''],
-      newCourseDuration: [''],
-      newCourseState: [''],
-      newCourseArea: [''],
+    this.frmCandidateCertification = this.fb.group({
 
       newCertificationName: ['', Validators.required],
       newCertificationInstitution: [''],
       newCertificationYear: ['2019'],
       newCertificationDescription: [''],
     });
-  }
-
-  public skillsOfCategory(category: string): Array<Skill> {
-
-    return AppConstants.basicSkills.filter(c => c.category == category);
-  }
-  
-  addCourse() {
-
   }
 
   addCertification() {

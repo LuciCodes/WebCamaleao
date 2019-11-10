@@ -1,0 +1,156 @@
+
+<h1>Certificações</h1>
+
+<form [formGroup]="frmCandidateCertification">
+
+  <mat-card class="default-card">
+    <mat-card-content>
+
+      <div fxLayout="row" class="m-t-30">
+        <div fxFlex>
+
+          <p>
+            Adicione abaixo uma ou mais certificações que você tenha tirado.<br>
+            Somente o campo <strong>Nome</strong> é obrigatório.
+          </p>
+      
+          <div fxLayout="row">
+            <div fxFlex="70%">
+
+              <mat-form-field>
+                <mat-label>
+                  Nome da Certificação
+                </mat-label>
+                <input
+                  matInput
+                  formControlName="newCertificationName"
+                >
+              </mat-form-field>          
+
+            </div>
+            <div fxFlex="28%" fxFlexOffset="2%">
+
+              <mat-form-field>
+                <mat-label>
+                  Ano
+                </mat-label>
+                <mat-select formControlName="newCertificationYear">
+                  <mat-option
+                    *ngFor="let year of years"
+                    [value]="year"
+                  >
+                    {{ year }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>          
+
+            </div>
+          </div>
+
+          <div fxLayout="row">          
+            <div fxFlex="50%">
+
+              <mat-form-field>
+                <mat-label>
+                  Nome da Instituição
+                </mat-label>
+                <input
+                  matInput
+                  formControlName="newCertificationInstitution"
+                >
+              </mat-form-field>          
+
+            </div>
+            <div fxFlex="48%" fxFlexOffset="2%">
+            
+              <mat-form-field>
+                <mat-label>
+                  Descritivo
+                </mat-label>
+                <input
+                  matInput
+                  formControlName="newCertificationDescription"
+                >
+              </mat-form-field>
+
+            </div>
+          </div>
+          
+          <div fxLayout="row" class="m-t-30">
+            <div fxFlex="33%" fxFlexOffset="33%">
+              
+              <button
+                color="accent"
+                class="w-100"
+                mat-flat-button
+                [disabled]="!newCertificationFormValid"
+                (click)="addCertification($event)"
+              >
+                Adicionar Certificação
+              </button>
+              
+            </div>  
+          </div>  
+          
+        </div>  
+      </div>  
+
+      <div fxLayout="row" class="m-t-10" *ngIf="certifications && certifications.length > 0">
+        <div fxFlex="100%">
+
+          <div fxLayout="row">
+            <div fxFlex="100%">
+
+              <h3>Certificações Cadastradas:</h3>
+
+            </div>
+          </div>
+
+          <div
+            fxLayout="row"
+            *ngFor="let certification of certifications"
+          >
+            <div fxFlex="80%">
+              
+              <mat-card class="default-card">
+                <mat-card-content>
+
+                  <h2>{{ certification.name }} {{ certification.year ? (' - ' + certification.year) : ('') }}</h2>
+                  
+                  <h3 *ngIf="certification.institution">{{ certification.institution }}</h3>
+
+                  <div fxLayout="row" *ngIf="certification.description">
+                    <div fxFlex>
+                      
+                      {{ certification.description }}
+
+                    </div>
+                  </div>
+                  
+                </mat-card-content>
+              </mat-card>
+  
+            </div>
+            <div fxFlex="18%" fxFlexOffset="2%" class="p-t-20">
+
+              <button
+                color="warn"
+                class="w-100"
+                mat-flat-button
+                (click)="removeCourse()"
+              >
+                <i class="fa fa-trash"></i>
+                Excluir Certificação
+              </button>
+
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      
+    </mat-card-content>
+  </mat-card>
+
+</form>
+

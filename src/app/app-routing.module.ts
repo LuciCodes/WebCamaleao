@@ -20,6 +20,7 @@ import { CandidateHabilitiesComponent } from './views/candidates/candidate-habil
 import { CandidatePreferencesComponent } from './views/candidates/candidate-preferences/candidate-preferences.component';
 import { CandidateEducationComponent } from './views/candidates/candidate-education/candidate-education.component';
 import { CandidateBasicInfoComponent } from './views/candidates/candidate-basic-info/candidate-basic-info.component';
+import { CandidateCertificationsComponent } from './views/candidates/candidate-certifications/candidate-certifications.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent,  },
@@ -42,6 +43,7 @@ const routes: Routes = [
         canActivate: [LoggedInGuard],
         children: [
             { path: '', component: CandidateBasicInfoComponent },
+            { path: 'certificacoes', component: CandidateCertificationsComponent },
             { path: 'perfil', component: CandidateProfileComponent },
             { path: 'escolaridade', component: CandidateEducationComponent },
             { path: 'experiencias', component: CandidateExperiencesComponent },

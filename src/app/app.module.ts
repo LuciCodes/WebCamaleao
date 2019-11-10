@@ -66,6 +66,8 @@ import { CandidateEducationComponent } from './views/candidates/candidate-educat
 import { CandidateBasicInfoComponent } from './views/candidates/candidate-basic-info/candidate-basic-info.component';
 import { CandidateSocialNetworksComponent } from './views/candidates/candidate-social-networks/candidate-social-networks.component';
 import { AreaNamePipe } from './pipes/area-name.pipe';
+import { SimpleLabelPipe } from './pipes/simple-label.pipe';
+import { CandidateCertificationsComponent } from './views/candidates/candidate-certifications/candidate-certifications.component';
 
 @NgModule({
   declarations: [
@@ -91,7 +93,9 @@ import { AreaNamePipe } from './pipes/area-name.pipe';
     CandidateEducationComponent,
     CandidateBasicInfoComponent,
     CandidateSocialNetworksComponent,
-    AreaNamePipe
+    AreaNamePipe,
+    SimpleLabelPipe,
+    CandidateCertificationsComponent
   ],
   imports: [
     //AngularFireModule.initializeApp(environment.firebase),

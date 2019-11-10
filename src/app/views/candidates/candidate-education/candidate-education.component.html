@@ -1,1 +1,398 @@
-<p>candidate-education works!</p>
+
+<h1>Escolaridade</h1>
+
+<form [formGroup]="frmCandidateEducation">
+
+  <mat-card class="default-card">
+    <mat-card-content>
+
+      <div fxLayout="row">
+        <div fxFlex>
+
+          <mat-form-field>
+            <mat-label>
+              Qual é a sua última formação acadêmica?
+            </mat-label>
+            <mat-select formControlName="level">
+              <mat-option
+                [value]="level.value"
+                *ngFor="let level of educationalLevels"
+              >
+                {{ level.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        </div>
+      </div>
+      <mat-tab-group
+        mat-align-tabs="center"
+      >
+        <mat-tab label="Cursos Acadêmicos">
+
+          <p>
+            Adicione abaixo um ou mais cursos acadêmicos que você tenha realizado.<br>
+            Somente os campos <strong>Nome do Curso</strong> e <strong>Nível do Curso</strong> são obrigatórios.
+          </p>
+      
+          <div fxLayout="row">
+            <div fxFlex="50%">
+
+              <mat-form-field>
+                <mat-label>
+                  Nome do Curso
+                </mat-label>
+                <input
+                  matInput
+                  formControlName="newCourseName"
+                >
+              </mat-form-field>          
+
+            </div>
+            <div fxFlex="48%" fxFlexOffset="2%">
+
+              <mat-form-field>
+                <mat-label>
+                  Nível do Curso
+                </mat-label>
+                <mat-select formControlName="newCourseLevel">
+                  <mat-option
+                    *ngFor="let level of educationalLevels"
+                    [value]="level.value"
+                  >
+                    {{ level.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>          
+
+            </div>
+          </div>
+
+          <div fxLayout="row">          
+            <div fxFlex="50%">
+
+              <mat-form-field>
+                <mat-label>
+                  Nome da Instituição
+                </mat-label>
+                <input
+                  matInput
+                  formControlName="newCourseInstitution"
+                >
+              </mat-form-field>          
+
+            </div>
+            <div fxFlex="48%" fxFlexOffset="2%">
+
+              <mat-form-field>
+                <mat-label>
+                  Área do Curso
+                </mat-label>
+                <mat-select formControlName="newCourseArea">
+                  <mat-option
+                    *ngFor="let area of businessAreas"
+                    [value]="area.value"
+                  >
+                    {{ area.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>    
+
+            </div>
+          </div>
+
+          <div fxLayout="row">
+            <div fxFlex="25%">
+
+              <mat-form-field>
+                <mat-label>
+                  Data de Início
+                </mat-label>
+                <input
+                  matInput
+                  formControlName="newCourseStartDate"
+                >
+              </mat-form-field>
+
+            </div>
+            <div fxFlex="23%" fxFlexOffset="2%">
+
+              <mat-form-field>
+                <mat-label>
+                  Data de Conclusão/Fim
+                </mat-label>
+                <input
+                  matInput
+                  formControlName="newCourseEndDate"
+                >
+              </mat-form-field>    
+
+            </div>
+            <div fxFlex="48%" fxFlexOffset="2%">
+            
+              <mat-form-field>
+                <mat-label>
+                  Estado onde cursou
+                </mat-label>
+                <mat-select formControlName="newCourseState">
+                  <mat-option
+                    *ngFor="let state of states"
+                    [value]="state.value"
+                  >
+                    {{ state.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+            </div>
+          </div>
+          
+          <div fxLayout="row" class="m-t-30">
+            <div fxFlex="33%" fxFlexOffset="33%">
+              
+              <button
+                color="accent"
+                class="w-100"
+                mat-flat-button
+                [disabled]="!newCourseFormValid"
+                (click)="addCourse($event)"
+              >
+                Adicionar Curso
+              </button>
+              
+            </div>  
+          </div>  
+
+          <div fxLayout="row" class="m-t-10" *ngIf="courses && courses.length > 0">
+            <div fxFlex="100%">
+
+              <div fxLayout="row">
+                <div fxFlex="100%">
+
+                  <h3>Cursos Cadastrados:</h3>
+
+                </div>
+              </div>
+
+              <div
+                fxLayout="row"
+                *ngFor="let course of courses"
+              >
+                <div fxFlex="80%">
+                  
+                  <mat-card class="default-card">
+                    <mat-card-content>
+
+                      <h2>{{ course.name }} {{ course.state ? (' / ' + course.state) : ('') }}</h2>
+                      
+                      <h3 *ngIf="course.institution">{{ course.institution }}</h3>
+
+                      <div fxLayout="row">
+                        <div fxFlex *ngIf="course.startDate || course.endDate || course.duration">
+                          
+                          <strong>Período:</strong>
+                          {{ course.startDate ? 'de ' + course.startDate : ''    }}
+                          {{ course.endDate ? ' até ' + course.endDate : ''  }}
+                          {{ course.duration ? ' (' + course.duration + ')' : '' }} 
+                          
+                        </div>
+                        <div fxFlex *ngIf="course.area">
+                          
+                          <strong>Área:</strong>
+                          {{ course.area | areaName }}
+
+                        </div>
+                      </div>
+                      
+                    </mat-card-content>
+                  </mat-card>
+      
+                </div>
+                <div fxFlex="18%" fxFlexOffset="2%" class="p-t-20">
+
+                  <button
+                    color="warn"
+                    class="w-100"
+                    mat-flat-button
+                    (click)="removeCourse()"
+                  >
+                    <i class="fa fa-trash"></i>
+                    Excluir Curso
+                  </button>
+
+                </div>
+              </div>
+              
+            </div>
+          </div>
+  
+        </mat-tab>
+        <mat-tab label="Certificações">
+
+          <div fxLayout="row" class="m-t-30">
+            <div fxFlex>
+    
+              <p>
+                Adicione abaixo uma ou mais certificações que você tenha tirado.<br>
+                Somente o campo <strong>Nome</strong> é obrigatório.
+              </p>
+          
+              <div fxLayout="row">
+                <div fxFlex="70%">
+    
+                  <mat-form-field>
+                    <mat-label>
+                      Nome da Certificação
+                    </mat-label>
+                    <input
+                      matInput
+                      formControlName="newCertificationName"
+                    >
+                  </mat-form-field>          
+    
+                </div>
+                <div fxFlex="28%" fxFlexOffset="2%">
+    
+                  <mat-form-field>
+                    <mat-label>
+                      Ano
+                    </mat-label>
+                    <mat-select formControlName="newCertificationYear">
+                      <mat-option
+                        *ngFor="let year of years"
+                        [value]="year"
+                      >
+                        {{ year }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>          
+    
+                </div>
+              </div>
+    
+              <div fxLayout="row">          
+                <div fxFlex="50%">
+    
+                  <mat-form-field>
+                    <mat-label>
+                      Nome da Instituição
+                    </mat-label>
+                    <input
+                      matInput
+                      formControlName="newCertificationInstitution"
+                    >
+                  </mat-form-field>          
+    
+                </div>
+                <div fxFlex="48%" fxFlexOffset="2%">
+                
+                  <mat-form-field>
+                    <mat-label>
+                      Descritivo
+                    </mat-label>
+                    <input
+                      matInput
+                      formControlName="newCertificationDescription"
+                    >
+                  </mat-form-field>
+    
+                </div>
+              </div>
+              
+              <div fxLayout="row" class="m-t-30">
+                <div fxFlex="33%" fxFlexOffset="33%">
+                  
+                  <button
+                    color="accent"
+                    class="w-100"
+                    mat-flat-button
+                    [disabled]="!newCertificationFormValid"
+                    (click)="addCertification($event)"
+                  >
+                    Adicionar Certificação
+                  </button>
+                  
+                </div>  
+              </div>  
+              
+            </div>  
+          </div>  
+    
+          <div fxLayout="row" class="m-t-10" *ngIf="certifications && certifications.length > 0">
+            <div fxFlex="100%">
+    
+              <div fxLayout="row">
+                <div fxFlex="100%">
+    
+                  <h3>Certificações Cadastradas:</h3>
+    
+                </div>
+              </div>
+    
+              <div
+                fxLayout="row"
+                *ngFor="let certification of certifications"
+              >
+                <div fxFlex="80%">
+                  
+                  <mat-card class="default-card">
+                    <mat-card-content>
+    
+                      <h2>{{ certification.name }} {{ certification.year ? (' - ' + certification.year) : ('') }}</h2>
+                      
+                      <h3 *ngIf="certification.institution">{{ certification.institution }}</h3>
+    
+                      <div fxLayout="row" *ngIf="certification.description">
+                        <div fxFlex>
+                          
+                          {{ certification.description }}
+    
+                        </div>
+                      </div>
+                      
+                    </mat-card-content>
+                  </mat-card>
+      
+                </div>
+                <div fxFlex="18%" fxFlexOffset="2%" class="p-t-20">
+    
+                  <button
+                    color="warn"
+                    class="w-100"
+                    mat-flat-button
+                    (click)="removeCourse()"
+                  >
+                    <i class="fa fa-trash"></i>
+                    Excluir Certificação
+                  </button>
+    
+                </div>
+              </div>
+              
+            </div>
+          </div>
+
+        </mat-tab>
+      </mat-tab-group>
+      
+    </mat-card-content>
+  </mat-card>
+  
+  <div fxLayout="row" class="m-t-30">
+    <div fxFlex="33%" fxFlexOffset="33%">
+      
+      <button
+        color="accent"
+        class="w-100"
+        mat-flat-button
+        [disabled]="!frmCandidateEducation.valid"
+        (click)="save($event)"
+      >
+        Salvar Escolaridade
+      </button>
+      
+    </div>  
+  </div>  
+  
+</form>
+

@@ -1,6 +1,8 @@
-import { CandidateCertifications } from './candidateCertifications';
+
+import { CandidateEducation } from './candidateEducation';
 import { CandidateHabilities } from './candidateHabilities';
 import { CandidatePreferences } from './candidatePreferences';
+import { CandidateProfile } from './candidateProfile';
 
 /*
 
@@ -40,9 +42,10 @@ export class Candidate {
   signUpState: string;
   state: string;
 
-  certifications: CandidateCertifications;
-  habilities: CandidateHabilities;
-  preferences: CandidatePreferences;
+  education: CandidateEducation = new CandidateEducation();
+  habilities: CandidateHabilities = new CandidateHabilities();
+  preferences: CandidatePreferences = new CandidatePreferences();
+  profile: CandidateProfile = new CandidateProfile();
 
   constructor(baseObj?: any) {
 

@@ -63,9 +63,9 @@ import { CandidatePreferencesComponent } from './views/candidates/candidate-pref
 import { HomeCandidateComponent } from './views/home/home-candidate/home-candidate.component';
 import { HomeCompanyComponent } from './views/home/home-company/home-company.component';
 import { CandidateEducationComponent } from './views/candidates/candidate-education/candidate-education.component';
-import { FormCandidateBasicInfoComponent } from './views/app-common/form-candidate-basic-info/form-candidate-basic-info.component';
-import { FormCandidateProfileComponent } from './views/app-common/form-candidate-profile/form-candidate-profile.component';
 import { CandidateBasicInfoComponent } from './views/candidates/candidate-basic-info/candidate-basic-info.component';
+import { CandidateSocialNetworksComponent } from './views/candidates/candidate-social-networks/candidate-social-networks.component';
+import { AreaNamePipe } from './pipes/area-name.pipe';
 
 @NgModule({
   declarations: [
@@ -89,9 +89,9 @@ import { CandidateBasicInfoComponent } from './views/candidates/candidate-basic-
     HomeCandidateComponent, 
     HomeCompanyComponent,
     CandidateEducationComponent,
-    FormCandidateBasicInfoComponent,
-    FormCandidateProfileComponent,
-    CandidateBasicInfoComponent
+    CandidateBasicInfoComponent,
+    CandidateSocialNetworksComponent,
+    AreaNamePipe
   ],
   imports: [
     //AngularFireModule.initializeApp(environment.firebase),

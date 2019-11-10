@@ -1,4 +1,125 @@
 
 <h1>Perfil</h1>
 
-<app-form-candidate-profile></app-form-candidate-profile>
+<form [formGroup]="frmCandidateProfile">
+
+  <mat-card class="default-card">
+    <mat-card-content>
+
+      <div fxLayout="row">
+        <div fxFlex>
+
+          <mat-form-field>
+            <mat-label>
+              Qual é a sua auto-identificação de raça-etnia?
+            </mat-label>
+            <mat-select formControlName="etnicity">
+              <mat-option
+                [value]="etnicity.value"
+                *ngFor="let etnicity of etnicities"
+              >
+                {{ etnicity.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        </div>
+      </div>
+      
+      <div fxLayout="row">
+        <div fxFlex>
+
+          <mat-form-field>
+            <mat-label>
+              Em relação ao seu gênero, qual é aquele que você se identifica?
+            </mat-label>
+            <mat-select formControlName="gender">
+              <mat-option
+                [value]="gender.value"
+                *ngFor="let gender of genders"
+              >
+                {{ gender.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        </div>
+      </div>
+
+      <div fxLayout="row">
+        <div fxFlex>
+
+          <mat-form-field>
+            <mat-label>
+              Qual é sua orientação afetiva-sexual?
+            </mat-label>
+            <mat-select formControlName="sex">
+              <mat-option
+                [value]="sex.value"
+                *ngFor="let sex of sexes"
+              >
+                {{ sex.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        </div>
+      </div>
+
+      
+      <div fxLayout="row">
+        <div fxFlex>
+
+          <mat-radio-group
+            aria-label="Pessoa com deficiência?"
+            formControlName="pcd"
+          >
+            <mat-label>
+              Você é uma pessoa com deficiência?
+            </mat-label>
+            <br>
+            <mat-radio-button value="true">Sim</mat-radio-button>
+            &nbsp;&nbsp;
+            <mat-radio-button value="false">Não</mat-radio-button>
+          </mat-radio-group>
+
+        </div>
+      </div>
+      
+      <div fxLayout="row" *ngIf="flagIsPcd">
+        <div fxFlex>
+
+          <mat-form-field>
+            <mat-label>
+              Necessita quais recursos especiais?
+            </mat-label>
+            <input
+              matInput
+              formControlName="pcdNote"
+            >
+          </mat-form-field>
+
+        </div>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+  
+  <div fxLayout="row" class="m-t-30">
+    <div fxFlex="33%" fxFlexOffset="33%">
+      
+      <button
+        color="accent"
+        class="w-100"
+        mat-flat-button
+        [disabled]="!frmCandidateProfile.valid"
+        (click)="save($event)"
+      >
+        Salvar Dados
+      </button>
+      
+    </div>  
+  </div>
+
+</form>
+

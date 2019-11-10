@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AppConstants } from 'src/app/etc/appConstants';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-candidate-profile',
@@ -7,9 +9,44 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CandidateProfileComponent implements OnInit {
 
-  constructor() { }
+  public frmCandidateProfile: FormGroup;
 
-  ngOnInit() {
+  get flagIsPcd(): boolean {
+    
+    return (this.frmCandidateProfile &&
+            this.frmCandidateProfile.controls.pcd &&
+            this.frmCandidateProfile.controls.pcd.value == 'true');
   }
 
+  get etnicities(): Array<any> {
+
+    return AppConstants.ethnicities;
+  }
+
+  get genders(): Array<any> {
+
+    return AppConstants.genders;
+  }
+
+  get sexes(): Array<any> {
+
+    return AppConstants.genders;
+  }
+
+  constructor(private fb: FormBuilder) {}
+
+  ngOnInit() {
+
+    this.frmCandidateProfile = this.fb.group({
+      gender: ['', Validators.required],
+      sex: ['', Validators.required],
+      etnicity: ['', Validators.required],
+      pcd: ['false'],
+      pcdNote: [''],
+    });
+  }
+
+  save(evtObj) {
+
+  }
 }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AppConstants } from 'src/app/etc/appConstants';
 
 @Component({
   selector: 'app-candidate-preferences',
@@ -7,9 +9,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CandidatePreferencesComponent implements OnInit {
 
-  constructor() { }
+  public frmCandidatePreferences: FormGroup;
 
-  ngOnInit() {
+  public get educationalLevels(): Array<any> {
+
+    return AppConstants.educationalLevels;
   }
 
+  constructor(private fb: FormBuilder) {}
+
+  ngOnInit() {
+
+    this.frmCandidatePreferences = this.fb.group({
+
+      level: ['', Validators.required]
+    });
+  }
+
+  save(evtObj) {
+
+  }
 }

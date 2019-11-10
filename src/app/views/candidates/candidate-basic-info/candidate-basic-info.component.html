@@ -1,4 +1,145 @@
 
 <h1>Dados Básicos</h1>
+<form [formGroup]="frmCandidateBasicInfo">
 
-<app-form-candidate-basic-info></app-form-candidate-basic-info>
+    <mat-card class="default-card">
+      <mat-card-content>
+        
+        <div fxLayout="row">
+          <div fxFlex="70%">
+          
+            <mat-form-field>
+              <mat-label>
+                Qual seu nome?
+              </mat-label>
+              <input
+                matInput
+                placeholder="Seu Nome"
+                formControlName="name"
+                required
+              >
+            </mat-form-field>
+  
+          </div>
+          <div fxFlex="30%" class="txt-center">
+  
+            <mat-checkbox>Esse é meu nome social</mat-checkbox>
+            
+          </div>
+        </div>
+  
+        <div fxLayout="row">
+          <div fxFlex="40%">
+  
+            <mat-form-field>
+              <mat-label>
+                Qual seu RG?
+              </mat-label>
+              <input
+                matInput
+                formControlName="docRg"
+                required
+              >
+            </mat-form-field>
+            
+          </div>
+          <div fxFlex="25%" fxFlexOffset="5%">
+        
+            <mat-form-field>
+              <mat-label>
+                Quando você nasceu?
+              </mat-label>
+              <input
+                matInput
+                placeholder="dd/mm/aaaa"
+                [textMask]="ptBrDateMask"
+                formControlName="birth"
+                required
+              >
+            </mat-form-field>
+  
+          </div> 
+        </div>
+  
+        <div fxLayout="row">
+          <div fxFlex="40%">
+  
+            <mat-form-field>
+              <mat-label>
+                Onde você mora?
+              </mat-label>
+                
+              <mat-select formControlName="state">
+                <mat-option
+                  [value]="state.abrev"
+                  *ngFor="let state of states"
+                >
+                  {{ state.name }}
+                </mat-option>
+              </mat-select>
+              
+              <mat-hint>Estado</mat-hint>
+  
+            </mat-form-field>
+  
+          </div>
+          <div fxFlex="55%" fxFlexOffset="5%">
+  
+            <mat-form-field *ngIf="hasState">
+              <mat-label>
+                &nbsp;
+              </mat-label>
+                
+              <mat-select formControlName="currentCity">
+                <mat-option
+                  [value]="city"
+                  *ngFor="let city of cities"
+                >
+                  {{ city }}
+                </mat-option>
+              </mat-select>
+              
+              <mat-hint>Cidade</mat-hint>
+  
+            </mat-form-field>
+            
+          </div>
+        </div>
+  
+        <div fxLayout="row">
+          <div fxFlex="40%">
+  
+            <mat-form-field>
+              <mat-label>
+                Qual seu Bairro?
+              </mat-label>
+              <input
+                matInput
+                formControlName="addrDistrict"
+                required
+              >
+            </mat-form-field>
+  
+          </div> 
+        </div>
+        
+      </mat-card-content>
+    </mat-card>
+
+    <div fxLayout="row" class="m-t-30">
+      <div fxFlex="33%" fxFlexOffset="33%">
+        
+        <button
+          color="accent"
+          class="w-100"
+          mat-flat-button
+          [disabled]="!frmCandidateBasicInfo.valid"
+          (click)="save($event)"
+        >
+          Salvar Dados
+        </button>
+        
+      </div>  
+    </div>  
+    
+  </form>

@@ -34,7 +34,7 @@
                     mat-flat-button
                     (click)="selectedCategory = category"
                   >
-                    {{ category }}
+                    {{ category }} ({{ categoryCounts[category] }})
                   </button>
 
                 </div>
@@ -45,19 +45,35 @@
 
               <h3>Habilidades</h3>
 
-              <div fxLayout="row">
+              <div
+                fxLayout="row"
+                *ngIf="flagLoadingData"
+                class="loader-panel"
+                style="padding-left: 42%;"
+              >
+
+                <fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon>
+                
+              </div>
+
+              <div
+                fxLayout="row"
+                *ngIf="!flagLoadingData"
+              >
 
                 <button
                   mat-flat-button
                   class="m-b-10 m-r-10"
                   [color]="skill.uiSelected ? 'accent' : 'primary'"
-                  (click)="skill.uiSelected = !skill.uiSelected"
+                  (click)="toggleSkill(skill)"
                   *ngFor="let skill of currentSkills"
                 >
                   {{ skill.name }}
                 </button>
 
               </div>
+              
+
 
               <!--div fxLayout="row">
                 <div

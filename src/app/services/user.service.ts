@@ -8,6 +8,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Candidate } from '../models/candidate';
 import * as firebase from 'firebase';
 import { CandidateProfile } from '../models/candidateProfile';
+import { CandidateHabilities } from '../models/candidateHabilities';
 
 @Injectable()
 export class UserService {
@@ -15,6 +16,7 @@ export class UserService {
   user: User;
   candidate: Candidate;
   candidateProfile: CandidateProfile;
+  candidateHabilities: CandidateHabilities;
 
   user$: Observable<User | null>;
 
@@ -106,6 +108,51 @@ export class UserService {
     }
   }
 
+  async loadUserCandidateHabilities() {
+    
+    if (this.user) {
+
+      if (!this.candidate) {
+
+        await this.loadUserCandidate();
+      }
+
+      let candidateQuery = await this.fireDb.collection('candidateHabilities').ref.where('candidateId', "==", this.candidate.id);
+
+      let candidateResult = await candidateQuery.get();
+
+      if (candidateResult.empty) {
+
+        let newCandidateHabilitiesRef = await this.fireDb.collection('candidateHabilities').add({ 
+          userId: this.user.uid,
+          candidateId: this.candidate.id
+        });
+
+        this.candidateHabilities = new CandidateHabilities({
+          userId: this.user.uid,
+          candidateId: this.candidate.id,
+          id: newCandidateHabilitiesRef.id,
+          list: ''
+        });
+
+        console.log('Created new user candidateHabilities:', this.candidateHabilities);
+
+      } else {
+
+        this.candidateHabilities = (candidateResult.docs[0].data() as CandidateHabilities);
+          
+        this.candidateHabilities.id = candidateResult.docs[0].id;
+        
+        if (!this.candidateHabilities.list) {
+
+          this.candidateHabilities.list = '';
+        }
+
+        console.log('Loaded user candidateHabilities:', this.candidateHabilities);
+      }
+    }
+  }
+
   async saveUserCandidate(candidate?: Candidate): Promise<any> {
 
     candidate.id = this.candidate.id;
@@ -135,10 +182,9 @@ export class UserService {
   
   async saveUserCandidateProfile(candidateProfile?: CandidateProfile): Promise<any> {
 
-    if (!this.candidate) {
+    if (!this.candidate) { await this.loadUserCandidate(); }
 
-      await this.loadUserCandidate();
-    }
+    if (!this.candidateProfile) { await this.loadUserCandidateProfile(); }
 
     candidateProfile.id = this.candidateProfile.id;
     candidateProfile.userId = this.user.uid;
@@ -156,6 +202,38 @@ export class UserService {
                                       .set(candidateProfile, { merge: true });
                                         
       this.candidateProfile = candidateProfile;
+    }
+    catch(err) {
+
+      saveResult.msg = 'Erro salvando dados... ' + (err || '');
+      saveResult.success = false;
+    }
+
+    return saveResult;
+  }
+  
+  async saveUserCandidateHabilities(candidateHabilities?: CandidateHabilities): Promise<any> {
+
+    if (!this.candidate) { await this.loadUserCandidate(); }
+
+    if (!this.candidateHabilities) { await this.loadUserCandidateHabilities(); }
+
+    candidateHabilities.id = this.candidateHabilities.id;
+    candidateHabilities.userId = this.user.uid;
+    candidateHabilities.candidateId = this.candidate.id;
+
+    candidateHabilities.updated = firebase.firestore.Timestamp.fromDate(new Date());
+    candidateHabilities.updatedUserId = this.user.uid;
+
+    let saveResult = { msg: 'Dados salvados com sucesso!', success: true };
+
+    try 
+    {
+      await this.fireDb.collection('candidateHabilities')
+                                      .doc(candidateHabilities.id)
+                                      .set(candidateHabilities, { merge: true });
+                                        
+      this.candidateHabilities = candidateHabilities;
     }
     catch(err) {
 

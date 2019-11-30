@@ -23,7 +23,7 @@
           </div>
           <div fxFlex="30%" class="txt-center">
   
-            <mat-checkbox>Esse é meu nome social</mat-checkbox>
+            <mat-checkbox formControlName="isSocialName">Esse é meu nome social</mat-checkbox>
             
           </div>
         </div>
@@ -69,7 +69,7 @@
                 Onde você mora?
               </mat-label>
                 
-              <mat-select formControlName="state">
+              <mat-select formControlName="addrState">
                 <mat-option
                   [value]="state.abrev"
                   *ngFor="let state of states"
@@ -90,7 +90,7 @@
                 &nbsp;
               </mat-label>
                 
-              <mat-select formControlName="currentCity">
+              <mat-select formControlName="addrCity">
                 <mat-option
                   [value]="city"
                   *ngFor="let city of cities"
@@ -133,9 +133,9 @@
           color="accent"
           class="w-100"
           mat-flat-button
-          [disabled]="!frmCandidateBasicInfo.valid"
+          [disabled]="!isValid"
           (click)="save($event)"
-        >
+        > 
           Salvar Dados
         </button>
         

@@ -30,6 +30,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatChipsModule } from '@angular/material/chips'; 
 import { MatListModule } from '@angular/material/list';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HomeComponent } from './views/home/home.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -138,6 +139,7 @@ import { CandidateCertificationsComponent } from './views/candidates/candidate-c
     MatTabsModule,
     MatSidenavModule,
     MatListModule,
+    MatSnackBarModule,
     MatInputModule,
     MatSelectModule,
     MatRadioModule,

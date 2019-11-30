@@ -72,10 +72,10 @@
 
           <mat-radio-group
             aria-label="Pessoa com deficiência?"
-            formControlName="pcd"
+            formControlName="pne"
           >
             <mat-label>
-              Você é uma pessoa com deficiência?
+              Você é uma pessoa portadora de necesidades especiais?
             </mat-label>
             <br>
             <mat-radio-button value="true">Sim</mat-radio-button>
@@ -95,7 +95,7 @@
             </mat-label>
             <input
               matInput
-              formControlName="pcdNote"
+              formControlName="pneNote"
             >
           </mat-form-field>
 
@@ -112,8 +112,8 @@
         color="accent"
         class="w-100"
         mat-flat-button
-        [disabled]="!frmCandidateProfile.valid"
-        (click)="save($event)"
+        [disabled]="!isValid"
+        (click)="save($event)" 
       >
         Salvar Dados
       </button>

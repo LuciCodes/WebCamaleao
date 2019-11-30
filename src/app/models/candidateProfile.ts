@@ -1,10 +1,29 @@
 
 export class CandidateProfile {
   
-  linkToLinkedIn: string;
-  linkToPortfolio: string;
-  linkToGithub: string;
-  linkToStackOverflow: string;
-  linkToDribbble: string;
-  linkToBehance: string;
+  id: string;
+  userId: string;
+  candidateId: string;
+
+  gender: string;
+  sex: string;
+  etnicity: string;
+  pne: boolean = false;
+  pneNote: string;
+
+  updated: any;
+  updatedUserId: string;
+
+  constructor(baseObj?: any)
+  {
+    if (baseObj) {
+
+      Object.assign(this, baseObj);
+    }
+  }
+
+  public toDocumentObject(): any {
+
+    return JSON.parse(JSON.stringify(this));
+  }
 }

@@ -54,10 +54,11 @@ export class AppConstants {
   ];
 
   static genders= [
-    { value: 'BRANCA', name:'Branca' },
-    { value: 'INDIGENA', name:'Indígena' },
-    { value: 'PRETA', name:'Preta' },
-    { value: 'PARDA', name:'Parda' },
+    { value: 'MULHER', name: 'Mulher' },
+    { value: 'HOMEM', name: 'Homem' },
+    { value: 'NB', name: 'Não-binário' },
+    { value: 'QUEER', name: 'Queer' },
+    { value: 'OUTRA', name: 'Outra' },
     { value: 'SEM_IDENTIFICACAO', name:'Não desejo  me identificar' }
   ];
 

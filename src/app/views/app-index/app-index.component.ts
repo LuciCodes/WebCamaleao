@@ -30,6 +30,16 @@ export class AppIndexComponent {
 
     return this.userService.userIsCandidate;
   }
+
+  get userIsCompany(): boolean {
+
+    return this.userService.userIsCompany;
+  }
+
+  get userIsAdmin(): boolean {
+
+    return this.userService.userIsAdmin;
+  }
   
   displayNameInitials: string;
 

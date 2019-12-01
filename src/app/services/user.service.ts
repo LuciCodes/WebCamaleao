@@ -11,6 +11,7 @@ import { CandidateProfile } from '../models/candidateProfile';
 import { CandidateHabilities } from '../models/candidateHabilities';
 import { CandidateEducation } from '../models/candidateEducation';
 import { WorkExperience } from '../models/workExperience';
+import { UserProfile } from '../models/userProfile';
 
 @Injectable()
 export class UserService {
@@ -25,13 +26,32 @@ export class UserService {
 
   user$: Observable<User | null>;
 
+  userProfiles: Array<UserProfile> = [];
+
   get hasUser(): boolean { return this.user != null; }
 
   get userIsCandidate(): boolean {
 
     // padronizando type em branco como CANDIDATE também
     // no cadastro, salvar o user depois com a propriedade type
-    return (this.hasUser && (!this.user['type'] || this.user['type'] == 'CANDIDATE'));
+    return (this.hasUser && (
+               this.userProfiles.length == 0
+            || this.userProfiles.findIndex(p => p.name == 'CANDIDATE') != -1
+            ));
+  }
+  
+  get userIsCompany(): boolean {
+
+    return (this.hasUser && (
+               this.userProfiles.findIndex(p => p.name == 'COMPANY') != -1
+            ));
+  }
+
+  get userIsAdmin(): boolean {
+
+    return (this.hasUser && (
+               this.userProfiles.findIndex(p => p.name == 'ADMIN') != -1
+            ));
   }
 
   constructor(private fireAuth: AngularFireAuth,
@@ -44,6 +64,8 @@ export class UserService {
       this.user = user;
 
       await this.loadUserCandidate();
+
+      await this.loadUserProfiles();
     });
   }
 
@@ -74,6 +96,31 @@ export class UserService {
     }
   }
   
+  async loadUserProfiles() {
+    
+    if (this.user) {
+
+      let profilesQuery = await this.fireDb.collection('userProfiles').ref.where('userId', "==", this.user.uid);
+
+      let profilesResult = await profilesQuery.get();
+
+      this.userProfiles = [];
+
+      if (!profilesResult.empty) {
+
+        for (let p = 0; p < profilesResult.docs.length; p++) {
+
+          this.userProfiles.push(new UserProfile({
+            id: profilesResult.docs[p].id,
+            ... profilesResult.docs[p].data()
+          }));
+        }
+
+        console.log('Loaded user profiles:', this.userProfiles);
+      }
+    }
+  }
+
   async loadUserCandidateProfile() {
     
     if (this.user) {

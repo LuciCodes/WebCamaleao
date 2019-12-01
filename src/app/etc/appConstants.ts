@@ -9,6 +9,7 @@ export class AppConstants {
   static cepMask = { mask: [/\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/] };
 
   static educationalLevels= [
+    { value: 'INDEFINIDA', name:'Indefinida' },
     { value: 'ENSINO_FUNDAMENTAL_INTERROMPIDO', name:'Ensino Fundamental: Interrompido' },
     { value: 'ENSINO_FUNDAMENTAL_CURSANDO', name:'Ensino Fundamental: Cursando' },
     { value: 'ENSINO_FUNDAMENTAL_COMPLETO', name:'Ensino Fundamental: Completo' },
@@ -35,6 +36,17 @@ export class AppConstants {
     { value: 'DOUTORADO_CURSANDO', name:'Pós-Graduação | Doutorado: Cursando' }
   ];
 
+  static courseLevels= [
+    { value: 'INDEPENDENTE', name:'Independente' },
+    { value: 'TECNICO', name:'Técnico' },
+    { value: 'PROFISSIONALIZANTE', name:'Profissionalizante' },
+    { value: 'ESPECIALIZANTE', name:'Especializante' },
+    { value: 'UNIVERSITARIO', name:'Universitário' },
+    { value: 'MESTRADO', name:'Mestrado' },
+    { value: 'DOUTORADO', name:'Doutorado' },
+    { value: 'POS_DOUTORADO', name:'Pós-Douturado' },
+    { value: 'OUTRO', name:'Outro' }
+  ];
   static sexes= [
     { value: 'ASSEXUAL', name:'Assexual' },
     { value: 'BISSEXUAL', name:'Bissexual' },

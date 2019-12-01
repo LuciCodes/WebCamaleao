@@ -9,6 +9,8 @@ import { Candidate } from '../models/candidate';
 import * as firebase from 'firebase';
 import { CandidateProfile } from '../models/candidateProfile';
 import { CandidateHabilities } from '../models/candidateHabilities';
+import { CandidateEducation } from '../models/candidateEducation';
+import { WorkExperience } from '../models/workExperience';
 
 @Injectable()
 export class UserService {
@@ -17,6 +19,9 @@ export class UserService {
   candidate: Candidate;
   candidateProfile: CandidateProfile;
   candidateHabilities: CandidateHabilities;
+  candidateEducation: CandidateEducation;
+
+  candidateWorkExperiences: Array<WorkExperience> = [];
 
   user$: Observable<User | null>;
 
@@ -60,8 +65,8 @@ export class UserService {
 
       } else {
 
-        this.candidate = (candidateResult.docs[0].data() as Candidate);
-          
+        this.candidate = (new Candidate(candidateResult.docs[0].data()));
+
         this.candidate.id = candidateResult.docs[0].id;
         
         console.log('Loaded user candidate:', this.candidate);
@@ -153,6 +158,81 @@ export class UserService {
     }
   }
 
+  async loadUserCandidateEducation() {
+    
+    if (this.user) {
+
+      if (!this.candidate) {
+
+        await this.loadUserCandidate();
+      }
+
+      let candidateQuery = await this.fireDb.collection('candidateEducation').ref.where('candidateId', "==", this.candidate.id);
+
+      let candidateResult = await candidateQuery.get();
+
+      if (candidateResult.empty) {
+
+        let newCandidateEducationRef = await this.fireDb.collection('candidateEducation').add({ 
+          userId: this.user.uid,
+          candidateId: this.candidate.id
+        });
+
+        this.candidateEducation = new CandidateEducation({
+          userId: this.user.uid,
+          candidateId: this.candidate.id,
+          id: newCandidateEducationRef.id
+        });
+
+        console.log('Created new user candidateEducation:', this.candidateEducation);
+
+      } else {
+
+        this.candidateEducation = (candidateResult.docs[0].data() as CandidateEducation);
+          
+        this.candidateEducation.id = candidateResult.docs[0].id;
+        
+        console.log('Loaded user candidateEducation:', this.candidateEducation);
+      }
+    }
+  }
+
+  async loadUsercandidateWorkExperiences() {
+    
+    if (this.user) {
+
+      if (!this.candidate) {
+
+        await this.loadUserCandidate();
+      }
+
+      let candidateQuery = await this.fireDb.collection('candidateWorkExperiences').ref.where('candidateId', "==", this.candidate.id);
+
+      let candidateResult = await candidateQuery.get();
+
+      if (candidateResult.empty) {
+
+        this.candidateWorkExperiences = [];
+
+      } else {
+
+        let experiences = [];
+
+        for (let c = 0; c < candidateResult.docs.length; c++) {
+
+          experiences.push(new WorkExperience( { 
+            id: candidateResult.docs[c].id ,
+            ...candidateResult.docs[c].data()
+          } ));
+        }
+        
+        this.candidateWorkExperiences = experiences;
+        
+        console.log('Loaded user candidateWorkExperiences:', experiences);
+      }
+    }
+  }
+
   async saveUserCandidate(candidate?: Candidate): Promise<any> {
 
     candidate.id = this.candidate.id;
@@ -234,6 +314,89 @@ export class UserService {
                                       .set(candidateHabilities, { merge: true });
                                         
       this.candidateHabilities = candidateHabilities;
+    }
+    catch(err) {
+
+      saveResult.msg = 'Erro salvando dados... ' + (err || '');
+      saveResult.success = false;
+    }
+
+    return saveResult;
+  }
+  
+  async saveUserCandidateEducation(candidateEducation?: CandidateEducation): Promise<any> {
+
+    if (!this.candidate) { await this.loadUserCandidate(); }
+
+    if (!this.candidateEducation) { await this.loadUserCandidateEducation(); }
+
+    candidateEducation.id = this.candidateEducation.id;
+    candidateEducation.userId = this.user.uid;
+    candidateEducation.candidateId = this.candidate.id;
+
+    candidateEducation.updated = firebase.firestore.Timestamp.fromDate(new Date());
+    candidateEducation.updatedUserId = this.user.uid;
+
+    let saveResult = { msg: 'Dados salvados com sucesso!', success: true };
+
+    try 
+    {
+      await this.fireDb.collection('candidateEducation')
+                                      .doc(candidateEducation.id)
+                                      .set(candidateEducation, { merge: true });
+                                        
+      this.candidateEducation = candidateEducation;
+    }
+    catch(err) {
+
+      saveResult.msg = 'Erro salvando dados... ' + (err || '');
+      saveResult.success = false;
+    }
+
+    return saveResult;
+  }
+  
+  async removeUsercandidateWorkExperience(workExperience?: WorkExperience): Promise<any> {
+
+    let expQuery = await this.fireDb.collection('candidateWorkExperiences').ref.where('candidateId', "==", this.candidate.id);
+
+    let expResult = await expQuery.get();
+
+    if (!expResult.empty) {
+
+      let existingExp = expResult.docs.find(d => d.id == workExperience.id);
+
+      if (existingExp) {
+
+        await this.fireDb.collection('candidateWorkExperiences').doc(existingExp.id).delete();
+      }
+    }
+  }
+
+  async saveUsercandidateWorkExperience(workExperience?: WorkExperience): Promise<any> {
+
+    if (!this.candidate) { await this.loadUserCandidate(); }
+
+    workExperience = new WorkExperience(workExperience);
+
+    workExperience.userId = this.user.uid;
+    workExperience.candidateId = this.candidate.id;
+
+    workExperience.updated = firebase.firestore.Timestamp.fromDate(new Date());
+    workExperience.updatedUserId = this.user.uid;
+
+    let saveResult = { msg: 'Dados salvados com sucesso!', success: true };
+
+    try 
+    {
+      let obj = workExperience.toDocumentObject();
+
+      let newExpRef = await this.fireDb.collection('candidateWorkExperiences').add(obj);
+
+      workExperience.id = newExpRef.id;
+
+      this.candidateWorkExperiences.push(workExperience);
+
     }
     catch(err) {
 

@@ -4,7 +4,22 @@
 <form [formGroup]="frmCandidateEducation">
 
   <mat-card class="default-card">
-    <mat-card-content>
+    <mat-card-content *ngIf="flagLoadingData">
+
+      <div
+        fxLayout="row"
+        class="loader-panel"
+        style="padding-left: 48%; padding-top: 2.6em"
+      >
+
+        <fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon>
+        
+      </div>
+
+    </mat-card-content>
+    <mat-card-content *ngIf="!flagLoadingData">
+
+      <h2>Nivel de Ensino</h2>
 
       <div fxLayout="row">
         <div fxFlex>
@@ -16,6 +31,7 @@
             <mat-select formControlName="level">
               <mat-option
                 [value]="level.value"
+                (blur)="save()"
                 *ngFor="let level of educationalLevels"
               >
                 {{ level.name }}
@@ -26,7 +42,7 @@
         </div>
       </div>
 
-      <h2>Cursos Acadêmicos</h2>
+      <h2>Cursos Acadêmicos <small>({{ cursosDescription }})</small></h2>
 
       <p>
         Adicione abaixo um ou mais cursos acadêmicos que você tenha realizado.<br>
@@ -55,7 +71,7 @@
             </mat-label>
             <mat-select formControlName="newCourseLevel">
               <mat-option
-                *ngFor="let level of educationalLevels"
+                *ngFor="let level of courseLevels"
                 [value]="level.value"
               >
                 {{ level.name }}
@@ -152,7 +168,7 @@
             color="accent"
             class="w-100"
             mat-flat-button
-            [disabled]="!newCourseFormValid"
+            [disabled]="!newCourseFormValid && !flagSavingData"
             (click)="addCourse($event)"
           >
             Adicionar Curso
@@ -212,7 +228,7 @@
                 color="warn"
                 class="w-100"
                 mat-flat-button
-                (click)="removeCourse()"
+                (click)="removeCourse(course)"
               >
                 <i class="fa fa-trash"></i>
                 Excluir Curso

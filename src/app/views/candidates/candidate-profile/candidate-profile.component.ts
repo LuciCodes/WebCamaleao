@@ -15,6 +15,7 @@ export class CandidateProfileComponent implements OnInit {
 
   public frmCandidateProfile: FormGroup;
 
+  private flagLoadingData = false;
   private flagSavingData = false;
 
   get isValid(): boolean {
@@ -57,7 +58,7 @@ export class CandidateProfileComponent implements OnInit {
     this.frmCandidateProfile = this.fb.group({
       gender: [obj.gender],
       sex: [obj.sex],
-      etnicity: [obj.ethnicity],
+      ethnicity: [obj.ethnicity],
       pne: [obj.pne],
       pneNote: [obj.pneNote],
     });
@@ -65,12 +66,16 @@ export class CandidateProfileComponent implements OnInit {
 
   async ngOnInit() {
 
+    this.flagLoadingData = true;
+
     if (!this.userService.candidateProfile) {
 
       await this.userService.loadUserCandidateProfile();
     }
 
     this.initForm(this.userService.candidateProfile);
+    
+    this.flagLoadingData = false;
   }
 
   async save() {

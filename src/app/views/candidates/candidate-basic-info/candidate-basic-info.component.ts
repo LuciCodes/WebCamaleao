@@ -15,6 +15,7 @@ export class CandidateBasicInfoComponent implements OnInit {
 
   public frmCandidateBasicInfo: FormGroup;
 
+  private flagLoadingData = false;
   private flagSavingData = false;
 
   get ptBrDateMask() { return AppConstants.ptBrDateMask; }
@@ -80,14 +81,20 @@ export class CandidateBasicInfoComponent implements OnInit {
 
   async ngOnInit() {
 
-    if (!this.userService.candidate)
+    this.flagLoadingData = true;
+
+    if (this.userService.user)
     {
-      await this.userService.loadUserCandidate();
+      if (!this.userService.candidate)
+      {
+  
+        await this.userService.loadUserCandidate();
+      }
+  
+      this.initForm(this.userService.candidate);
     }
-
-    let candidate = this.userService.candidate;
-
-    this.initForm(candidate);
+    
+    this.flagLoadingData = false;
   }
 
   async save() {

@@ -1,8 +1,9 @@
 
 export class Course {
 
+  id: string;
+
   name: string;
-  description: string;
   institution: string;
 
   level: string;
@@ -13,4 +14,24 @@ export class Course {
   duration: string;
   state: string;
   area: string;
+  
+  constructor(baseObj?: any)
+  {
+    if (baseObj) {
+
+      Object.assign(this, baseObj);
+    }
+
+    if (!this.id) {
+
+      this.id = new Date().getTime().toString();
+    }
+  }
+
+  public toDocumentObject(): any {
+
+    let result = JSON.parse(JSON.stringify(this));
+
+    return result;
+  }
 }

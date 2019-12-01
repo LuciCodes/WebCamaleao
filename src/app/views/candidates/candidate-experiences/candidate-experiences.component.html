@@ -1,10 +1,24 @@
 
 <h1>Experiências</h1>
 
-<form [formGroup]="frmCandidateExperience">
+<form [formGroup]="frmcandidateWorkExperiences">
 
   <mat-card class="default-card">
-    <mat-card-content>
+  
+    <mat-card-content *ngIf="flagLoadingData">
+
+        <div
+          fxLayout="row"
+          class="loader-panel"
+          style="padding-left: 48%; padding-top: 2.6em"
+        >
+  
+          <fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon>
+          
+        </div>
+  
+      </mat-card-content>
+      <mat-card-content *ngIf="!flagLoadingData">
 
       <p>
         Adicione abaixo suas experiências de trabalho.<br>
@@ -99,8 +113,8 @@
             color="accent"
             class="w-100"
             mat-flat-button
-            [disabled]="!newCourseFormValid"
-            (click)="addCourse($event)"
+            [disabled]="!isValid || flagSavingData"
+            (click)="addWorkExperience()"
           >
             Adicionar Experiência
           </button>
@@ -108,7 +122,7 @@
         </div>  
       </div>  
 
-      <div fxLayout="row" class="m-t-10" *ngIf="experieces && experieces.length > 0">
+      <div fxLayout="row" class="m-t-10" *ngIf="experiences && experiences.length > 0">
         <div fxFlex="100%">
 
           <div fxLayout="row">
@@ -121,23 +135,23 @@
 
           <div
             fxLayout="row"
-            *ngFor="let experiece of experieces"
+            *ngFor="let experience of experiences"
           >
             <div fxFlex="80%">
               
               <mat-card class="default-card">
                 <mat-card-content>
 
-                  <h2>{{ experiece.roleName }}</h2>
+                  <h2>{{ experience.roleName }}</h2>
                   
-                  <h3>{{ experiece.companyName }}</h3>
+                  <h3>{{ experience.companyName }}</h3>
 
                   <div fxLayout="row">
                     <div fxFlex>
                       
                       <strong>Período:</strong>
-                      {{ experiece.startDate ? 'de ' + experiece.startDate : ''    }}
-                      {{ experiece.endDate ? ' até ' + experiece.endDate : ''  }}
+                      {{ experience.startDate ? 'de ' + experience.startDate : ''    }}
+                      {{ experience.endDate ? ' até ' + experience.endDate : ''  }}
 
                     </div>
                   </div>
@@ -145,7 +159,7 @@
                   <div fxLayout="row">
                     <div fxFlex>
                       
-                      {{ experiece.description }}
+                      {{ experience.description }}
 
                     </div>
                   </div>
@@ -160,7 +174,7 @@
                 color="warn"
                 class="w-100"
                 mat-flat-button
-                (click)="removeCourse()"
+                (click)="removeWorkExperience(experience)"
               >
                 <i class="fa fa-trash"></i>
                 Excluir Experiência

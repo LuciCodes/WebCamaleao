@@ -4,7 +4,20 @@
 <form [formGroup]="frmCandidateProfile">
 
   <mat-card class="default-card">
-    <mat-card-content>
+    <mat-card-content *ngIf="flagLoadingData">
+
+      <div
+        fxLayout="row"
+        class="loader-panel"
+        style="padding-left: 48%; padding-top: 2.6em"
+      >
+
+        <fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon>
+        
+      </div>
+
+    </mat-card-content>
+    <mat-card-content *ngIf="!flagLoadingData">
 
       <div fxLayout="row">
         <div fxFlex>
@@ -13,12 +26,12 @@
             <mat-label>
               Qual é a sua auto-identificação de raça-etnia?
             </mat-label>
-            <mat-select formControlName="etnicity">
+            <mat-select formControlName="ethnicity">
               <mat-option
-                [value]="etnicity.value"
-                *ngFor="let etnicity of etnicities"
+                [value]="eth.value"
+                *ngFor="let eth of etnicities"
               >
-                {{ etnicity.name }}
+                {{ eth.name }}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -105,7 +118,7 @@
     </mat-card-content>
   </mat-card>
   
-  <div fxLayout="row" class="m-t-30">
+  <div fxLayout="row" class="m-t-30" *ngIf="!flagLoadingData">
     <div fxFlex="33%" fxFlexOffset="33%">
       
       <button

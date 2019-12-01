@@ -4,7 +4,21 @@
 <form [formGroup]="frmCandidateCertification">
 
   <mat-card class="default-card">
-    <mat-card-content>
+      <mat-card-content *ngIf="flagLoadingData">
+  
+        <div
+          fxLayout="row"
+          class="loader-panel"
+          style="padding-left: 48%; padding-top: 2.6em"
+        >
+  
+          <fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon>
+          
+        </div>
+  
+      </mat-card-content>
+      <mat-card-content *ngIf="!flagLoadingData">
+        
 
       <div fxLayout="row" class="m-t-30">
         <div fxFlex>
@@ -84,7 +98,7 @@
                 class="w-100"
                 mat-flat-button
                 [disabled]="!newCertificationFormValid"
-                (click)="addCertification($event)"
+                (click)="addCertification()"
               >
                 Adicionar Certificação
               </button>
@@ -137,7 +151,7 @@
                 color="warn"
                 class="w-100"
                 mat-flat-button
-                (click)="removeCourse()"
+                (click)="removeCertification(certification)"
               >
                 <i class="fa fa-trash"></i>
                 Excluir Certificação

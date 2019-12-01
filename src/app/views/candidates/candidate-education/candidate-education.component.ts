@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AppConstants } from 'src/app/etc/appConstants';
 import { Skill } from 'src/app/models/skill';
+import { UserService } from 'src/app/services/user.service';
+import { MatSnackBar } from '@angular/material';
+import { CandidateEducation } from 'src/app/models/candidateEducation';
+import { Course } from 'src/app/models/course';
+import { Certification } from 'src/app/models/certification';
 
 @Component({
   selector: 'app-candidate-education',
@@ -10,6 +15,9 @@ import { Skill } from 'src/app/models/skill';
 })
 export class CandidateEducationComponent implements OnInit {
 
+  private flagLoadingData = false;
+  private flagSavingData = false;
+
   public frmCandidateEducation: FormGroup;
 
   public get educationalLevels(): Array<any> {
@@ -17,6 +25,11 @@ export class CandidateEducationComponent implements OnInit {
     return AppConstants.educationalLevels;
   }
   
+  public get courseLevels(): Array<any> {
+
+    return AppConstants.courseLevels;
+  }
+
   public get businessAreas(): Array<any> {
 
     return AppConstants.businessAreas;
@@ -29,8 +42,8 @@ export class CandidateEducationComponent implements OnInit {
   
   public get newCourseFormValid(): boolean {
 
-    return ( this.frmCandidateEducation.controls.newCourseName.valid
-          && this.frmCandidateEducation.controls.newCourseLevel.valid
+    return ( this.frmCandidateEducation
+          && this.frmCandidateEducation.valid
            );
   }
   
@@ -39,8 +52,11 @@ export class CandidateEducationComponent implements OnInit {
     return (this.frmCandidateEducation.controls.newCertificationName.valid);
   }
 
-  public get courses(): Array<any> {
+  public get courses(): Array<Course> {
 
+    return this.userService.candidateEducation.courses;
+
+    /*
     return [
       {
         name: 'Ensino Médio',
@@ -63,18 +79,21 @@ export class CandidateEducationComponent implements OnInit {
         area: 'TECNOLOGIA_REDE_DE_COMPUTADORES'
       }
     ]
+    */
   }
 
-  public get certifications(): Array<any> {
+  public get cursosDescription(): string {
 
-    return [
-      {
-        name: 'AWS Certified Cloud Practicioner',
-        institution: 'Amazon',
-        year: '2019',
-        description: 'Cloud development basics'
-      }
-    ]
+    if (this.courses.length > 0) {
+
+      let plur = this.courses.length == 1 ? '' : 's';
+
+      return `${ this.courses.length } curso${ plur } cadastrado${ plur }`;
+
+    } else {
+
+      return 'nenhum cadastrado';
+    }
   }
 
   public get years(): Array<string> {
@@ -134,13 +153,19 @@ export class CandidateEducationComponent implements OnInit {
     ]
   }
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder,
+    private userService: UserService,
+    private snackBar: MatSnackBar
+  ) {
 
-  ngOnInit() {
+    this.initForm();
+  }
+
+  initForm(edu: CandidateEducation = new CandidateEducation()) {
 
     this.frmCandidateEducation = this.fb.group({
 
-      level: ['', Validators.required],
+      level: [ edu.level || 'ENSINO_FUNDAMENTAL_COMPLETO', Validators.required],
       newCourseName: ['', Validators.required],
       newCourseInstitution: [''],
       newCourseLevel: ['', Validators.required],
@@ -148,29 +173,85 @@ export class CandidateEducationComponent implements OnInit {
       newCourseEndDate: [''],
       newCourseDuration: [''],
       newCourseState: [''],
-      newCourseArea: [''],
-
-      newCertificationName: ['', Validators.required],
-      newCertificationInstitution: [''],
-      newCertificationYear: ['2019'],
-      newCertificationDescription: [''],
+      newCourseArea: ['']
     });
   }
 
-  public skillsOfCategory(category: string): Array<Skill> {
+  async ngOnInit() {
 
-    return AppConstants.basicSkills.filter(c => c.category == category);
+    this.flagLoadingData = true;
+
+    if (!this.userService.candidateEducation) {
+
+      await this.userService.loadUserCandidateEducation();
+    }
+
+    this.initForm(this.userService.candidateEducation);
+
+    this.flagLoadingData = false;
   }
-  
-  addCourse() {
 
+  async addCourse() {
+
+    if (this.frmCandidateEducation.valid && !this.flagSavingData) {
+
+      this.flagSavingData = true;
+
+      let msg = this.snackBar.open('Salvando dados...');
+
+      let courseObj = this.frmCandidateEducation.value;
+
+      let newCourse = new Course({
+        name: courseObj.newCourseName,
+        institution: courseObj.newCourseInstitution,
+        level: courseObj.newCourseLevel,
+        startDate: courseObj.newCourseStartDate,
+        endDate: courseObj.newCourseEndDate,
+        duration: courseObj.newCourseDuration,
+        state: courseObj.newCourseState,
+        area: courseObj.newCourseArea
+      });
+
+      this.userService.candidateEducation.courses.push(newCourse);
+
+      await this.save();
+    }
   }
 
-  addCertification() {
+  async removeCourse(course: Course) {
 
+    if (!this.flagSavingData) {
+
+      this.flagSavingData = true;
+
+      let msg = this.snackBar.open('Salvando dados...');
+
+      let courseIdx = this.userService.candidateEducation.courses.findIndex(c => c.id == course.id);
+
+      this.userService.candidateEducation.courses.splice(courseIdx, 1);
+
+      await this.save();
+    }
   }
 
-  save(evtObj) {
+  async save() {
 
+    let lvl = this.frmCandidateEducation.value.level;
+
+    let edu = new CandidateEducation(this.userService.candidateEducation)
+
+    edu.level = lvl;
+
+    let obj = edu.toDocumentObject();
+
+    let msg = this.snackBar.open('Salvando dados...', obj);
+
+    let result = await this.userService.saveUserCandidateEducation(obj);
+
+    msg.dismiss();
+
+    msg = this.snackBar.open(result.msg, 'OK');
+
+    this.flagSavingData = false;
   }
 }

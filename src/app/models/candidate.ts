@@ -48,11 +48,6 @@ export class Candidate {
   addrState: string;
   addrDistrict: string;
 
-  education: CandidateEducation = new CandidateEducation();
-  habilities: CandidateHabilities = new CandidateHabilities();
-  preferences: CandidatePreferences = new CandidatePreferences();
-  profile: CandidateProfile = new CandidateProfile();
-
   updated: any;
   updatedUserId: string;
 
@@ -68,11 +63,6 @@ export class Candidate {
   toDocumentObject() {
 
     let result = JSON.parse(JSON.stringify(this));
-
-    delete result['education'];
-    delete result['habilities'];
-    delete result['preferences'];
-    delete result['profile'];
 
     return result;
   }

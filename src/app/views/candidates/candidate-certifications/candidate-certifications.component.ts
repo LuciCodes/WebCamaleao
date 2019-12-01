@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AppConstants } from 'src/app/etc/appConstants';
 import { Skill } from 'src/app/models/skill';
+import { UserService } from 'src/app/services/user.service';
+import { MatSnackBar } from '@angular/material';
+import { CandidateEducation } from 'src/app/models/candidateEducation';
+import { Certification } from 'src/app/models/certification';
 
 @Component({
   selector: 'app-candidate-certifications',
@@ -9,6 +13,9 @@ import { Skill } from 'src/app/models/skill';
   styleUrls: ['./candidate-certifications.component.css']
 })
 export class CandidateCertificationsComponent implements OnInit {
+
+  private flagLoadingData = false;
+  private flagSavingData = false;
 
   public frmCandidateCertification: FormGroup;
 
@@ -29,19 +36,19 @@ export class CandidateCertificationsComponent implements OnInit {
   
   public get newCertificationFormValid(): boolean {
 
-    return (this.frmCandidateCertification.controls.newCertificationName.valid);
+    return (this.frmCandidateCertification.valid);
   }
 
   public get certifications(): Array<any> {
 
-    return [
-      {
-        name: 'AWS Certified Cloud Practicioner',
-        institution: 'Amazon',
-        year: '2019',
-        description: 'Cloud development basics'
-      }
-    ]
+     if (this.userService.candidateEducation) {
+
+        return this.userService.candidateEducation.certifications || [];
+
+    } else {
+
+      return [];
+    };
   }
 
   public get years(): Array<string> {
@@ -101,9 +108,16 @@ export class CandidateCertificationsComponent implements OnInit {
     ]
   }
 
-  constructor(private fb: FormBuilder) {}
 
-  ngOnInit() {
+  constructor(private fb: FormBuilder,
+    private userService: UserService,
+    private snackBar: MatSnackBar
+  ) {
+
+    this.initForm();
+  }
+
+  initForm() {
 
     this.frmCandidateCertification = this.fb.group({
 
@@ -113,12 +127,76 @@ export class CandidateCertificationsComponent implements OnInit {
       newCertificationDescription: [''],
     });
   }
+  
+  async ngOnInit() {
 
-  addCertification() {
+    this.flagLoadingData = true;
 
+    if (!this.userService.candidateEducation) {
+
+      await this.userService.loadUserCandidateEducation();
+    }
+
+    this.initForm();
+
+    this.flagLoadingData = false;
   }
 
-  save(evtObj) {
+  async addCertification() {
 
+    if (this.frmCandidateCertification.valid && !this.flagSavingData) {
+
+      this.flagSavingData = true;
+
+      let msg = this.snackBar.open('Salvando dados...');
+
+      let certObj = this.frmCandidateCertification.value;
+
+      let newCert = new Certification({
+        name: certObj.newCertificationName,
+        institution: certObj.newCertificationInstitution,
+        year: certObj.newCertificationYear,
+        description: certObj.newCertificationDescription
+      });
+
+      this.userService.candidateEducation.certifications.push(newCert);
+
+      await this.save();
+
+      this.initForm();
+    }
+  }
+
+  async removeCertification(cert: Certification) {
+
+    if (!this.flagSavingData) {
+
+      this.flagSavingData = true;
+
+      let msg = this.snackBar.open('Salvando dados...');
+
+      let courseIdx = this.userService.candidateEducation.certifications.findIndex(c => c.id == cert.id);
+
+      this.userService.candidateEducation.certifications.splice(courseIdx, 1);
+
+      await this.save();
+    }
+  }
+
+  async save() {
+
+    let edu = new CandidateEducation(this.userService.candidateEducation)
+
+    let obj = edu.toDocumentObject();
+
+    let msg = this.snackBar.open('Salvando dados...', obj);
+
+    let result = await this.userService.saveUserCandidateEducation(obj);
+
+    msg.dismiss();
+
+    msg = this.snackBar.open(result.msg, 'OK');
+
+    this.flagSavingData = false;
   }
 }

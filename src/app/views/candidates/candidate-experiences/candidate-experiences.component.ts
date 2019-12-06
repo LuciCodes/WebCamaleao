@@ -59,7 +59,7 @@ export class CandidateExperiencesComponent implements OnInit {
 
     this.flagLoadingData = true;
 
-    if (!this.userService.candidateEducation) {
+    if (!this.userService.candidateWorkExperiences) {
 
       await this.userService.loadUsercandidateWorkExperiences();
     }

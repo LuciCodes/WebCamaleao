@@ -22,7 +22,7 @@ export class UserService {
   candidateHabilities: CandidateHabilities;
   candidateEducation: CandidateEducation;
 
-  candidateWorkExperiences: Array<WorkExperience> = [];
+  candidateWorkExperiences: Array<WorkExperience>;
 
   user$: Observable<User | null>;
 

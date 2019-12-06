@@ -11,13 +11,18 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
 
+    /*
     window.onresize = () => {
 
       let el = document.querySelector('.mat-sidenav-container');
 
       if (el) {
 
-        el.setAttribute('style', `height: ${ document.body.clientHeight }px`);
+        let h = document.body.clientHeight;
+
+        console.log('Setheight: ' + h);
+
+        //el.setAttribute('style', `height: ${ h }px`);
       }
     }
 
@@ -25,5 +30,6 @@ export class AppComponent implements OnInit {
 
       window.onresize(null);
     }, 420);
+    */
   }
 }

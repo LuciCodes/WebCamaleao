@@ -13,6 +13,9 @@ export class CandidatePanelEducationComponent implements OnInit {
   
   @Input()
   showTitle: boolean = true;
+  
+  @Input()
+  mode: string = 'default';
 
   constructor() { }
 

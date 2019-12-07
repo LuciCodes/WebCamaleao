@@ -302,3 +302,65 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   color: white;
   text-decoration: none;
 }
+
+
+.candidate-container h3 {
+
+  margin-top: 1em;
+  padding:0.42em 0 0.2em 0;
+
+  text-align: center;
+  width: 100%;
+
+  border-top: 1px dotted rgba(100, 100, 100, 0.42);
+}
+
+.candidate-container h4 {
+
+  margin-top: 0;
+}
+
+.candidate-container .block-first td,
+.candidate-container .block-first th {
+
+  padding-top: 0.2em;
+}
+
+.candidate-container .block-last td,
+.candidate-container .block-last th {
+
+  padding-top: 0.2em;
+  border-bottom: 1px solid rgba(100, 100, 100, 0.2);
+}
+
+.candidate-container table td, 
+.candidate-container table th {
+
+  vertical-align: top;
+}
+
+.list-table td, 
+.list-table th {
+
+  padding: 0.4em;
+  vertical-align: middle;
+}
+
+.candidate-container table {
+
+  width: 100%;
+}
+
+.candidate-container table tbody th {
+
+  min-width: 10%;
+  white-space: nowrap;
+  text-align: right;
+}
+
+.candidate-container table tbody td {
+
+  text-align: left;
+  font-size: 1.1em;
+}
+

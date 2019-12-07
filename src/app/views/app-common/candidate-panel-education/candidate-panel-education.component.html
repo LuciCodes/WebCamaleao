@@ -1,5 +1,8 @@
+
 <div fxLayout="row" *ngIf="candidateEducation">
-  <div fxFlex="80%" fxFlexOffset="10%">
+
+  <!-- MODE: json -->
+  <div fxFlex="80%" fxFlexOffset="10%" *ngIf="mode == 'json'">
 
     <h5>
       Educação
@@ -9,4 +12,85 @@
     </div>
 
   </div>
+
+  <!-- MODE: default -->
+  <div fxFlex="100%" *ngIf="mode == 'default'">
+
+    <h3>
+      Educação
+    </h3>
+
+    <table>
+      <tbody>
+        <tr>
+          <td style="width: 20%">
+
+            <strong>Nível:</strong><br>
+            {{ candidateEducation.level }}
+            
+          </td>
+          <td>
+
+            <h4>
+              Cursos:
+            </h4>
+            
+            <table class="list-table">
+              <tbody>
+                <ng-container  *ngFor="let course of candidateEducation.courses">
+
+                  <tr class="block-first">
+                    <th>
+                      Curso:
+                    </th>
+                    <td>
+                      {{ course.name }}
+                    </td>
+                    <th>
+                      Instituição:
+                    </th>
+                    <td>
+                      {{ course.institution }}
+                    </td>
+                    <th>
+                      Ano:
+                    </th>
+                    <td>
+                      {{ course.startDate }}
+                    </td>
+                  </tr>
+                  <tr [class]="course.description? '' : 'block-last'">
+                    <th>
+                      Nível:
+                    </th>
+                    <td>
+                      {{ course.level }}
+                    </td>
+                    <th>
+                      Área:
+                    </th>
+                    <td colspan="3">
+                      {{ course.area }}
+                    </td>
+                  </tr>
+                  <tr *ngIf="course.description" class="block-last">
+                    <th>
+                      Descrição:
+                    </th>
+                    <td colspan="5">
+                      {{ course.description }}
+                    </td>
+                  </tr>
+
+                </ng-container>
+              </tbody>
+            </table>
+            
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+  </div>
+
 </div>

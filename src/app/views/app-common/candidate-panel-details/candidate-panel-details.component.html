@@ -1,18 +1,22 @@
 
-<app-candidate-panel-basic-info
-  [candidate]="candidateDetails.candidate"
-  [candidateProfile]="candidateDetails.candidateProfile"
-  [showTitle]="showTitle"
-></app-candidate-panel-basic-info>
+<div class="candidate-container">
 
-<app-candidate-panel-education
-  [candidateEducation]="candidateDetails.candidateEducation"
-></app-candidate-panel-education>
+  <app-candidate-panel-basic-info
+    [candidate]="candidateDetails.candidate"
+    [candidateProfile]="candidateDetails.candidateProfile"
+    [showTitle]="showTitle"
+  ></app-candidate-panel-basic-info>
 
-<app-candidate-panel-habilities
-  [candidateHabilities]="candidateDetails.candidateHabilities"
-></app-candidate-panel-habilities>
+  <app-candidate-panel-education
+    [candidateEducation]="candidateDetails.candidateEducation"
+  ></app-candidate-panel-education>
 
-<app-candidate-panel-experience
-  [candidateExperience]="candidateDetails.candidateExperience"
-></app-candidate-panel-experience>
+  <app-candidate-panel-habilities
+    [candidateHabilities]="candidateDetails.candidateHabilities"
+  ></app-candidate-panel-habilities>
+
+  <app-candidate-panel-experience
+    [candidateExperience]="candidateDetails.candidateExperience"
+  ></app-candidate-panel-experience>
+
+</div>

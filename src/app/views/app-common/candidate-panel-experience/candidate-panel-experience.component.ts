@@ -14,6 +14,9 @@ export class CandidatePanelExperienceComponent implements OnInit {
   @Input()
   showTitle: boolean = true;
 
+  @Input()
+  mode: string = 'default';
+
   constructor() { }
 
   ngOnInit() {

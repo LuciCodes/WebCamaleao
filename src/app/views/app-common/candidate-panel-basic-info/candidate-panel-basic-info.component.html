@@ -1,15 +1,58 @@
 
 <div fxLayout="row" *ngIf="candidate">
-  <div fxFlex="33%" fxFlexOffset="33%">
+  
+  <!-- MODE: json -->
+  <div fxFlex="80%" fxFlexOffset="10%" *ngIf="mode == 'json'">
 
-    <h1 *ngIf="showTitle">
-      {{ candidate.name }}
-    </h1>
+    <h5>
+      Candidate
+    </h5>
+    <div>
+      {{ candidate | json }}
+    </div>
 
   </div>
+
+  <!-- MODE: default -->
+  <div fxFlex="100%" *ngIf="mode == 'default'">
+
+    <h3 *ngIf="showTitle">
+      {{ candidate.name }}
+    </h3>
+
+    <table>
+      <tbody>
+        <tr>
+          <th>
+            Data de Nascimento:
+          </th>
+          <td>
+
+            {{ candidate.birth }}
+            
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Documentos:
+          </th>
+          <td>
+
+            <strong>CPF</strong>: {{ candidate.cpf || 'n/d' }} <strong>RG</strong>: {{ candidate.docRg || 'n/d' }}
+            
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+  </div>
+
+
 </div>
 <div fxLayout="row" *ngIf="candidateProfile">
-  <div fxFlex="80%" fxFlexOffset="10%">
+
+  <!-- MODE: json -->
+  <div fxFlex="80%" fxFlexOffset="10%" *ngIf="mode == 'json'">
 
     <h5>
       Perfil
@@ -17,6 +60,37 @@
     <div>
       {{ candidateProfile | json }}
     </div>
+
+  </div>
+  
+  <!-- MODE: default -->
+  <div fxFlex="100%" *ngIf="mode == 'default'">
+
+    <h3>
+      Perfil
+    </h3>
+    <table>
+      <tbody>
+        <tr>
+          <th>
+            Gênero:
+          </th>
+          <td>
+
+            {{ candidateProfile.gender }}
+            
+          </td>
+          <th>
+            Sexo:
+          </th>
+          <td>
+
+            {{ candidateProfile.sex }}
+            
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
   </div>
 </div>

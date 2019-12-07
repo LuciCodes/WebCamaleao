@@ -4,82 +4,105 @@ import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 
 import { Injectable } from '@angular/core';
+import { WebApiMockService } from './webApi.mock.service';
+import { WebApiFirebaseService } from './webApi.firebase.service';
 
 @Injectable()
 export class WebApiService {
 
-  constructor(private http: HttpClient){}
+  mockAll: boolean = true;
+  firebaseAll: boolean = false;
+
+  mockFunctions: Array<string> = [];
+  fbFunctions: Array<string> = [];
+
+  constructor(private webMock: WebApiMockService,
+              private webFirebase: WebApiFirebaseService){}
+
+  userForMock(name: string): boolean {
+
+    return (this.mockFunctions.findIndex(f => f == name) != -1);
+  }
+
+  userForFirebase(name: string): boolean {
+
+    return (this.fbFunctions.findIndex(f => f == name) != -1);
+  }
+
+  async searchCandidates() : Promise<Array<any>> {
+
+    if (this.mockAll || this.userForMock('searchCandidates')) {
+
+      return this.webMock.searchCandidates();
+    }
+    
+    if (this.firebaseAll || this.userForFirebase('searchCandidates')) {
+
+      return this.webFirebase.searchCandidates();
+    }
+
+    return [];
+  }
 
   async searchJobOffers() : Promise<Array<any>> {
 
-    let url = `${ environment.webApiHost }/api/jobOffers`;  // this is theory
+    if (this.mockAll || this.userForMock('searchJobOffers')) {
 
-    if (environment.useTestData) {
-      url = 'http://localhost:4200/assets/testData/jobOffers.json'
+      return this.webMock.searchJobOffers();
+    }
+    
+    if (this.firebaseAll || this.userForFirebase('searchJobOffers')) {
+
+      return this.webFirebase.searchJobOffers();
     }
 
-    let response;
-    
-    await this.http.get(url).toPromise().then((okResponse) => {
-
-      response = okResponse;
-
-    }, (errResponse) => {
-
-      throw({ code:errResponse.status, msg: errResponse.statusText });
-    });
-
-    return response;
+    return [];
   }
   
   async getCandidates() : Promise<Array<any>> {
 
-    let url = `${ environment.webApiHost }/api/candidates`;  // this is theory
+    if (this.mockAll || this.userForMock('getCandidates')) {
 
-    if (environment.useTestData) {
-      url = 'http://localhost:4200/assets/testData/candidates.json'
+      return this.webMock.getCandidates();
+    }
+    
+    if (this.firebaseAll || this.userForFirebase('getCandidates')) {
+
+      return this.webFirebase.getCandidates();
     }
 
-    let response;
-    
-    await this.http.get(url).toPromise().then((okResponse) => {
-
-      response = okResponse;
-
-    }, (errResponse) => {
-
-      throw({ code:errResponse.status, msg: errResponse.statusText });
-    });
-
-    return response;
+    return [];
   }
 
   async getTopJobOffers() : Promise<Array<any>> {
 
-    let allOffers = await this.searchJobOffers();
+    if (this.mockAll || this.userForMock('getTopJobOffers')) {
 
-    let result = [];
-
-    if (allOffers.length > 0) { result.push(allOffers[0]); }
-    if (allOffers.length > 1) { result.push(allOffers[1]); }
-    if (allOffers.length > 2) { result.push(allOffers[2]); }
+      return this.webMock.getTopJobOffers();
+    }
     
-    return result;
+    if (this.firebaseAll || this.userForFirebase('getTopJobOffers')) {
+
+      return this.webFirebase.getTopJobOffers();
+    }
+
+    return [];
   }
 
   
   async getTopCandidates() : Promise<Array<any>> {
 
-    let candidades = await this.getCandidates();
+    if (this.mockAll || this.userForMock('getTopCandidates')) {
 
-    let result = [];
-
-    if (candidades.length > 0) { result.push(candidades[0]); }
-    if (candidades.length > 1) { result.push(candidades[1]); }
-    if (candidades.length > 2) { result.push(candidades[2]); }
+      return this.webMock.getTopCandidates();
+    }
     
-    return result;
-  }
+    if (this.firebaseAll || this.userForFirebase('getTopCandidates')) {
 
+      return this.webFirebase.getTopCandidates();
+    }
+
+    return [];
+  }
   
 }

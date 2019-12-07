@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AppConstants } from 'src/app/etc/appConstants';
 import { WebApiService } from 'src/app/services/webApi.service';
+import { CandidateService } from 'src/app/services/candidate.service';
+import { CandidateSearchParams } from 'src/app/models/candidateSearchParams';
 
 @Component({
   selector: 'app-candidate-search',
@@ -14,7 +16,7 @@ export class CandidateSearchComponent  {
 
   flagLoadingData: boolean = false;
 
-  jobList: Array<any>;
+  candidates: Array<any>;
 
   get states(): Array<any> {
 
@@ -28,7 +30,7 @@ export class CandidateSearchComponent  {
 
   get citiesOfSelectedState(): Array<any> {
     
-    let state = this.frmBuscarVagas.controls['searchInCitiesOfState'].value;
+    let state = this.frmSearch.controls['searchInCitiesOfState'].value;
 
     if (state) {
 
@@ -37,28 +39,23 @@ export class CandidateSearchComponent  {
     } else { return []; }
   }
 
-  frmBuscarVagas = this.fb.group({
-    seachTerm: null,
-    locationType: 'any',
+  frmSearch = this.fb.group({
+    idCpf: '',
+    name: '',
+    gender: '',
+    sex: '',
+    pcd: '',
+    locationType: '',
     seachNearZip: null,
     searchInStates: null,
     searchInCities: null,
     searchInCitiesOfState: null,
     searchInProfessions: null
-    /*,
-    firstName: [null, Validators.required],
-    lastName: [null, Validators.required],
-    address: [null, Validators.required],
-    address2: null,
-    city: [null, Validators.required],
-    postalCode: [null, Validators.compose([
-      Validators.required, Validators.minLength(5), Validators.maxLength(5)])
-    ],
-    shipping: ['free', Validators.required]
-    */
   });
 
-  constructor(private webApi: WebApiService, private fb: FormBuilder) {}
+  constructor(private webApi: WebApiService,
+              private candidateService: CandidateService,
+              private fb: FormBuilder) {}
 
   onSubmit() {
     
@@ -66,14 +63,18 @@ export class CandidateSearchComponent  {
     
     window.setTimeout(() => {
   
-      this.webApi.searchJobOffers().then((jobs) => {
+      let params = new CandidateSearchParams(this.frmSearch.value);
 
-        this.jobList = jobs;
+      params.forceReload = true;
+
+      this.candidateService.searchCandidates(params).then((candidateList) => {
+
+        this.candidates = candidateList;
 
         this.flagLoadingData = false;
       });
       
-    }, 1420);
+    }, 420);
   }
 
 }

@@ -50,7 +50,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './views/login/login.component';
 
 import { WebApiService } from './services/webApi.service';
+import { WebApiFirebaseService } from './services/webApi.firebase.service';
+import { WebApiMockService } from './services/webApi.mock.service';
 import { UserService } from './services/user.service';
+import { CandidateService } from './services/candidate.service';
+import { CandidateFirebaseService } from './services/candidate.firebase.service';
+import { CandidateMockService } from './services/candidate.mock.service';
 
 import { AppIndexComponent } from './views/app-index/app-index.component';
 import { LogoutComponent } from './views/logout/logout.component';
@@ -87,6 +92,7 @@ import { CandidateSocialNetworksComponent } from './views/candidates/candidate-s
 import { AreaNamePipe } from './pipes/area-name.pipe';
 import { SimpleLabelPipe } from './pipes/simple-label.pipe';
 import { CandidateCertificationsComponent } from './views/candidates/candidate-certifications/candidate-certifications.component';
+import { CandidadeCardComponent } from './views/app-common/candidade-card/candidade-card.component';
 
 @NgModule({
   declarations: [
@@ -127,7 +133,8 @@ import { CandidateCertificationsComponent } from './views/candidates/candidate-c
     CandidateSocialNetworksComponent,
     AreaNamePipe,
     SimpleLabelPipe,
-    CandidateCertificationsComponent
+    CandidateCertificationsComponent,
+    CandidadeCardComponent
   ],
   imports: [
     //AngularFireModule.initializeApp(environment.firebase),
@@ -179,7 +186,12 @@ import { CandidateCertificationsComponent } from './views/candidates/candidate-c
   ],
   providers: [
     WebApiService,
-    UserService
+    WebApiFirebaseService,
+    WebApiMockService,
+    UserService,
+    CandidateService,
+    CandidateFirebaseService,
+    CandidateMockService
   ],
   bootstrap: [AppComponent]
 })

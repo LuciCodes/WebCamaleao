@@ -1,0 +1,61 @@
+
+.candidate-card-container {
+
+  padding: 10px;
+  margin: 0px 20px 20px 0px;
+
+  background: rgba(255, 255, 255, 1);
+
+  border-radius: 20px;
+
+  border: 1px solid rgba(100, 100, 100, 0.21);
+  box-shadow: 0px 2px 3px rgba(142, 142, 142, 0.42);
+}
+
+.candidate-card-container h3 {
+
+  margin: 0 0 4px 0px;
+}
+
+.candidate-card-container h3  a {
+
+  color:#bf6c8f;
+  text-decoration: none;
+  padding-bottom: 0px;
+
+  border-bottom: 1px dotted #bf6c8f;
+}
+
+.candidate-card-container h3  a:hover {
+
+  color:#964768;
+  border-bottom:  1px solid #964768;
+  animation: 0.2s linear all;
+}
+
+.candidate-card-container p {
+
+  margin: 0;
+  padding: 2px;
+}
+
+.avatar-pic {
+
+  padding: 5px 20px 5px 5px;
+  text-align: center;
+}
+
+.avatar-pic img {
+
+  width: 100%;
+  border-radius: 50%;
+
+  box-shadow: 0px 2px 10px rgba(100, 100, 100, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.avatar-pic.default img {
+
+  box-shadow: none;
+  border: none;
+}

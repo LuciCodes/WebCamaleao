@@ -1,0 +1,61 @@
+
+<div
+  class="candidate-card-container"
+>
+  <div fxLayout="row">
+      
+    <div fxFlex="30%" class="avatar-pic {{ isDefaultPhoto(candidate) ? 'default' : '' }}">
+
+      <img
+        src="{{ photoOf(candidate) }}"
+        alt="{{ candidate.name }}"
+      >
+  
+    </div>
+    <div fxFlex="70%">
+  
+      <h3 class="m-b-2">
+        <a href="javascript:;" routerLink="/candidates/{{ candidate.id }}">
+          {{ candidate.name }}
+        </a>
+      </h3>
+
+      <p class="txt-sm">
+        {{ locationOf(candidate) }}
+        <br>
+        <small>{{ candidate.addrPostal }}</small>&nbsp;
+      </p>
+    
+      <p class="txt-sm" style="text-transform: capitalize;">
+        {{ summaryOf(candidate) }}
+      </p>
+    
+      <p *ngIf="candidate.phoneNumber">
+        {{ candidate.phoneNumber }}
+      </p>
+
+      <p class="m-t-10">
+      
+        <button
+          mat-stroked-button
+          color="primary"
+          type="button"
+          class="m-r-20"
+        >
+          <i class="fa fa-search"></i> Ver Detalhes
+        </button>
+        
+        <button
+          mat-stroked-button
+          color="accent"
+          type="button"
+        >
+          <i class="fa fa-external-link-alt"></i> Destacar
+        </button>
+
+      </p>
+  
+    </div>
+
+  </div>
+</div>

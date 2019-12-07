@@ -22,47 +22,23 @@ import { CandidateProfile } from './candidateProfile';
   state: "SP"
 
 */
-export class Candidate {
+export class CandidateSearchParams {
 
-  id: string;
-  userId: string;
-
-  birth: string;
-  cpf: string;
-  ethinicity: string;
-  gender: string;
+  idCpf: string;
   name: string;
+  genders: Array<any>;
+  sexes: Array<any>;
   pcd: boolean;
-  pcdNote: string;
-  phone: string;
-  photoUrl: string;
-  region: string;
-  sex: string;
-  signUpState: string;
-  state: string;
+  searchInStates: Array<any>;
+  searchInCities: Array<any>;
+  searchInCitiesOfState: Array<any>;
 
-  docRg: string;
-
-  addrCity: string;
-  addrState: string;
-  addrDistrict: string;
-
-  updated: any;
-  updatedUserId: string;
-
-  isSocialName: boolean = false;
+  forceReload: boolean = false;
 
   constructor(baseObj?: any) {
 
     if (baseObj) {
       Object.assign(this, baseObj);
     }
-  }
-
-  toDocumentObject() {
-
-    let result = JSON.parse(JSON.stringify(this));
-
-    return result;
   }
 }

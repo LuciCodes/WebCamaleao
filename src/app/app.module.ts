@@ -94,6 +94,11 @@ import { SimpleLabelPipe } from './pipes/simple-label.pipe';
 import { CandidateCertificationsComponent } from './views/candidates/candidate-certifications/candidate-certifications.component';
 import { CandidadeCardComponent } from './views/app-common/candidade-card/candidade-card.component';
 import { CandidateDetailsComponent } from './views/candidates/candidate-details/candidate-details.component';
+import { CandidatePanelBasicInfoComponent } from './views/app-common/candidate-panel-basic-info/candidate-panel-basic-info.component';
+import { CandidatePanelDetailsComponent } from './views/app-common/candidate-panel-details/candidate-panel-details.component';
+import { CandidatePanelEducationComponent } from './views/app-common/candidate-panel-education/candidate-panel-education.component';
+import { CandidatePanelHabilitiesComponent } from './views/app-common/candidate-panel-habilities/candidate-panel-habilities.component';
+import { CandidatePanelExperienceComponent } from './views/app-common/candidate-panel-experience/candidate-panel-experience.component';
 
 @NgModule({
   declarations: [
@@ -136,7 +141,12 @@ import { CandidateDetailsComponent } from './views/candidates/candidate-details/
     SimpleLabelPipe,
     CandidateCertificationsComponent,
     CandidadeCardComponent,
-    CandidateDetailsComponent
+    CandidateDetailsComponent,
+    CandidatePanelBasicInfoComponent,
+    CandidatePanelDetailsComponent,
+    CandidatePanelEducationComponent,
+    CandidatePanelHabilitiesComponent,
+    CandidatePanelExperienceComponent
   ],
   imports: [
     //AngularFireModule.initializeApp(environment.firebase),

@@ -1,0 +1,24 @@
+<div fxLayout="row" *ngIf="candidateExperience">
+  <div fxFlex="80%" fxFlexOffset="10%">
+
+    <h5>Experiência</h5>
+
+    <div
+      fxLayout="row"
+      *ngFor="let experience of candidateExperience"
+    >
+      <div fxFlex>
+
+        <div fxLayout="row">
+          <div fxFlex>
+
+            {{ experience | json }}
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>

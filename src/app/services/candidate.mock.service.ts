@@ -5,6 +5,7 @@ import { CandidateDetails } from '../models/candidateDetails';
 import { CandidateEducation } from '../models/candidateEducation';
 import { CandidateHabilities } from '../models/candidateHabilities';
 import { CandidateProfile } from '../models/candidateProfile';
+import { WorkExperience } from '../models/workExperience';
 
 @Injectable()
 export class CandidateMockService {
@@ -13,6 +14,8 @@ export class CandidateMockService {
   private _candidateEducationCache: Array<CandidateEducation> = [];
   private _candidateHabiitiesCache: Array<CandidateHabilities> = [];
   private _candidateProfilesCache: Array<CandidateProfile> = [];
+  
+  private _workExperienceCache: Array<any> = [];
   
   get candidates(): Array<Candidate> {
 
@@ -46,6 +49,8 @@ export class CandidateMockService {
       result.candidateHabilities = await this.getCandidateHabilities(candidateId) || new CandidateHabilities();
 
       result.candidateProfile = await this.getCandidateProfile(candidateId) || new CandidateProfile();
+      
+      result.candidateExperience = await this.getCandidateExperience(candidateId);
 
     }
 
@@ -97,6 +102,45 @@ export class CandidateMockService {
     return result;
   }
   
+  async getCandidateExperience(candidateId: string): Promise<Array<WorkExperience>> {
+        
+    let result: any = this._workExperienceCache.find(w => w.candidateId == candidateId);
+
+    if (!result) {
+
+      let url = `http://localhost:4200/assets/testData/candidateWorkExperiences-${ candidateId }.json`;
+
+      try {
+
+        await this.http.get(url).toPromise().then(async (okResponse) => {
+
+          result = [];
+
+          if(Array.isArray(okResponse)) {
+  
+            for(let i = 0; i < okResponse.length; i++) {
+  
+              result.push(new WorkExperience(okResponse[i]));
+            }
+          }
+  
+          this._workExperienceCache.push({
+            candidateId: candidateId,
+            experience: result
+          });
+  
+        }, (errResponse) => {});
+
+      } catch(err) {}
+
+      return result;
+
+    } else {
+
+      return result.experience;
+    }
+  }
+
   async getCandidateHabilities(candidateId: string): Promise<CandidateHabilities> {
         
     let result: CandidateHabilities = this._candidateHabiitiesCache.find(e => e.candidateId == candidateId);

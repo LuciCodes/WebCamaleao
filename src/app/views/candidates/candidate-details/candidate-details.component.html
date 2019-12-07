@@ -18,7 +18,7 @@
   </mat-card>
   
 </div>
-<div *ngIf="!flagLoadingData">
+<div *ngIf="!flagLoadingData && candidateDetails">
 
   <h1>
     {{ candidateDetails.candidate.name }}
@@ -26,18 +26,12 @@
 
   <mat-card class="default-card">
     <mat-card-content>
-      
-      <div fxLayout="row">
-        <div fxFlex="70%">
-        
-          {{ candidateDetails | json }}
+    
+      <app-candidate-panel-details
+        [candidateDetails]="candidateDetails"
+        [showTitle]="false"
+      ></app-candidate-panel-details>
 
-        </div>
-        <div fxFlex="30%" class="txt-center">
-
-          
-        </div>
-      </div>
       
     </mat-card-content>
   </mat-card>

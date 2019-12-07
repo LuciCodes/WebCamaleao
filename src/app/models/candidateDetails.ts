@@ -4,6 +4,7 @@ import { CandidateHabilities } from './candidateHabilities';
 import { CandidateProfile } from './candidateProfile';
 import { Candidate } from './candidate';
 import { Input } from '@angular/core';
+import { WorkExperience } from './workExperience';
 
 export class CandidateDetails {
 
@@ -18,6 +19,9 @@ export class CandidateDetails {
 
   @Input()
   candidateProfile: CandidateProfile;
+
+  @Input()
+  candidateExperience: Array<WorkExperience>;
 
   constructor(baseObj?: any) {
 

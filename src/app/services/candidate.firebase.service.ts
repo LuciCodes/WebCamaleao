@@ -21,6 +21,7 @@ export class CandidateFirebaseService {
   private _candidateEducationCache: Array<CandidateEducation> = [];
   private _candidateHabiitiesCache: Array<CandidateHabilities> = [];
   private _candidateProfilesCache: Array<CandidateProfile> = [];
+  private _workExperienceCache: Array<any> = [];
 
   get candidates(): Array<Candidate> {
 
@@ -43,6 +44,8 @@ export class CandidateFirebaseService {
     result.candidateHabilities = await this.getCandidateHabilities(candidateId);
 
     result.candidateProfile = await this.getCandidateProfile(candidateId);
+    
+    result.candidateExperience = await this.getCandidateExperience(candidateId);
 
     return result;
   }
@@ -85,6 +88,38 @@ export class CandidateFirebaseService {
     return result;
   }
   
+  async getCandidateExperience(candidateId: string): Promise<Array<WorkExperience>> {
+        
+    let exp = this._workExperienceCache.find(w => w.candidateId == candidateId);
+
+    let result;
+
+    if (!exp) {
+
+      let candidateQuery = await this.fireDb.collection('candidateWorkExperiences').ref.where('candidateId', '==', candidateId);
+
+      let candidateResult = await candidateQuery.get();
+  
+      result = [];
+
+      if (!candidateResult.empty) {
+  
+        for(let d = 0; d < candidateResult.docs.length; d++) {
+
+          result.push(new WorkExperience(candidateResult.docs[d].data()));
+        }
+      }
+        
+      this._workExperienceCache.push({ candidateId: candidateId, experience: result });
+
+    } else {
+
+      result = exp.experience;
+    }
+
+    return result;
+  }
+
   async getCandidateHabilities(candidateId: string): Promise<CandidateHabilities> {
     
     let result: CandidateHabilities = this._candidateHabiitiesCache.find(e => e.candidateId == candidateId);

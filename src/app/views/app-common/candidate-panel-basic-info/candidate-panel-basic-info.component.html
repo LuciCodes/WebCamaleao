@@ -1,0 +1,22 @@
+
+<div fxLayout="row" *ngIf="candidate">
+  <div fxFlex="33%" fxFlexOffset="33%">
+
+    <h1 *ngIf="showTitle">
+      {{ candidate.name }}
+    </h1>
+
+  </div>
+</div>
+<div fxLayout="row" *ngIf="candidateProfile">
+  <div fxFlex="80%" fxFlexOffset="10%">
+
+    <h5>
+      Perfil
+    </h5>
+    <div>
+      {{ candidateProfile | json }}
+    </div>
+
+  </div>
+</div>

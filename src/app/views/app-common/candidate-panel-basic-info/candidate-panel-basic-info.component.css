@@ -1,0 +1,17 @@
+
+
+.avatar-pic {
+
+  position: relative;
+  left: -20px;
+  top: 10px;
+  width: 128px;
+  height: 128px;
+  margin-bottom: -128px;
+}
+
+  .avatar-pic img {
+
+    border-radius: 50%;
+    width: 100%;
+  }

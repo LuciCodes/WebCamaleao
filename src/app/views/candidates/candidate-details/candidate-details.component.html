@@ -20,11 +20,39 @@
 </div>
 <div *ngIf="!flagLoadingData && candidateDetails">
 
-  <h1>
-    {{ candidateDetails.candidate.name }}
-  </h1>
+  <div fxLayout="row">
+    <div fxFlex="70%">
 
-  <mat-card class="default-card">
+      <h1>
+        {{ candidateDetails.candidate.name }}
+      </h1>
+        
+    </div>
+    <div fxFlex="30%" class="txt-right p-t-30">
+
+      <button
+        mat-stroked-button
+        color="accent"
+        type="button"
+        class="m-r-20"
+        title="Destacar"
+      >
+        <i class="fa fa-external-link-alt"></i>
+      </button>
+  
+      <button
+        mat-stroked-button
+        color="accent"
+        (click)="printPreview($event)"
+        title="Imprimir"
+      > 
+        <i class="fa fa-print"></i>
+      </button>
+      
+    </div>
+  </div>
+
+  <mat-card class="default-card m-t-0">
     <mat-card-content>
     
       <app-candidate-panel-details
@@ -37,17 +65,28 @@
   </mat-card>
 
   <div fxLayout="row" class="m-t-30" *ngIf="!flagLoadingData">
-    <div fxFlex="33%" fxFlexOffset="33%">
+    <div fxFlex>
 
-      <button
-        color="accent"
-        class="w-100"
-        mat-flat-button
-        [disabled]="true"
-        (click)="save($event)"
-      > 
-        Salvar Dados
-      </button>
+      <p class="m-t-10 txt-center">
+
+        <button
+          mat-stroked-button
+          color="accent"
+          type="button"
+          class="m-r-20"
+        >
+          <i class="fa fa-external-link-alt"></i>&nbsp;&nbsp;Destacar
+        </button>
+    
+        <button
+          mat-stroked-button
+          color="accent"
+          (click)="printPreview($event)"
+        > 
+          <i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir
+        </button>
+        
+      </p>
       
     </div>  
   </div>  

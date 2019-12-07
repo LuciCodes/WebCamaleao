@@ -99,6 +99,12 @@ import { CandidatePanelDetailsComponent } from './views/app-common/candidate-pan
 import { CandidatePanelEducationComponent } from './views/app-common/candidate-panel-education/candidate-panel-education.component';
 import { CandidatePanelHabilitiesComponent } from './views/app-common/candidate-panel-habilities/candidate-panel-habilities.component';
 import { CandidatePanelExperienceComponent } from './views/app-common/candidate-panel-experience/candidate-panel-experience.component';
+import { EducationLevelPipe } from './pipes/education-level.pipe';
+import { GenderNamePipe } from './pipes/gender-name.pipe';
+import { SexNamePipe } from './pipes/sex-name.pipe';
+import { EthnicityNamePipe } from './pipes/ethnicity-name.pipe';
+import { CourseLevelNamePipe } from './pipes/course-level-name.pipe';
+import { BusinessAreaNamePipe } from './pipes/business-area-name.pipe';
 
 @NgModule({
   declarations: [
@@ -146,7 +152,13 @@ import { CandidatePanelExperienceComponent } from './views/app-common/candidate-
     CandidatePanelDetailsComponent,
     CandidatePanelEducationComponent,
     CandidatePanelHabilitiesComponent,
-    CandidatePanelExperienceComponent
+    CandidatePanelExperienceComponent,
+    EducationLevelPipe,
+    GenderNamePipe,
+    SexNamePipe,
+    EthnicityNamePipe,
+    CourseLevelNamePipe,
+    BusinessAreaNamePipe
   ],
   imports: [
     //AngularFireModule.initializeApp(environment.firebase),

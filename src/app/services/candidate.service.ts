@@ -10,7 +10,7 @@ import { CandidateDetails } from '../models/candidateDetails';
 @Injectable()
 export class CandidateService {
 
-  mockAll: boolean = true;
+  mockAll: boolean = false;
   firebaseAll: boolean = true;
 
   mockFunctions: Array<string> = [];
@@ -68,18 +68,18 @@ export class CandidateService {
     return result;
   }
 
-  async loadCandidates() : Promise<Array<any>> {
+  async loadCandidates(forceReload: boolean = false) : Promise<Array<any>> {
 
     if (this.mockAll || this.userForMock('loadCandidates')) {
 
-      this._candidates = await this.candidateMock.loadCandidates();
+      this._candidates = await this.candidateMock.loadCandidates(forceReload);
 
       return this._candidates;
     }
     
     if (this.firebaseAll || this.userForFirebase('loadCandidates')) {
       
-      this._candidates = await this.candidateFirebase.loadCandidates();
+      this._candidates = await this.candidateFirebase.loadCandidates(forceReload);
 
       return this._candidates;
     }
@@ -95,7 +95,7 @@ export class CandidateService {
 
     if (filterParams.forceReload) { this._candidates = null; }
 
-    await this.loadCandidates();
+    await this.loadCandidates(filterParams.forceReload);
 
     let filteredSearch = [];
 

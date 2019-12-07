@@ -356,6 +356,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   min-width: 10%;
   white-space: nowrap;
   text-align: right;
+  padding-top: 0.2em;
 }
 
 .candidate-container table tbody td {

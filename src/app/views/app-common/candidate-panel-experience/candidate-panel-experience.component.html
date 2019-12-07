@@ -51,9 +51,13 @@
             <th style="width: 3em">
               Até:
             </th>
-            <td style="width: 10em">
+            <td style="width: 20em">
               <div *ngIf="!experience.isCurrent">
-                  {{ experience.endDate }}
+
+                  {{ experience.endDate }}&nbsp;&nbsp;
+
+                  <small>({{ dateDiffString(experience.startDate, experience.endDate) }})</small>
+                  
               </div>
               <div *ngIf="experience.isCurrent">
                 <small>(atual)</small>
@@ -63,6 +67,9 @@
           <tr *ngIf="experience.description && experience.description != ''">
             <th style="width: 6em">
               Descrição:
+              <br>
+              <br>
+              &nbsp;
             </th>
             <td colspan="4">
               {{ experience.description }}

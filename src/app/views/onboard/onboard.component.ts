@@ -91,7 +91,7 @@ export class OnboardComponent implements OnInit {
     this.frmCandidateDiversity = this.fb.group({
       gender: ['', Validators.required],
       sex: ['', Validators.required],
-      etnicity: ['', Validators.required],
+      ethnicity: ['', Validators.required],
       pcd: ['false'],
       pcdNote: [''],
     });

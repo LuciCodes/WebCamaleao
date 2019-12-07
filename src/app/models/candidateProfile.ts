@@ -7,7 +7,7 @@ export class CandidateProfile {
 
   gender: string;
   sex: string;
-  etnicity: string;
+  ethnicity: string;
   pne: boolean = false;
   pneNote: string;
 

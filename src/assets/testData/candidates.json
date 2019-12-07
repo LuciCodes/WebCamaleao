@@ -4,8 +4,6 @@
     "birth": "16/06/1990",
     "cpf": "384.122.778-30",
     "docRg": "384.555.888-30",
-    "ethinicity": "BRANCA",
-    "gender": "MULHER",
     "addrDistrict": "",
     "addrCity": "São Paulo",
     "addrState": "SP",
@@ -15,17 +13,13 @@
     "phone": "(11) 97109-2650",
     "photoUrl": "/assets/img/people/01.jpg",
     "region": "",
-    "sex": "BISSEXUAL",
-    "signUpState": "COMPLETED",
-    "state": "SP"
+    "signUpState": "COMPLETED"
   },
   {
     "id": 101,
     "birth": "16/06/1989",
     "cpf": "384.555.888-30",
     "docRg": "384.555.888-30",
-    "ethinicity": "BRANCA",
-    "gender": "MULHER",
     "addrDistrict": "",
     "addrCity": "São Paulo",
     "addrState": "SP",
@@ -35,21 +29,17 @@
     "phone": "(11) 97109-2650",
     "photoUrl": "/assets/img/people/02.jpg",
     "region": "",
-    "sex": "HOMOSSEXUAL",
-    "signUpState": "COMPLETED",
-    "state": "SP"
+    "signUpState": "COMPLETED"
   },
   {
     "id": 102,
     "birth": "01/06/1989",
     "cpf": "123.774.112-30",
     "docRg": "123.774.112-30",
-    "ethinicity": "BRANCA",
-    "gender": "MULHER",
     "addrDistrict": "",
     "addrCity": "São José dos Campos",
     "addrState": "SP",
-    "addrPostal": "12.240-360",
+    "addrPostalCode": "12.240-360",
     "name": "Júlia Barros",
     "pcd": false,
     "pcdNote": "",
@@ -57,16 +47,13 @@
     "photoUrl": "/assets/img/people/03.jpg",
     "region": "",
     "sex": "BISSEXUAL",
-    "signUpState": "COMPLETED",
-    "state": "SP"
+    "signUpState": "COMPLETED"
   },
   {
     "id": 103,
     "birth": "01/06/1989",
     "cpf": "123.774.112-30",
     "docRg": "384.555.888-30",
-    "ethinicity": "BRANCA",
-    "gender": "MULHER",
     "addrDistrict": "",
     "addrCity": "Belo Horizonte",
     "addrState": "MG",
@@ -76,8 +63,6 @@
     "phone": "(11) 99776-4650",
     "photoUrl": "",
     "region": "",
-    "sex": "BISSEXUAL",
-    "signUpState": "COMPLETED",
-    "state": "SP"
+    "signUpState": "COMPLETED"
   }
 ]

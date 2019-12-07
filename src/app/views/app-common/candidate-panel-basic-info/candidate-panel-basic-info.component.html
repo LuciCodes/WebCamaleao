@@ -20,6 +20,15 @@
       {{ candidate.name }}
     </h3>
 
+    <div class="avatar-pic" *ngIf="candidate.photoUrl">
+
+      <img
+        src="{{ candidate.photoUrl }}"
+        alt="{{ candidate.name }}"
+      >
+  
+    </div>
+    
     <table>
       <tbody>
         <tr>
@@ -31,14 +40,46 @@
             {{ candidate.birth }}
             
           </td>
-        </tr>
-        <tr>
           <th>
             Documentos:
           </th>
           <td>
 
-            <strong>CPF</strong>: {{ candidate.cpf || 'n/d' }} <strong>RG</strong>: {{ candidate.docRg || 'n/d' }}
+            CPF: {{ candidate.cpf || 'n/d' }} &nbsp;&nbsp;RG: {{ candidate.docRg || 'n/d' }}
+            
+          </td>
+          <th>
+            Contato:
+          </th>
+          <td>
+
+            {{ candidate.phone || 'n/d' }}
+            
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Estado:
+          </th>
+          <td>
+
+            {{ candidate.addrState || 'n/d' }}
+            
+          </td>
+          <th>
+            Cidade:
+          </th>
+          <td>
+
+              {{ candidate.addrCity || 'n/d' }}
+            
+          </td>
+          <th>
+            Bairro - CEP:
+          </th>
+          <td>
+
+            {{ candidate.addrDistrict }} - {{ candidate.addrPostalCode || 'n/d' }}
             
           </td>
         </tr>
@@ -77,7 +118,7 @@
           </th>
           <td>
 
-            {{ candidateProfile.gender }}
+            {{ candidateProfile.gender | genderName }}
             
           </td>
           <th>
@@ -85,7 +126,23 @@
           </th>
           <td>
 
-            {{ candidateProfile.sex }}
+            {{ candidateProfile.sex | sexName }}
+            
+          </td>
+          <th>
+            Etnia:
+          </th>
+          <td>
+
+            {{ candidateProfile.ethnicity | ethnicityName }}
+            
+          </td>
+          <th>
+            Pne?:
+          </th>
+          <td>
+
+            {{ candidateProfile.pne ? 'Sim' : 'Não' }}{{ candidateProfile.pne && candidateProfile.pneNote ? (' - ' + candidateProfile.pneNote) : '' }}
             
           </td>
         </tr>

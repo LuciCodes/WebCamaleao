@@ -46,6 +46,7 @@ export class Candidate {
   addrCity: string;
   addrState: string;
   addrDistrict: string;
+  addrPostalCode: string;
 
   updated: any;
   updatedUserId: string;

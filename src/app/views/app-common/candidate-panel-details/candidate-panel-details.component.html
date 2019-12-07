@@ -7,13 +7,22 @@
     [showTitle]="showTitle"
   ></app-candidate-panel-basic-info>
 
-  <app-candidate-panel-education
-    [candidateEducation]="candidateDetails.candidateEducation"
-  ></app-candidate-panel-education>
+  <div fxLayout="row">
+    <div fxFlex="40%">
 
-  <app-candidate-panel-habilities
-    [candidateHabilities]="candidateDetails.candidateHabilities"
-  ></app-candidate-panel-habilities>
+      <app-candidate-panel-habilities
+        [candidateHabilities]="candidateDetails.candidateHabilities"
+      ></app-candidate-panel-habilities>
+
+    </div>
+    <div fxFlex="60%">
+
+      <app-candidate-panel-education
+        [candidateEducation]="candidateDetails.candidateEducation"
+      ></app-candidate-panel-education>
+
+    </div>
+  </div>
 
   <app-candidate-panel-experience
     [candidateExperience]="candidateDetails.candidateExperience"

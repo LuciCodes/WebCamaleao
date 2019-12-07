@@ -93,6 +93,7 @@ import { AreaNamePipe } from './pipes/area-name.pipe';
 import { SimpleLabelPipe } from './pipes/simple-label.pipe';
 import { CandidateCertificationsComponent } from './views/candidates/candidate-certifications/candidate-certifications.component';
 import { CandidadeCardComponent } from './views/app-common/candidade-card/candidade-card.component';
+import { CandidateDetailsComponent } from './views/candidates/candidate-details/candidate-details.component';
 
 @NgModule({
   declarations: [
@@ -134,7 +135,8 @@ import { CandidadeCardComponent } from './views/app-common/candidade-card/candid
     AreaNamePipe,
     SimpleLabelPipe,
     CandidateCertificationsComponent,
-    CandidadeCardComponent
+    CandidadeCardComponent,
+    CandidateDetailsComponent
   ],
   imports: [
     //AngularFireModule.initializeApp(environment.firebase),

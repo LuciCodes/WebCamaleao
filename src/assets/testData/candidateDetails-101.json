@@ -1,0 +1,96 @@
+{
+  "candidate": {
+    "isSocialName": true,
+    "addrCity": "São José dos Campos",
+    "addrDistrict": "Jd das Indústrias",
+    "addrState": "SP",
+    "birth": "01/01/1981",
+    "docRg": "3466",
+    "id": "4J8duS0gIBpVBBEzsS6D",
+    "name": "Luciana de Maria Leal",
+    "signupState": "COMPLETED",
+    "updated": {
+      "seconds": 1575235767,
+      "nanoseconds": 240000000
+    },
+    "updatedUserId": "tNH9oCEbUGbMi5uKxEYMO6bptJH2",
+    "userId": "dUjlPF9wezdeZXo87PqtEjecidG2"
+  },
+  "candidateEducation": {
+    "level": "ENSINO_SUPERIOR_CURSANDO",
+    "certifications": [
+      {
+        "description": "",
+        "id": "1575164897779",
+        "institution": "Amazon AWS",
+        "name": "AWS Cloud Practicioner",
+        "year": "2019"
+      },
+      {
+        "description": "",
+        "id": "1575235834947",
+        "institution": "Faculdades Facu",
+        "name": "Nova Certidão",
+        "year": "2019"
+      }
+    ],
+    "courses": [
+      {
+        "area": "DESENHO",
+        "duration": "",
+        "endDate": "01/07/2006",
+        "id": "1575158593006",
+        "institution": "Super School",
+        "level": "TECNICO",
+        "name": "Lightwave 3D",
+        "startDate": "01/06/2006"
+      },
+      {
+        "area": "ADMINISTRACAO",
+        "duration": "",
+        "endDate": "",
+        "id": "1575235812002",
+        "institution": "Instituto",
+        "level": "TECNICO",
+        "name": "Novo Curso",
+        "startDate": "",
+        "state": ""
+      }
+    ],
+    "candidateId": "4J8duS0gIBpVBBEzsS6D",
+    "id": "JilwMqgXiOYeDDEKsfcz",
+    "updated": {
+      "seconds": 1575235834,
+      "nanoseconds": 948000000
+    },
+    "updatedUserId": "tNH9oCEbUGbMi5uKxEYMO6bptJH2",
+    "userId": "tNH9oCEbUGbMi5uKxEYMO6bptJH2"
+  },
+  "candidateHabilities": {
+    "candidateId": "4J8duS0gIBpVBBEzsS6D",
+    "id": "91VqlnnXdEACifVr00KG",
+    "list": "Administrativas: Administração de Empresas, Administrativas: Contabilidade, Administrativas: Gestão de Pessoas, Administrativas: Planilhas, Administrativas: Recrutamento, Artísticas: Design Gráfico, Científicas: Matemática, TI: Análise de Sistemas, TI: Banco de Dados, TI: Lógica, TI: Planilhas, TI: Programação, Software: Edição de Vídeo",
+    "updated": {
+      "seconds": 1575674632,
+      "nanoseconds": 96000000
+    },
+    "updatedUserId": "dUjlPF9wezdeZXo87PqtEjecidG2",
+    "userId": "dUjlPF9wezdeZXo87PqtEjecidG2"
+  },
+  "candidateProfile": {
+    "pne": "false",
+    "candidateId": "4J8duS0gIBpVBBEzsS6D",
+    "ethnicity": "BRANCA",
+    "etnicity": null,
+    "gender": "MULHER",
+    "id": "O9NSiwRIxYnoT3elCj2Z",
+    "pneNote": null,
+    "sex": "BISSEXUAL",
+    "updated": {
+      "seconds": 1575235775,
+      "nanoseconds": 895000000
+    },
+    "updatedUserId": "tNH9oCEbUGbMi5uKxEYMO6bptJH2",
+    "userId": "tNH9oCEbUGbMi5uKxEYMO6bptJH2"
+  }
+}

@@ -1,0 +1,62 @@
+
+<div *ngIf="flagLoadingData">
+
+  <mat-card class="default-card">
+    <mat-card-content>
+
+      <div
+        fxLayout="row"
+        class="loader-panel"
+        style="padding-left: 48%; padding-top: 2.6em"
+      >
+
+        <fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon>
+        
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+  
+</div>
+<div *ngIf="!flagLoadingData">
+
+  <h1>
+    {{ candidateDetails.candidate.name }}
+  </h1>
+
+  <mat-card class="default-card">
+    <mat-card-content>
+      
+      <div fxLayout="row">
+        <div fxFlex="70%">
+        
+          {{ candidateDetails | json }}
+
+        </div>
+        <div fxFlex="30%" class="txt-center">
+
+          
+        </div>
+      </div>
+      
+    </mat-card-content>
+  </mat-card>
+
+  <div fxLayout="row" class="m-t-30" *ngIf="!flagLoadingData">
+    <div fxFlex="33%" fxFlexOffset="33%">
+
+      <button
+        color="accent"
+        class="w-100"
+        mat-flat-button
+        [disabled]="true"
+        (click)="save($event)"
+      > 
+        Salvar Dados
+      </button>
+      
+    </div>  
+  </div>  
+
+  
+</div>

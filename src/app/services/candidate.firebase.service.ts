@@ -12,15 +12,19 @@ import { CandidateHabilities } from '../models/candidateHabilities';
 import { CandidateEducation } from '../models/candidateEducation';
 import { WorkExperience } from '../models/workExperience';
 import { UserProfile } from '../models/userProfile';
+import { CandidateDetails } from '../models/candidateDetails';
 
 @Injectable()
 export class CandidateFirebaseService {
 
-  private _candidates: Array<Candidate>;
+  private _candidateCache: Array<Candidate> = [];
+  private _candidateEducationCache: Array<CandidateEducation> = [];
+  private _candidateHabiitiesCache: Array<CandidateHabilities> = [];
+  private _candidateProfilesCache: Array<CandidateProfile> = [];
 
   get candidates(): Array<Candidate> {
 
-    return this._candidates;
+    return this._candidateCache;
   }
 
   constructor(private fireAuth: AngularFireAuth,
@@ -28,29 +32,100 @@ export class CandidateFirebaseService {
 
   }
 
-  async getCandidate(candidateId: string): Promise<Candidate> {
+  async getCandidateDetails(candidateId: string) : Promise<CandidateDetails> {
+
+    let result = new CandidateDetails();
+
+    result.candidate = await this.getCandidate(candidateId);
     
-    let candidateQuery = await this.fireDb.collection('candidates').ref.where('id', '==', candidateId);
+    result.candidateEducation = await this.getCandidateEducation(candidateId);
+    
+    result.candidateHabilities = await this.getCandidateHabilities(candidateId);
 
-    let candidateResult = await candidateQuery.get();
+    result.candidateProfile = await this.getCandidateProfile(candidateId);
 
-    if (!candidateResult.empty) {
-
-      /*
-      this.candidate = (new Candidate(candidateResult.docs[0].data()));
-
-      this.candidate.id = candidateResult.docs[0].id;
-      
-      console.log('Loaded user candidate:', this.candidate);
-      */
-    }
-
-    return null;
+    return result;
   }
   
+  async getCandidate(candidateId: string): Promise<Candidate> {
+    
+    let result: Candidate = this._candidateCache.find(e => e.id == candidateId);
+
+    if (!result) {
+
+      let candidateQuery = await this.fireDb.collection('candidates').doc(candidateId);
+
+      let candidateResult = await candidateQuery.get().toPromise();
+  
+      if (candidateResult) {
+  
+        result = new Candidate(candidateResult.data());
+      }
+    }
+
+    return result;
+  }
+  
+  async getCandidateEducation(candidateId: string): Promise<CandidateEducation> {
+    
+    let result: CandidateEducation = this._candidateEducationCache.find(e => e.candidateId == candidateId);
+
+    if (!result) {
+
+      let candidateQuery = await this.fireDb.collection('candidateEducation').ref.where('candidateId', '==', candidateId);
+
+      let candidateResult = await candidateQuery.get();
+  
+      if (!candidateResult.empty) {
+  
+        result = new CandidateEducation(candidateResult.docs[0].data());
+      }
+    }
+
+    return result;
+  }
+  
+  async getCandidateHabilities(candidateId: string): Promise<CandidateHabilities> {
+    
+    let result: CandidateHabilities = this._candidateHabiitiesCache.find(e => e.candidateId == candidateId);
+
+    if (!result) {
+
+      let candidateQuery = await this.fireDb.collection('candidateHabilities').ref.where('candidateId', '==', candidateId);
+  
+      let candidateResult = await candidateQuery.get();
+  
+      if (!candidateResult.empty) {
+  
+        result = new CandidateHabilities(candidateResult.docs[0].data());
+      }
+    }
+
+    return result;
+  }
+  
+  async getCandidateProfile(candidateId: string): Promise<CandidateProfile> {
+
+    let result: CandidateProfile = this._candidateProfilesCache.find(e => e.candidateId == candidateId);
+
+    if (!result) {    
+
+      let candidateQuery = await this.fireDb.collection('candidateProfiles').ref.where('candidateId', '==', candidateId);
+  
+      let candidateResult = await candidateQuery.get();
+  
+      if (!candidateResult.empty) {
+  
+        return new CandidateProfile(candidateResult.docs[0].data());
+      }
+    }
+
+    return result;
+  }
+
   async loadCandidates(reload: boolean = false): Promise<Array<Candidate>> {
     
-    if (!this._candidates || reload) {
+    if (!this._candidateCache || reload) {
       
       let candidateQuery = await this.fireDb.collection('candidates').ref.where('signupState', '==', 'COMPLETED').orderBy('id');
 
@@ -67,14 +142,14 @@ export class CandidateFirebaseService {
           results[d].id = candidateResult.docs[d].id;
         }
 
-        this._candidates = results;
+        this._candidateCache = results;
 
       } else {
 
-        this._candidates = [];
+        this._candidateCache = [];
       }
     }
 
-    return this._candidates;
+    return this._candidateCache;
   }
 }

@@ -1,32 +1,28 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { User } from 'firebase';
 
-import { Observable } from 'rxjs';
-import { map, shareReplay, filter } from 'rxjs/operators';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { Candidate } from '../models/candidate';
-import * as firebase from 'firebase';
-import { CandidateProfile } from '../models/candidateProfile';
-import { CandidateHabilities } from '../models/candidateHabilities';
-import { CandidateEducation } from '../models/candidateEducation';
-import { WorkExperience } from '../models/workExperience';
-import { UserProfile } from '../models/userProfile';
+
 import { CandidateMockService } from './candidate.mock.service';
 import { CandidateFirebaseService } from './candidate.firebase.service';
 import { CandidateSearchParams } from '../models/candidateSearchParams';
+import { CandidateDetails } from '../models/candidateDetails';
+import { CandidateEducation } from '../models/candidateEducation';
+import { CandidateHabilities } from '../models/candidateHabilities';
+import { CandidateProfile } from '../models/candidateProfile';
 
 @Injectable()
 export class CandidateService {
 
   mockAll: boolean = false;
-  firebaseAll: boolean = false;
+  firebaseAll: boolean = true;
 
   mockFunctions: Array<string> = [];
   fbFunctions: Array<string> = ['loadCandidates', 'searchCandidates'];
 
   private _candidates: Array<Candidate> = [];
 
+  private _detailsCache: Array<CandidateDetails> = [];
+  
   get candidates(): Array<Candidate> {
 
     return this._candidates;
@@ -42,11 +38,37 @@ export class CandidateService {
     return (this.fbFunctions.findIndex(f => f == name) != -1);
   }
 
-  constructor(private fireAuth: AngularFireAuth,
-              private fireDb: AngularFirestore,
-              private candidateMock: CandidateMockService,
+  constructor(private candidateMock: CandidateMockService,
               private candidateFirebase: CandidateFirebaseService) {
 
+  }
+
+  async getCandidateDetails(candidateId: string) : Promise<CandidateDetails> {
+
+    let result: CandidateDetails = this._detailsCache.find(r => r.candidate && r.candidate.id == candidateId);
+
+    if (!result) {
+
+      if (this.mockAll || this.userForMock('loadCandidates')) {
+
+        result = await this.candidateMock.getCandidateDetails(candidateId);
+  
+        this._detailsCache.push(result);
+  
+        return result;
+     }
+      
+      if (this.firebaseAll || this.userForFirebase('loadCandidates')) {
+        
+        result = await this.candidateFirebase.getCandidateDetails(candidateId);
+        
+        this._detailsCache.push(result);
+        
+        return result;
+      }
+    }
+
+    return result;
   }
 
   async loadCandidates() : Promise<Array<any>> {

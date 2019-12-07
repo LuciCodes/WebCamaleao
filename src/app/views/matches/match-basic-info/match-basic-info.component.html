@@ -1,0 +1,44 @@
+
+<h1>Buscar Empresas</h1>
+
+<form [formGroup]="frmMatchPreferences">
+
+  <mat-card class="default-card">
+    <mat-card-content>
+
+      <div fxLayout="row">
+        <div fxFlex>
+
+          <mat-form-field>
+            <mat-label>
+              Nome
+            </mat-label>
+            <input
+              matInput
+              formControlName="level"
+            >
+          </mat-form-field>
+
+        </div>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+  
+  <div fxLayout="row" class="m-t-30">
+    <div fxFlex="33%" fxFlexOffset="33%">
+      
+      <button
+        color="accent"
+        class="w-100"
+        mat-flat-button
+        (click)="save($event)"
+      >
+        Salvar Dados
+      </button>
+      
+    </div>  
+  </div>
+  
+</form>
+

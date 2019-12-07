@@ -1,14 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { AppConstants } from 'src/app/etc/appConstants';
+import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+
+import { AppConstants } from '../../../etc/appConstants';
 import { WebApiService } from 'src/app/services/webApi.service';
-import { FormBuilder } from '@angular/forms';
 
 @Component({
-  selector: 'app-home-vagas',
-  templateUrl: './home-vagas.component.html',
-  styleUrls: ['./home-vagas.component.css']
+  selector: 'app-job-offer-search',
+  templateUrl: './job-offer-search.component.html',
+  styleUrls: ['./job-offer-search.component.css']
 })
-export class HomeVagasComponent implements OnInit {
+export class JobOfferSearchComponent {
+
+  get cepMask() { return AppConstants.cepMask; }
 
   flagLoadingData: boolean = false;
 
@@ -58,17 +61,10 @@ export class HomeVagasComponent implements OnInit {
 
   constructor(private webApi: WebApiService, private fb: FormBuilder) {}
 
-  ngOnInit(): void {
-
-    this.onSubmit();
-  }
-
   onSubmit() {
-
+    
     this.flagLoadingData = true;
-
-    this.jobList = null;
-
+    
     window.setTimeout(() => {
   
       this.webApi.searchJobOffers().then((jobs) => {

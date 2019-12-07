@@ -1,0 +1,46 @@
+
+<h1>Maches Home</h1>
+
+<form [formGroup]="frmMatchProfile">
+
+  <mat-card class="default-card">
+    <mat-card-content *ngIf="flagLoadingData">
+
+      <div
+        fxLayout="row"
+        class="loader-panel"
+        style="padding-left: 48%; padding-top: 2.6em"
+      >
+
+        <fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon>
+        
+      </div>
+
+    </mat-card-content>
+    <mat-card-content *ngIf="!flagLoadingData">
+
+      <div fxLayout="row">
+        <div fxFlex>
+
+          <!--mat-form-field>
+            <mat-label>
+              Qual é a sua auto-identificação de raça-etnia?
+            </mat-label>
+            <mat-select formControlName="ethnicity">
+              <mat-option
+                [value]="eth.value"
+                *ngFor="let eth of etnicities"
+              >
+                {{ eth.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field-->
+
+        </div>
+      </div>
+      
+    </mat-card-content>
+  </mat-card>
+  
+</form>
+

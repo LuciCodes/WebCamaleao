@@ -1,0 +1,249 @@
+<div fxLayout="row">
+  <div fxFlex>
+
+    <h1 class="m-t-20">
+      Buscar Empresas
+    </h1>
+
+    <form [formGroup]="frmBuscarVagas" novalidate (ngSubmit)="onSubmit()">
+      <mat-card class="default-card">
+        <mat-card-content>
+
+          <div fxLayout="row" fxLayoutGap="1%">
+            <div fxFlex="33%">
+            
+              <h3 class="m-b-0">Texto da busca</h3>
+
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Texto da busca" formControlName="seachTerm">
+              </mat-form-field>
+              
+            </div>
+            <div fxFlex="33%">
+
+              <h3 class="m-b-0">Área</h3>
+
+              <mat-form-field class="full-width">
+
+                <mat-label>Profissões</mat-label>
+                <mat-select placeholder="Profissões" formControlName="searchInProfessions" multiple>
+                  <mat-option *ngFor="let prof of professions" [value]="prof">
+                    {{ prof }}
+                  </mat-option>
+                </mat-select>
+
+              </mat-form-field>
+
+            </div>
+            <div fxFlex="33%">
+
+              <h3 class="m-b-0">Localizacão</h3>
+
+              <mat-form-field class="full-width">
+
+                <mat-select formControlName="locationType">
+                  <mat-option value="any">Em qualquer lugar </mat-option>
+                  <mat-option value="near">Próximos a um CEP</mat-option>
+                  <mat-option value="state">Em um estado</mat-option>
+                  <mat-option value="city">Em uma cidade</mat-option>
+                  <mat-option value="international">Internacionais</mat-option>
+                  <mat-option value="remote">Remotos (de casa)</mat-option>
+                </mat-select>
+
+              </mat-form-field>
+
+              <div
+                class="row"
+                *ngIf="frmBuscarVagas.controls.locationType.value == 'near'"
+              >
+                <div class="col">
+
+                  <mat-form-field class="full-width">
+
+                    <input
+                      matInput
+                      placeholder="CEP"
+                      [textMask]="cepMask"
+                      formControlName="seachNearZip"
+                    >
+
+                  </mat-form-field>
+
+                </div>
+              </div>
+              
+              <div
+                class="row"
+                *ngIf="frmBuscarVagas.controls.locationType.value == 'state'"
+              >
+                <div class="col">
+
+                  <mat-form-field class="full-width">
+
+                    <mat-label>Estados:</mat-label>
+                    <mat-select placeholder="Estados" formControlName="searchInStates" multiple>
+                      <mat-option *ngFor="let state of states" [value]="state.abrev">
+                        {{ state.name }}
+                      </mat-option>
+                    </mat-select>
+
+                  </mat-form-field>
+
+                </div>
+              </div>
+              
+              <div
+                class="row"
+                *ngIf="frmBuscarVagas.controls.locationType.value == 'city'"
+              >
+                <div class="col">
+
+                  <div class="row">
+                    <div class="col">
+                          
+                      <mat-form-field class="full-width">
+
+                        <mat-label>Estado:</mat-label>
+                        <mat-select placeholder="Estado" formControlName="searchInCitiesOfState">
+                          <mat-option *ngFor="let state of states" [value]="state.abrev">
+                            {{ state.name }}
+                          </mat-option>
+                        </mat-select>
+
+                      </mat-form-field>
+                      
+                    </div>
+                    <div class="col" *ngIf="!frmBuscarVagas.controls.searchInCitiesOfState.value">
+
+                      <p>
+                        <small>(escolha o estado)</small>
+                      </p>
+                      
+                    </div>
+                    <div class="col" *ngIf="frmBuscarVagas.controls.searchInCitiesOfState.value">
+
+                      <mat-form-field class="full-width">
+                        
+                        <mat-label>Cidades:</mat-label>
+                        <mat-select
+                          placeholder="Cidades"
+                          formControlName="searchInCities"
+                          multiple
+                        >
+        
+                          <mat-option *ngFor="let city of citiesOfSelectedState" [value]="city">
+                            {{ city }}
+                          </mat-option>
+
+                        </mat-select>
+                      
+                      </mat-form-field>
+
+                    </div>
+                  </div>
+
+
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+
+        </mat-card-content>
+        <mat-card-actions class="p-b-10">
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+          >
+            Buscar
+          </button>
+        </mat-card-actions>
+      </mat-card>
+
+      <div class="row loader-panel" *ngIf="flagLoadingData">
+        <div class="col">
+          <fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon>
+        </div>
+      </div>
+
+      <div *ngIf="jobList != null">
+        <div
+          class="no-items"
+          *ngIf="jobList.length == 0"
+        >
+
+          Nenhma vaga encontrada com esses parâmetros...
+
+        </div>
+
+        <div class="row" *ngIf="jobList.length > 0">
+          <div class="col">
+
+            <mat-list>
+              <mat-list-item
+                class="job-list large-avatar"
+                *ngFor="let job of jobList"
+              >
+                <img
+                  matListAvatar
+                  src="{{ job.company.logoUrl }}"
+                  alt="{{ job.company.name }}"
+                >
+                <h3 matLine>
+                  <a href="javascript:;" routerLink="/vagas/{{ job.id }}">
+                    {{ job.jobTitle }}
+                  </a>
+                </h3>
+        
+                <p matLine>
+                  <span> {{job.jobDescription}} </span>
+                </p>
+        
+                <div matLine>
+                  <div class="row m-t-20">
+                    <div class="col-1">
+                      
+                      <label>Perícias:</label>
+        
+                    </div>
+                    <div class="col">
+                      
+                      <mat-chip-list matLine>
+                        <mat-chip *ngFor="let skill of job.skills">{{ skill }}</mat-chip>
+                      </mat-chip-list>
+        
+                    </div>
+                    <div class="col-1">
+                          
+                      <label>Tags:</label>
+        
+                    </div>
+                    <div class="col">
+        
+                      <mat-chip-list matLine>
+                        <mat-chip *ngFor="let tag of job.tags">{{ tag }}</mat-chip>
+                      </mat-chip-list>
+        
+                    </div>
+                  </div>
+        
+                </div>
+        
+              </mat-list-item>
+            </mat-list>
+
+          </div>
+        </div>
+        
+
+
+      </div>
+
+    </form>
+  
+
+  </div>
+</div>
+  

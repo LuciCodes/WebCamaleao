@@ -1,15 +1,14 @@
-import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-
-import { AppConstants } from '../../../etc/appConstants';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AppConstants } from 'src/app/etc/appConstants';
 import { WebApiService } from 'src/app/services/webApi.service';
 
 @Component({
-  selector: 'app-buscar-vagas',
-  templateUrl: './buscar-vagas.component.html',
-  styleUrls: ['./buscar-vagas.component.css']
+  selector: 'app-company-search',
+  templateUrl: './company-search.component.html',
+  styleUrls: ['./company-search.component.css']
 })
-export class BuscarVagasComponent {
+export class CompanySearchComponent  {
 
   get cepMask() { return AppConstants.cepMask; }
 

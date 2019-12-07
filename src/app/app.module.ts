@@ -38,10 +38,11 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatStepperModule } from '@angular/material/stepper';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
-import { BuscarVagasComponent } from './views/vagas/buscar-vagas/buscar-vagas.component';
-import { EditarVagasComponent } from './views/vagas/editar-vagas/editar-vagas.component';
-import { HomeVagasComponent } from './views/vagas/home-vagas/home-vagas.component';
-import { IndexVagasComponent } from './views/vagas/index-vagas/index-vagas.component';
+
+import { JobOfferSearchComponent } from './views/job-offers/job-offer-search/job-offer-search.component';
+import { JobOfferIndexComponent } from './views/job-offers/job-offer-index/job-offer-index.component';
+import { JobOfferHomeComponent } from './views/job-offers/job-offer-home/job-offer-home.component';
+import { JobOfferBasicInfoComponent } from './views/job-offers/job-offer-basic-info/job-offer-basic-info.component';
 
 import { TextMaskModule } from 'angular2-text-mask';
 
@@ -61,8 +62,25 @@ import { CandidateProfileComponent } from './views/candidates/candidate-profile/
 import { CandidateExperiencesComponent } from './views/candidates/candidate-experiences/candidate-experiences.component';
 import { CandidateHabilitiesComponent } from './views/candidates/candidate-habilities/candidate-habilities.component';
 import { CandidatePreferencesComponent } from './views/candidates/candidate-preferences/candidate-preferences.component';
+
+import { CompanyIndexComponent } from './views/companies/company-index/company-index.component';
+import { CompanyHomeComponent } from './views/companies/company-home/company-home.component';
+import { CompanyBasicInfoComponent } from './views/companies/company-basic-info/company-basic-info.component';
+import { CompanySearchComponent } from './views/companies/company-search/company-search.component';
+
+import { MatchIndexComponent } from './views/matches/match-index/match-index.component';
+import { MatchHomeComponent } from './views/matches/match-home/match-home.component';
+import { MatchBasicInfoComponent } from './views/matches/match-basic-info/match-basic-info.component';
+import { MatchSearchComponent } from './views/matches/match-search/match-search.component';
+
+import { UserIndexComponent } from './views/users/user-index/user-index.component';
+import { UserHomeComponent } from './views/users/user-home/user-home.component';
+import { UserBasicInfoComponent } from './views/users/user-basic-info/user-basic-info.component';
+import { UserSearchComponent } from './views/users/user-search/user-search.component';
+
 import { HomeCandidateComponent } from './views/home/home-candidate/home-candidate.component';
 import { HomeCompanyComponent } from './views/home/home-company/home-company.component';
+import { CandidateSearchComponent } from './views/candidates/candidate-search/candidate-search.component';
 import { CandidateEducationComponent } from './views/candidates/candidate-education/candidate-education.component';
 import { CandidateBasicInfoComponent } from './views/candidates/candidate-basic-info/candidate-basic-info.component';
 import { CandidateSocialNetworksComponent } from './views/candidates/candidate-social-networks/candidate-social-networks.component';
@@ -74,10 +92,10 @@ import { CandidateCertificationsComponent } from './views/candidates/candidate-c
   declarations: [
     AppComponent,
     HomeComponent,
-    BuscarVagasComponent,
-    EditarVagasComponent,
-    HomeVagasComponent,
-    IndexVagasComponent,
+    JobOfferIndexComponent,
+    JobOfferHomeComponent,
+    JobOfferSearchComponent,
+    JobOfferBasicInfoComponent,
     LoginComponent,
     AppIndexComponent,
     LogoutComponent,
@@ -85,10 +103,23 @@ import { CandidateCertificationsComponent } from './views/candidates/candidate-c
     AppHeaderComponent,
     CamaleaoTagsComponent,
     CandidateIndexComponent,
+    CandidateSearchComponent,
     CandidateProfileComponent,
     CandidateExperiencesComponent,
     CandidateHabilitiesComponent,
     CandidatePreferencesComponent,
+    CompanyIndexComponent,
+    CompanyHomeComponent,
+    CompanyBasicInfoComponent,
+    CompanySearchComponent,
+    UserIndexComponent,
+    UserHomeComponent,
+    UserBasicInfoComponent,
+    UserSearchComponent,
+    MatchIndexComponent,
+    MatchHomeComponent,
+    MatchBasicInfoComponent,
+    MatchSearchComponent,
     HomeCandidateComponent, 
     HomeCompanyComponent,
     CandidateEducationComponent,

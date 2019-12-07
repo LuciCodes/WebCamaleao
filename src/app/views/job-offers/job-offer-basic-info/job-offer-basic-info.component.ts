@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-editar-vagas',
-  templateUrl: './editar-vagas.component.html',
-  styleUrls: ['./editar-vagas.component.css']
+  selector: 'app-job-offer-basic-info',
+  templateUrl: './job-offer-basic-info.component.html',
+  styleUrls: ['./job-offer-basic-info.component.css']
 })
-export class EditarVagasComponent {
+export class JobOfferBasicInfoComponent {
 
   addressForm = this.fb.group({
     company: null,

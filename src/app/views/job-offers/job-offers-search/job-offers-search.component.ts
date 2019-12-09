@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
 import { AppConstants } from '../../../etc/appConstants';
-import { WebApiService } from 'src/app/services/webApi.service';
+import { JobOfferService } from 'src/app/services/job-offer.service';
+import { JobOfferSearchParams } from 'src/app/models/jobOfferSearchParams';
 
 @Component({
   selector: 'app-job-offers-search',
@@ -15,7 +16,7 @@ export class JobOffersSearchComponent {
 
   flagLoadingData: boolean = false;
 
-  jobList: Array<any>;
+  jobOffers: Array<any>;
 
   get states(): Array<any> {
 
@@ -29,7 +30,7 @@ export class JobOffersSearchComponent {
 
   get citiesOfSelectedState(): Array<any> {
     
-    let state = this.frmBuscarVagas.controls['searchInCitiesOfState'].value;
+    let state = this.frmSearch.controls['searchInCitiesOfState'].value;
 
     if (state) {
 
@@ -38,28 +39,22 @@ export class JobOffersSearchComponent {
     } else { return []; }
   }
 
-  frmBuscarVagas = this.fb.group({
-    seachTerm: null,
-    locationType: 'any',
+  frmSearch = this.fb.group({
+    idCpf: '',
+    name: '',
+    gender: '',
+    sex: '',
+    pcd: '',
+    locationType: '',
     seachNearZip: null,
     searchInStates: null,
     searchInCities: null,
     searchInCitiesOfState: null,
     searchInProfessions: null
-    /*,
-    firstName: [null, Validators.required],
-    lastName: [null, Validators.required],
-    address: [null, Validators.required],
-    address2: null,
-    city: [null, Validators.required],
-    postalCode: [null, Validators.compose([
-      Validators.required, Validators.minLength(5), Validators.maxLength(5)])
-    ],
-    shipping: ['free', Validators.required]
-    */
   });
 
-  constructor(private webApi: WebApiService, private fb: FormBuilder) {}
+  constructor(private jobOfferService: JobOfferService,
+              private fb: FormBuilder) {}
 
   onSubmit() {
     
@@ -67,14 +62,18 @@ export class JobOffersSearchComponent {
     
     window.setTimeout(() => {
   
-      this.webApi.searchJobOffers().then((jobs) => {
+      let params = new JobOfferSearchParams(this.frmSearch.value);
 
-        this.jobList = jobs;
+      params.forceReload = true;
+
+      this.jobOfferService.searchJobOffers(params).then((list) => {
+
+        this.jobOffers = list;
 
         this.flagLoadingData = false;
       });
       
-    }, 1420);
+    }, 420);
   }
 
 }

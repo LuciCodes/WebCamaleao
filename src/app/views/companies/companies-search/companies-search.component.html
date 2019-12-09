@@ -186,11 +186,11 @@
                 class="job-list large-avatar"
                 *ngFor="let job of jobList"
               >
-                <img
+                <!--img
                   matListAvatar
                   src="{{ job.company.logoUrl }}"
                   alt="{{ job.company.name }}"
-                >
+                -->
                 <h3 matLine>
                   <a href="javascript:;" routerLink="/vagas/{{ job.id }}">
                     {{ job.jobTitle }}
@@ -211,7 +211,7 @@
                     <div class="col">
                       
                       <mat-chip-list matLine>
-                        <mat-chip *ngFor="let skill of job.skills">{{ skill }}</mat-chip>
+                        <mat-chip *ngFor="let skill of job.habilities">{{ skill }}</mat-chip>
                       </mat-chip-list>
         
                     </div>

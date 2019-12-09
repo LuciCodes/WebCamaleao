@@ -1,0 +1,27 @@
+[
+  {
+    "id": 5000,
+    "name": "Apple, Inc",
+    "logoUrl": "/assets/img/company-logos/logo-apple.png"
+  },
+  {
+    "id": 5001,
+    "name": "Microsoft",
+    "logoUrl": "/assets/img/company-logos/logo-microsoft.png"
+  },
+  {
+    "id": 5002,
+    "name": "Google",
+    "logoUrl": "/assets/img/company-logos/logo-google.png"
+  },
+  {
+    "id": 5003,
+    "name": "Tesla Motors",
+    "logoUrl": "/assets/img/company-logos/logo-tesla.png"
+  },
+  {
+    "id": 5004,
+    "name": "Amazon",
+    "logoUrl": "/assets/img/company-logos/logo-amazon.png"
+  }
+]

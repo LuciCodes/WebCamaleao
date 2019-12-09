@@ -16,9 +16,14 @@ import { WebApiService } from './services/webApi.service';
 import { WebApiFirebaseService } from './services/webApi.firebase.service';
 import { WebApiMockService } from './services/webApi.mock.service';
 import { UserService } from './services/user.service';
+
 import { CandidateService } from './services/candidate.service';
 import { CandidateFirebaseService } from './services/candidate.firebase.service';
 import { CandidateMockService } from './services/candidate.mock.service';
+
+import { JobOfferService } from './services/job-offer.service';
+import { JobOfferFirebaseService } from './services/job-offer.firebase.service';
+import { JobOfferMockService } from './services/job-offer.mock.service';
 
 import { AppIndexComponent } from './views/app-index/app-index.component';
 import { LogoutComponent } from './views/logout/logout.component';
@@ -67,7 +72,10 @@ import { SharedModule } from './shared.module';
     UserService,
     CandidateService,
     CandidateFirebaseService,
-    CandidateMockService
+    CandidateMockService,
+    JobOfferService,
+    JobOfferFirebaseService,
+    JobOfferMockService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,62 @@
+<div fxLayout="row">
+  <div fxFlex>
+
+    <h1 class="m-t-20">
+
+      <a href="javascript:;" routerLink="/vagas/buscar" style="text-decoration: none; color: #333">
+        &lt;
+      </a>
+
+      Incluir Vaga
+    </h1>
+
+    <form [formGroup]="frmJobOffer" novalidate (ngSubmit)="onSubmit()">
+      <mat-card class="default-card">
+        <mat-card-content>
+
+          <div fxLayout="row" fxLayoutGap="1%">
+            <div fxFlex="33%">
+
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Titulo" formControlName="title">
+              </mat-form-field>
+              
+            </div>
+            <div fxFlex="33%">
+
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Nível de Atuação" formControlName="level">
+              </mat-form-field>
+
+            </div>
+            <div fxFlex="33%">
+
+              <mat-form-field class="full-width">
+
+                <mat-select placeholder="Áreas de Trabalho" formControlName="areas" multiple>
+                  <mat-option *ngFor="let prof of professions" [value]="prof">
+                    {{ prof }}
+                  </mat-option>
+                </mat-select>
+
+              </mat-form-field>
+
+            </div>
+          </div>
+    
+        </mat-card-content>
+        <mat-card-actions class="p-b-10">
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+          >
+            Buscar
+          </button>
+        </mat-card-actions>
+      </mat-card>
+
+    </form>
+  </div>
+</div>
+  

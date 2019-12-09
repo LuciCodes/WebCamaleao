@@ -1,0 +1,11 @@
+{
+  "id": 1006,
+  "companyId" : "5004",
+  "title": "Robot Manager",
+  "description": "A Tesla procura uma especialista em robótica para a fábria na Califórnia",
+  "locationTxt": "Palo Alto, CA - USA",
+  "tags": ["programação", "ti", "robótica"],
+  "habilities": ["inglês fluente", "curso superior"],
+  "areas": ["ti"],
+  "level": "senior"
+}

@@ -1,0 +1,11 @@
+{
+  "id": 1000,
+  "companyId" : "5000",
+  "title": "Desenvolvedore Mobile",
+  "description": "Uma das maiores empresas de tecnologia do mundo precisa de desenvolvedores remotos para trabalhar nos testes do iOS",
+  "locationTxt": "Remoto",
+  "tags": ["programação", "ti"],
+  "habilities": ["ios", "swift"],
+  "areas": ["ti"],
+  "level": "senior"
+}

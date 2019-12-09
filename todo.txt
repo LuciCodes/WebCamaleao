@@ -1,0 +1,4 @@
+
+Create Functions Project
+
+Create function to InitCandidate(), don't create new info when into is unavailable

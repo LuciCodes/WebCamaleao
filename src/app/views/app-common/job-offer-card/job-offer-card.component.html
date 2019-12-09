@@ -1,0 +1,26 @@
+
+<div
+  class="card-container"
+  *ngIf="jobOffer"
+>
+  <div fxLayout="row">
+      
+    <div fxFlex="30%" class="avatar-pic default">
+
+      <img
+        src="{{ photoOf(jobOffer) }}"
+      >
+
+    </div>
+    <div fxFlex="70%">
+
+      <h3>
+        {{ jobOffer.title }}
+      </h3>
+      <p>
+        {{ jobOffer.description }}
+      </p>
+
+    </div>
+  </div>
+</div>  

@@ -32,7 +32,18 @@
               Cursos:
             </h4>
             
-            <table class="list-table">
+            <div
+              *ngIf="!candidateEducation.courses || candidateEducation.courses.length == 0"
+              class="txt-center"
+              style="margin-top: -40px"
+            >
+              <small>(nenhum definido)</small>
+            </div>
+            
+            <table
+              *ngIf="candidateEducation.courses && candidateEducation.courses.length > 0"
+              class="list-table"
+            >
               <tbody>
                 <ng-container  *ngFor="let course of candidateEducation.courses">
 

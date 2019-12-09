@@ -3,11 +3,11 @@
 .avatar-pic {
 
   position: relative;
-  left: -20px;
-  top: 10px;
-  width: 128px;
-  height: 128px;
-  margin-bottom: -128px;
+  left: -0px;
+  top: 12px;
+  width: 100px;
+  height: 100px;
+  margin-bottom: -100px;
 }
 
   .avatar-pic img {

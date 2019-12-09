@@ -18,6 +18,11 @@
       Habilidades
     </h3>
 
+    <div *ngIf="!categories || categories.length == 0" class="txt-center">
+      <br><br>
+      <small>(nenhuma definida)</small>
+    </div>
+
     <table>
       <tbody>
         <tr *ngFor="let category of categories">

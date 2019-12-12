@@ -8,7 +8,7 @@ export class AppConstants {
   static phoneMask = { mask: ['(', /[1-9]/, /[1-9]/, ')', ' ', /[1-9]/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/] };
   static cepMask = { mask: [/\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/] };
 
-  static educationalLevels= [
+  static educationalLevels = [
     { value: 'INDEFINIDA', name:'Indefinida' },
     { value: 'ENSINO_FUNDAMENTAL_INTERROMPIDO', name:'Ensino Fundamental: Interrompido' },
     { value: 'ENSINO_FUNDAMENTAL_CURSANDO', name:'Ensino Fundamental: Cursando' },
@@ -36,7 +36,7 @@ export class AppConstants {
     { value: 'DOUTORADO_CURSANDO', name:'Pós-Graduação | Doutorado: Cursando' }
   ];
 
-  static courseLevels= [
+  static courseLevels = [
     { value: 'INDEPENDENTE', name:'Independente' },
     { value: 'TECNICO', name:'Técnico' },
     { value: 'PROFISSIONALIZANTE', name:'Profissionalizante' },
@@ -47,7 +47,17 @@ export class AppConstants {
     { value: 'POS_DOUTORADO', name:'Pós-Douturado' },
     { value: 'OUTRO', name:'Outro' }
   ];
-  static sexes= [
+
+  static jobOfferLevels = [
+    { value: 'ESTAGIO', name:'Estágio' },
+    { value: 'APRENDIZ', name:'Aprendiz' },
+    { value: 'PLENO', name:'Pleno' },
+    { value: 'SENIOR', name:'Sênior' },
+    { value: 'DIRETOR', name:'Diretor' },
+    { value: 'EXECUTIVO', name:'Executivo' }
+  ];
+  
+  static sexes = [
     { value: 'ASSEXUAL', name:'Assexual' },
     { value: 'BISSEXUAL', name:'Bissexual' },
     { value: 'DEMISSEXUAL', name:'Demissexual' },
@@ -57,7 +67,7 @@ export class AppConstants {
     { value: 'SEM_IDENTIFICACAO', name:'Não desejo  me identificar' }
   ];
 
-  static ethnicities= [
+  static ethnicities = [
     { value: 'BRANCA', name:'Branca' },
     { value: 'INDIGENA', name:'Indígena' },
     { value: 'PRETA', name:'Preta' },
@@ -65,13 +75,21 @@ export class AppConstants {
     { value: 'SEM_IDENTIFICACAO', name:'Não desejo  me identificar' }
   ];
 
-  static genders= [
+  static genders = [
     { value: 'MULHER', name: 'Mulher' },
     { value: 'HOMEM', name: 'Homem' },
     { value: 'NB', name: 'Não-binário' },
     { value: 'QUEER', name: 'Queer' },
     { value: 'OUTRA', name: 'Outra' },
     { value: 'SEM_IDENTIFICACAO', name:'Não desejo  me identificar' }
+  ];
+
+  static jobOfferTypes = [
+    { value: 'INTEGRAL', name:'Integral' },
+    { value: 'MEIO_PERIODO', name:'Meio Período' },
+    { value: 'CONTRATO', name:'Contrato' },
+    { value: 'TEMPORARIO', name:'Temporário' },
+    { value: 'ESTAGIO', name:'Estágio' }
   ];
 
   static businessAreas = [

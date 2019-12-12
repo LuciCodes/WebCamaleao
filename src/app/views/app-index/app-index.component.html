@@ -42,7 +42,9 @@
 
 </mat-toolbar>
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" 
+  <mat-sidenav
+      #drawer
+      class="sidenav" 
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
       [opened]="(isHandset$ | async) === false">
@@ -96,6 +98,8 @@
         
       </ng-container>
       
+      <div style="display:block; width: 140px;">&nbsp;</div>
+
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

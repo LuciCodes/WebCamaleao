@@ -4,12 +4,15 @@ export class JobOffer {
   id: string;
 
   companyId: string;
-  
-  title: string;
-  description: string;
-  locationTxt: string;
+  companyName: string;
+  companyAuxId: string;
 
+  title: string;
   level: string;
+  description: string;
+  hours: string;
+
+  locationTxt: string;
 
   areas: Array<string> = [];
   habilities: Array<string> = [];

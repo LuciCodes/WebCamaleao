@@ -21,6 +21,16 @@ export class JobOffersDetailComponent implements OnInit {
 
   get cepMask() { return AppConstants.cepMask; }
 
+  get jobOfferLevels(): Array<any> {
+
+    return AppConstants.jobOfferLevels;
+  }
+
+  get jobOfferTypes(): Array<any> {
+
+    return AppConstants.jobOfferTypes;
+  }
+
   get states(): Array<any> {
 
     return AppConstants.brazilianStates;
@@ -29,6 +39,21 @@ export class JobOffersDetailComponent implements OnInit {
   get professions(): Array<any> {
 
     return AppConstants.professions;
+  }
+
+  get basicSkills(): Array<any> {
+
+    return AppConstants.basicSkills;
+  }
+
+  get isValid(): boolean {
+
+    return this.frmJobOffer && this.frmJobOffer.valid;
+  }
+
+  get companies() {
+
+    return [];
   }
 
   /*
@@ -58,10 +83,15 @@ export class JobOffersDetailComponent implements OnInit {
 
     this.frmJobOffer = this.fb.group({
       companyId: null,
+      companyName: [obj.companyName, Validators.required],
+      companyAuxId: [obj.companyAuxId],
       title: [obj.title, Validators.required],
-      description: [obj.description, Validators.required],
       level: [obj.level, Validators.required],
-      areas: [null, Validators.required]
+      description: [obj.description, Validators.required],
+      jobOfferType: [obj.jobOfferType, Validators.required],
+      areas: [null, Validators.required],
+      habilities: [null, Validators.required],
+      tags: [null, Validators.required]
     });
   }
 
@@ -87,10 +117,5 @@ export class JobOffersDetailComponent implements OnInit {
       this.flagLoadingData = false;
       
     });
-  }
-
-  onSubmit() {
-    alert('Thanks!');
-  }
-  
+  }  
 }

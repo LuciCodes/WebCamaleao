@@ -5,6 +5,7 @@ import { JobOffer } from '../models/jobOffer';
 import { JobOfferMockService } from './job-offer.mock.service';
 import { JobOfferFirebaseService } from './job-offer.firebase.service';
 import { JobOfferSearchParams } from '../models/jobOfferSearchParams';
+import { Company } from '../models/company';
 
 @Injectable()
 export class JobOfferService {
@@ -76,7 +77,7 @@ export class JobOfferService {
     return this._jobOffers;
   }
 
-  async searchJobOffers(filterParams?: JobOfferSearchParams) : Promise<Array<any>> {
+  async searchJobOffers(filterParams?: JobOfferSearchParams, companyList?: Array<Company>) : Promise<Array<any>> {
 
     let filters = {};
 
@@ -98,7 +99,41 @@ export class JobOfferService {
 
       if (filterParams.text) {
 
-        include = (job.description.toLowerCase().includes(filterParams.text));
+        include = (job.title.toLowerCase().includes(filterParams.text.toLowerCase())
+                || job.description.toLowerCase().includes(filterParams.text.toLowerCase()));
+      }
+
+      if (include && filterParams.companyName && companyList) {
+
+        let companies = companyList.filter(c => c.name.toLowerCase().includes(filterParams.companyName.toLowerCase()));
+
+        include = (job.companyId == null || companies.findIndex(c => c.id == job.companyId) > -1);
+      }
+      
+      if (include && filterParams.areas && filterParams.areas.length > 0) {
+
+        include = false;
+
+        for (let a = 0; a < filterParams.areas.length; a++) {
+
+          include = job.areas.includes(filterParams[a]);
+
+          if (include) break;
+        }
+      }
+      
+      if (include && filterParams.tags && filterParams.tags != '') {
+
+        include = false;
+
+        let tagList = filterParams.tags.split(',');
+
+        for (let l = 0; l < tagList.length; l++) {
+            
+          include = job.tags.includes(tagList[l]);  //tag is case sensitive for now
+
+          if (include) break;
+        }
       }
 
       if (include) {
@@ -139,5 +174,10 @@ export class JobOfferService {
     }
 
     return result;
+  }
+
+  clearSearchParams() {
+
+    this.lastSearchParams = null;
   }
 }

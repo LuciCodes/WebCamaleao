@@ -2,10 +2,16 @@
 export class JobOfferSearchParams {
 
   text: string;
+  companyId: string;
+  companyName: string;
   areas: Array<any>;
+  tags: string;
+  locationType: string;
+  seachNearZip: string;
   searchInStates: Array<any>;
   searchInCities: Array<any>;
   searchInCitiesOfState: Array<any>;
+  searchInProfessions: Array<any>;
 
   forceReload: boolean = false;
 

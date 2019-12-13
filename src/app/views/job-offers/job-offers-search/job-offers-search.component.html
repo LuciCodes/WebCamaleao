@@ -13,7 +13,7 @@
       
     </div>
 
-    <form [formGroup]="frmSearch" *ngIf="frmSearch" novalidate (ngSubmit)="onSubmit()">
+    <form [formGroup]="frmSearch" *ngIf="frmSearch" novalidate>
       <mat-card class="default-card">
         <mat-card-content>
 
@@ -21,14 +21,14 @@
             <div fxFlex="33%">
 
               <mat-form-field class="full-width">
-                <input matInput placeholder="ID ou CPF" formControlName="idCpf">
+                <input matInput placeholder="Título ou descrição" formControlName="text">
               </mat-form-field>
               
             </div>
             <div fxFlex="33%">
 
               <mat-form-field class="full-width">
-                <input matInput placeholder="Nome da Pessoa" formControlName="name">
+                <input matInput placeholder="Nome da Empresa" formControlName="companyName">
               </mat-form-field>
 
             </div>
@@ -36,7 +36,7 @@
 
               <mat-form-field class="full-width">
 
-                <mat-select placeholder="Área de Trabalho" formControlName="searchInProfessions" multiple>
+                <mat-select placeholder="Áreas de Trabalho" formControlName="searchInProfessions" multiple>
                   <mat-option *ngFor="let prof of professions" [value]="prof">
                     {{ prof }}
                   </mat-option>
@@ -170,10 +170,20 @@
 
         </mat-card-content>
         <mat-card-actions class="p-b-10">
+          
+          <button
+            mat-button
+            color="warning"
+            (click)="clearParams()"
+            style="margin-right: 2.1em;"
+          >
+            Limpar Parâmetros
+          </button>
+
           <button
             mat-raised-button
             color="primary"
-            type="submit"
+            (click)="search()"
           >
             Buscar
           </button>

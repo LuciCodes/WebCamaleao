@@ -85,11 +85,11 @@ export class JobOffersSearchComponent implements OnInit {
   initForm(obj: any) {
 
     this.frmSearch = this.fb.group({
-      idCpf: [obj.idCpf],
-      name: [obj.name],
-      gender: [obj.gender],
-      sex: [obj.sex],
-      pcd: [obj.pcd],
+      text: [obj.text],
+      companyId: [obj.companyId],
+      companyName: [obj.companyName],
+      areas: [obj.areas],
+      tags: [obj.tags],
       locationType: [obj.locationType],
       seachNearZip: [obj.seachNearZip],
       searchInStates: [obj.searchInStates],
@@ -99,7 +99,7 @@ export class JobOffersSearchComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  search() {
     
     this.flagLoadingData = true;
     
@@ -109,7 +109,7 @@ export class JobOffersSearchComponent implements OnInit {
 
       params.forceReload = true;
 
-      this.jobOfferService.searchJobOffers(params).then((list) => {
+      this.jobOfferService.searchJobOffers(params, this.companyService.companies).then((list) => {
 
         this.jobOffers = list;
 
@@ -119,4 +119,10 @@ export class JobOffersSearchComponent implements OnInit {
     }, 420);
   }
 
+  clearParams() {
+
+    this.jobOfferService.clearSearchParams();
+
+    this.initForm({});
+  }
 }

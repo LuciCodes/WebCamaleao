@@ -103,7 +103,7 @@ export class JobOfferService {
                 || job.description.toLowerCase().includes(filterParams.text.toLowerCase()));
       }
 
-      if (include && filterParams.companyName && companyList) {
+      if ((include) && filterParams.companyName && companyList) {
 
         let companies = companyList.filter(c => c.name.toLowerCase().includes(filterParams.companyName.toLowerCase()));
 

@@ -95,7 +95,8 @@ export class JobOffersSearchComponent implements OnInit {
       searchInStates: [obj.searchInStates],
       searchInCities: [obj.searchInCities],
       searchInCitiesOfState: [obj.searchInCitiesOfState],
-      searchInProfessions: [obj.searchInProfessions]
+      searchInProfessions: [obj.searchInProfessions],
+      searchLogic: [obj.searchLogic || 'AND']
     });
   }
 

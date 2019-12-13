@@ -11,7 +11,6 @@ export class JobOfferSearchParams {
   searchInStates: Array<any>;
   searchInCities: Array<any>;
   searchInCitiesOfState: Array<any>;
-  searchInProfessions: Array<any>;
 
   forceReload: boolean = false;
 

@@ -36,7 +36,7 @@
 
               <mat-form-field class="full-width">
 
-                <mat-select placeholder="Áreas de Trabalho" formControlName="searchInProfessions" multiple>
+                <mat-select placeholder="Áreas de Trabalho" formControlName="areas" multiple>
                   <mat-option *ngFor="let prof of professions" [value]="prof">
                     {{ prof }}
                   </mat-option>
@@ -47,7 +47,7 @@
             </div>
           </div>
     
-          <div fxLayout="row" fxLayoutGap="1%">
+          <div fxLayout="row" fxLayoutGap="1%" style="display: none">
             <div fxFlex="33%">
 
               <mat-form-field class="full-width">
@@ -171,22 +171,55 @@
         </mat-card-content>
         <mat-card-actions class="p-b-10">
           
-          <button
-            mat-button
-            color="warning"
-            (click)="clearParams()"
-            style="margin-right: 2.1em;"
-          >
-            Limpar Parâmetros
-          </button>
+          <div fxLayout="row" fxLayoutGap="1%" style="display: none">
+            <div fxFlex="30%" class="txt-right">
+              
+              <button
+                mat-button
+                color="warning"
+                (click)="clearParams()"
+                style="margin-right: 2.1em;"
+              >
+                Limpar Parâmetros
+              </button>
+              
+            </div>
+            <div fxFlex="36%" class="txt-center">
 
-          <button
-            mat-raised-button
-            color="primary"
-            (click)="search()"
-          >
-            Buscar
-          </button>
+              <button
+                mat-raised-button
+                color="primary"
+                (click)="search()"
+              >
+                Buscar
+              </button>
+
+            </div>
+            <div fxFlex="50%" class="txt-left">
+  
+              <!--
+              Lógica:&nbsp;&nbsp;
+              <mat-radio-group
+                formControlName="searchLogic"
+                aria-label="Select an option"
+              >
+                <mat-radio-button
+                  [value]="'AND'"
+                  title="Todos os parâmetros devem ser satisfeitos em cada item do resultado"
+                >AND (exclusivista)</mat-radio-button>
+                &nbsp;&nbsp;
+                <mat-radio-button
+                  [value]="'OR'"
+                  title="Qualquer um dos parâmetros pode ser satisfeito em cada item do resultado"
+                  >
+                    OR (inclusivista)
+                </mat-radio-button> 
+              </mat-radio-group>
+              -->
+              
+            </div>
+          </div>
+
         </mat-card-actions>
       </mat-card>
 

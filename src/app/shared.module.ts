@@ -40,6 +40,9 @@ import { TextMaskModule } from 'angular2-text-mask';
 import { AreaNamePipe } from './pipes/area-name.pipe';
 import { SimpleLabelPipe } from './pipes/simple-label.pipe';
 import { EducationLevelPipe } from './pipes/education-level.pipe';
+import { JobOfferLevelNamePipe } from './pipes/job-offer-level-name.pipe';
+import { JobOfferTypeNamePipe } from './pipes/job-offer-type-name.pipe';
+import { StringToListPipe } from './pipes/string-to-list.pipe';
 import { GenderNamePipe } from './pipes/gender-name.pipe';
 import { SexNamePipe } from './pipes/sex-name.pipe';
 import { EthnicityNamePipe } from './pipes/ethnicity-name.pipe';
@@ -53,6 +56,9 @@ import { CommonModule } from '@angular/common';
     SimpleLabelPipe,
     EducationLevelPipe,
     GenderNamePipe,
+    JobOfferLevelNamePipe,
+    JobOfferTypeNamePipe,
+    StringToListPipe,
     SexNamePipe,
     EthnicityNamePipe,
     CourseLevelNamePipe,
@@ -135,6 +141,9 @@ import { CommonModule } from '@angular/common';
     SimpleLabelPipe,
     EducationLevelPipe,
     GenderNamePipe,
+    JobOfferLevelNamePipe,
+    JobOfferTypeNamePipe,
+    StringToListPipe,
     SexNamePipe,
     EthnicityNamePipe,
     CourseLevelNamePipe,

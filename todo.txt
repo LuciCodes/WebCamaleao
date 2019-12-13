@@ -8,3 +8,5 @@ Create function to InitCandidate(), don't create new info when into is unavailab
 Adicionar habilidade Idioma:
 
 Adicionar Voluntariado: (experiencia)
+
+Matematica (elétrons) > Hardware > Software > Ideias (output)

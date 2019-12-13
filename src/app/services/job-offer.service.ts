@@ -15,6 +15,9 @@ export class JobOfferService {
   mockFunctions: Array<string> = [];
   fbFunctions: Array<string> = ['loadJobOffers', 'searchJobOffers'];
 
+  lastSearchParams?: JobOfferSearchParams;
+  lastSearchResults?: Array<JobOffer>;
+
   private _jobOffers: Array<JobOffer> = [];
   
   get jobOffers(): Array<JobOffer> {
@@ -104,7 +107,10 @@ export class JobOfferService {
       }
     }
 
-    return filteredSearch;
+    this.lastSearchResults = filteredSearch;
+    this.lastSearchParams = filterParams;
+
+    return this.lastSearchResults;
   }
   
   async saveJobOffer(jobOffer?: JobOffer): Promise<any> {
@@ -121,6 +127,17 @@ export class JobOfferService {
       result = await this.jobOfferFirebase.saveJobOffer(jobOffer);
     }
     
+    if (this.lastSearchResults) {
+      // updates this cache
+
+      let idx = this.lastSearchResults.findIndex(j => j.id == jobOffer.id);
+
+      if (idx > -1) {
+
+        this.lastSearchResults[idx] = jobOffer;
+      }
+    }
+
     return result;
   }
 }

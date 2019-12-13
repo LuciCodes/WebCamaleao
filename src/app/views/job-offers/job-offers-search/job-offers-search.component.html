@@ -13,7 +13,7 @@
       
     </div>
 
-    <form [formGroup]="frmSearch" novalidate (ngSubmit)="onSubmit()">
+    <form [formGroup]="frmSearch" *ngIf="frmSearch" novalidate (ngSubmit)="onSubmit()">
       <mat-card class="default-card">
         <mat-card-content>
 

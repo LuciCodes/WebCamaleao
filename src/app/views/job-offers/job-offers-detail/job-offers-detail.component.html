@@ -1,5 +1,11 @@
 
-<div fxLayout="row" *ngIf="editingObj">
+<div class="row loader-panel tall" *ngIf="flagLoadingData">
+  <div class="col">
+    <fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon>
+  </div>
+</div>
+
+<div fxLayout="row" *ngIf="!flagLoadingData && editingObj">
   <div fxFlex>
 
     <h1 class="m-t-20">
@@ -28,36 +34,38 @@
         <div fxLayout="row" fxLayoutGap="1%">
           <div fxFlex="33%">
 
-            <span *ngIf="companies[editingObj.companyId]">
+            <h4>Empresa:</h4>
+            <p *ngIf="companies[editingObj.companyId]">
               {{ companies[editingObj.companyId].name  }}
-            </span>
+            </p>
 
           </div>
           
         </div>
 
         <div fxLayout="row" fxLayoutGap="1%">
-          <div fxFlex="33%">
+          <div fxFlex="50%">
 
-            {{ editingObj.title }}
+            <h4>Título:</h4>
+            <p>
+              {{ editingObj.title }}
+            </p>
             
           </div>
-          <div fxFlex="33%">
+          <div fxFlex="24%">
 
-            {{ editingObj.level }}
-
-          </div>
-          <div fxFlex="33%">
-
-            {{ editingObj.jobOfferType }}
+            <h4>Nível:</h4>
+            <p>
+              {{ editingObj.level | jobOfferLevelName }}
+            </p>
 
           </div>
-        </div>
+          <div fxFlex="24%">
 
-        <div fxLayout="row" fxLayoutGap="1%">
-          <div fxFlex>
-
-            {{ editingObj.areas | json }}
+            <h4>Tipo:</h4>
+            <p>
+              {{ editingObj.jobOfferType | jobOfferTypeName }}
+            </p>
 
           </div>
         </div>
@@ -65,7 +73,21 @@
         <div fxLayout="row" fxLayoutGap="1%">
           <div fxFlex>
 
-            {{ editingObj.habilities | json }}
+            <h4>Áreas:</h4>
+            <p>
+              {{ editingObj.areas | stringToList }}
+            </p>  
+
+          </div>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="1%">
+          <div fxFlex>
+
+            <h4>Habilidades:</h4>
+            <p>
+              {{ editingObj.habilities | stringToList }}
+            </p>
             
           </div>
         </div>
@@ -73,7 +95,10 @@
         <div fxLayout="row" fxLayoutGap="1%">
           <div fxFlex>
 
-            {{ editingObj.tags | json }}
+            <h4>Tags:</h4>
+            <p>
+              {{ editingObj.tags }}
+            </p>
 
           </div>
         </div>
@@ -81,7 +106,10 @@
         <div fxLayout="row" fxLayoutGap="1%">
           <div fxFlex>
 
-            {{ editingObj.description }}
+            <h4>Descrição:</h4>
+            <p>
+              {{ editingObj.description }}
+            </p>
 
           </div>
         </div>

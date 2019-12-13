@@ -1,4 +1,12 @@
-<div fxLayout="row">
+
+
+<div class="row loader-panel tall" *ngIf="flagLoadingData">
+  <div class="col">
+    <fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon>
+  </div>
+</div>
+
+<div fxLayout="row" *ngIf="!flagLoadingData && editingObj">
   <div fxFlex>
 
     <h1 class="m-t-20">

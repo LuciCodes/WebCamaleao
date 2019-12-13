@@ -103,9 +103,9 @@ export class JobOffersEditComponent implements OnInit {
       level: [obj.level, Validators.required],
       description: [obj.description, Validators.required],
       jobOfferType: [obj.jobOfferType, Validators.required],
-      areas: [null],
-      habilities: [null],
-      tags: [null]
+      areas: [obj.areas],
+      habilities: [obj.habilities],
+      tags: [obj.tags]
     });
   }
 

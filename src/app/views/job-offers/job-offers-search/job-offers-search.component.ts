@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 import { AppConstants } from '../../../etc/appConstants';
 import { JobOfferService } from 'src/app/services/job-offer.service';
@@ -24,14 +24,23 @@ export class JobOffersSearchComponent implements OnInit {
 
   async initCache(): Promise<any> {
 
-    await this.companyService.loadCompanies(true);
+    if (this.companyService.companies.length == 0) {
 
+      this.flagLoadingData = true;
+
+      await this.companyService.loadCompanies(true);
+
+      console.log('Loaded companies:', this.companies);
+    }
+    
     for(let c = 0; c < this.companyService.companies.length; c++) {
-
+  
       let comp = this.companyService.companies[c];
 
       this.companies[comp.id] = comp;
     }
+    
+    this.flagLoadingData = false;
   }
   
   get states(): Array<any> {
@@ -55,19 +64,7 @@ export class JobOffersSearchComponent implements OnInit {
     } else { return []; }
   }
 
-  frmSearch = this.fb.group({
-    idCpf: '',
-    name: '',
-    gender: '',
-    sex: '',
-    pcd: '',
-    locationType: '',
-    seachNearZip: null,
-    searchInStates: null,
-    searchInCities: null,
-    searchInCitiesOfState: null,
-    searchInProfessions: null
-  });
+  frmSearch: FormGroup;
 
   constructor(private jobOfferService: JobOfferService,
               private companyService: CompanyService,
@@ -75,13 +72,33 @@ export class JobOffersSearchComponent implements OnInit {
 
   async ngOnInit(): Promise<any> {
 
-    this.flagLoadingData = true;
-
     await this.initCache();
+
+    this.initForm(this.jobOfferService.lastSearchParams || {});
     
-    this.flagLoadingData = false;
+    if (this.jobOfferService.lastSearchResults) {
+
+      this.jobOffers = this.jobOfferService.lastSearchResults;
+    }
   }
   
+  initForm(obj: any) {
+
+    this.frmSearch = this.fb.group({
+      idCpf: [obj.idCpf],
+      name: [obj.name],
+      gender: [obj.gender],
+      sex: [obj.sex],
+      pcd: [obj.pcd],
+      locationType: [obj.locationType],
+      seachNearZip: [obj.seachNearZip],
+      searchInStates: [obj.searchInStates],
+      searchInCities: [obj.searchInCities],
+      searchInCitiesOfState: [obj.searchInCitiesOfState],
+      searchInProfessions: [obj.searchInProfessions]
+    });
+  }
+
   onSubmit() {
     
     this.flagLoadingData = true;

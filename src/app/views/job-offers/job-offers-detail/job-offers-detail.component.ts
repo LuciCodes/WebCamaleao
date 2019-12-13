@@ -5,6 +5,11 @@ import { JobOffer } from 'src/app/models/jobOffer';
 import { JobOfferService } from 'src/app/services/job-offer.service';
 import {Location} from '@angular/common';
 import { AppConstants } from 'src/app/etc/appConstants';
+import { CompanyService } from 'src/app/services/company.service';
+import { Company } from 'src/app/models/company';
+import { MatSnackBar } from '@angular/material';
+import { UserService } from 'src/app/services/user.service';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-job-offers-detail',
@@ -13,11 +18,16 @@ import { AppConstants } from 'src/app/etc/appConstants';
 })
 export class JobOffersDetailComponent implements OnInit {
 
+  flagSavingData = false;
   flagLoadingData = false;
 
-  editingObj: JobOffer;
+  flagNewJobOffer = false;
+
+  offerDescription: string;
 
   frmJobOffer: any;
+
+  editingObj: JobOffer;
 
   get cepMask() { return AppConstants.cepMask; }
 
@@ -51,71 +61,44 @@ export class JobOffersDetailComponent implements OnInit {
     return this.frmJobOffer && this.frmJobOffer.valid;
   }
 
-  get companies() {
+  companies: any = {};
 
-    return [];
+  async initCache(): Promise<any> {
+
+    await this.companyService.loadCompanies(true);
+
+    for(let c = 0; c < this.companyService.companies.length; c++) {
+
+      let comp = this.companyService.companies[c];
+
+      this.companies[comp.id] = comp;
+    }
   }
 
-  /*
-  get citiesOfSelectedState(): Array<any> {
-    
-    let state = this.frmSearch.controls['searchInCitiesOfState'].value;
-
-    if (state) {
-
-      return this.states.find(s => s.abrev == state).cities;
-
-    } else { return []; }
-  }
-  */
-
-  constructor(private fb: FormBuilder,
-              public location: Location,
+  constructor(public location: Location,
+              private companyService: CompanyService,
               private jobOfferService: JobOfferService,
               private route: ActivatedRoute) {
 
-    this.initForm();
   }
 
-  initForm(obj?: any) {
-    
-    if (!obj) { obj = {}; }
-
-    this.frmJobOffer = this.fb.group({
-      companyId: null,
-      companyName: [obj.companyName, Validators.required],
-      companyAuxId: [obj.companyAuxId],
-      title: [obj.title, Validators.required],
-      level: [obj.level, Validators.required],
-      description: [obj.description, Validators.required],
-      jobOfferType: [obj.jobOfferType, Validators.required],
-      areas: [null, Validators.required],
-      habilities: [null, Validators.required],
-      tags: [null, Validators.required]
-    });
-  }
-
-  ngOnInit(): void {
+  async ngOnInit() {
 
     this.flagLoadingData = true;
+
+    await this.initCache();
 
     this.route.paramMap.subscribe(async(params) => {
 
       let id = params.get('id');
 
-      if (!id || id == '' || id == 'nova') {
-
-        this.editingObj = new JobOffer();
-
-      } else {
+      if (id && id != '') {
 
         this.editingObj = await this.jobOfferService.getJobOffer(id);
       }
 
-      this.initForm(this.editingObj);
-
       this.flagLoadingData = false;
-      
     });
-  }  
+  }
+
 }

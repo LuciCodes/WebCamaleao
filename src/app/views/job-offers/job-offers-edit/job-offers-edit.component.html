@@ -1,0 +1,213 @@
+<div fxLayout="row">
+  <div fxFlex>
+
+    <h1 class="m-t-20">
+
+      <a href="javascript:;" routerLink="/vagas/buscar" style="text-decoration: none; color: #333">
+        &lt;
+      </a>
+
+      <span *ngIf="flagNewJobOffer">
+        Incluir Vaga
+      </span>
+      <span *ngIf="!flagNewJobOffer && editingObj">
+        Editar Vaga <small>{{ editingObj.id }}</small>
+      </span>
+    </h1>
+
+    <form [formGroup]="frmJobOffer" novalidate>
+      <mat-card class="default-card">
+        <mat-card-content>
+
+          <div fxLayout="row" fxLayoutGap="1%">
+            <div fxFlex="33%">
+
+              <mat-form-field class="full-width">
+                
+                <mat-label>Empresa</mat-label>
+                <input
+                  matInput
+                  placeholder="Nome da empresa"
+                  formControlName="companyName"
+                >
+              </mat-form-field>
+
+            </div>
+            <div fxFlex="33%">
+
+              <ng-container *ngIf="companies.length > 0">
+
+                <button
+                  mat-button
+                  [matMenuTriggerFor]="belowMenu"
+                >
+                  <i class="fa fa-ellipsis-h"></i>
+                </button>
+                <mat-menu
+                  #belowMenu="matMenu"
+                  yPosition="below"
+                >
+                  <button
+                    mat-menu-item
+                    (click)="selectCompany(company)"
+                    *ngFor="let company of companies"
+                  >
+                    {{ company.name }}
+                  </button>
+                </mat-menu>
+                
+              </ng-container>
+
+            </div>
+            
+          </div>
+
+          <div fxLayout="row" fxLayoutGap="1%">
+            <div fxFlex="33%">
+
+              <mat-form-field class="full-width">
+              
+                <mat-label>Título</mat-label>
+                <input
+                  matInput 
+                  placeholder="Título da vaga" 
+                  formControlName="title"
+                >
+              </mat-form-field>
+              
+            </div>
+            <div fxFlex="33%">
+
+              <mat-form-field class="full-width">
+                  <mat-label>Nível</mat-label>
+                  <mat-select
+                    placeholder="Nível de atuação da vaga" 
+                    formControlName="level"
+                  >
+                    <mat-option
+                      *ngFor="let level of jobOfferLevels"
+                      [value]="level.value"
+                    >
+                      {{ level.name }}
+                    </mat-option>
+                  </mat-select>
+              </mat-form-field>
+
+            </div>
+            <div fxFlex="33%">
+
+              <mat-form-field class="full-width">
+
+                <mat-label>Tipo</mat-label>
+                <mat-select
+                  placeholder="Tipo de Trabalho"
+                  formControlName="jobOfferType"
+                >
+                  <mat-option *ngFor="let jobType of jobOfferTypes" [value]="jobType.value">
+                    {{ jobType.name }}
+                  </mat-option>
+                </mat-select>
+
+              </mat-form-field>
+
+            </div>
+          </div>
+
+          <div fxLayout="row" fxLayoutGap="1%">
+            <div fxFlex>
+
+              <mat-form-field class="full-width">
+          
+                <mat-label>Áreas</mat-label>
+                <mat-select
+                  placeholder="Áreas da vaga" 
+                  formControlName="areas"
+                  multiple
+                >
+                  <mat-option
+                    *ngFor="let prof of professions"
+                    [value]="prof"
+                  >
+                    {{ prof }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+            </div>
+          </div>
+
+          <div fxLayout="row" fxLayoutGap="1%">
+            <div fxFlex>
+
+              <mat-form-field class="full-width">
+                <mat-label>Habilidades</mat-label>
+                <mat-select
+                  placeholder="Habilidades requisitadas" 
+                  formControlName="habilities"
+                  multiple
+                >
+                  <mat-option
+                    *ngFor="let skill of basicSkills"
+                    [value]="skill.category + ':' + skill.name"
+                  >
+                    {{ skill.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              
+            </div>
+          </div>
+
+          <div fxLayout="row" fxLayoutGap="1%">
+            <div fxFlex>
+
+              <mat-form-field class="full-width">
+
+                <mat-label>Tags</mat-label>
+                <input
+                  matInput 
+                  placeholder="Tags da vaga (separar por vírgula)" 
+                  formControlName="tags"
+                >
+
+              </mat-form-field>
+
+            </div>
+          </div>
+    
+          <div fxLayout="row" fxLayoutGap="1%">
+            <div fxFlex>
+
+              <mat-form-field class="full-width">
+
+                <mat-label>Descrição</mat-label>
+                <textarea
+                  matInput
+                  formControlName="description"
+                  style="height:14em"
+                ></textarea>
+
+              </mat-form-field>
+
+            </div>
+          </div>
+          
+        </mat-card-content>
+        <mat-card-actions class="p-b-10">
+          <button
+            mat-raised-button
+            color="accent"
+            type="submit"
+            [disabled]="!isValid"
+            (click)="save($event)"
+          >
+            <i class="fa fa-save"></i>
+            Salvar Vaga
+          </button>
+        </mat-card-actions>
+      </mat-card>
+
+    </form>
+  </div>
+</div>
+  

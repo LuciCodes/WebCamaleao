@@ -8,6 +8,7 @@ import { JobOffersIndexComponent } from './job-offers-index/job-offers-index.com
 import { JobOffersSearchComponent } from './job-offers-search/job-offers-search.component';
 import { JobOffersHomeComponent } from './job-offers-home/job-offers-home.component';
 import { JobOffersDetailComponent } from './job-offers-detail/job-offers-detail.component';
+import { JobOffersEditComponent } from './job-offers-edit/job-offers-edit.component';
 
 const routes: Routes = [
   { 
@@ -17,7 +18,8 @@ const routes: Routes = [
       children: [
         { path: '', component: JobOffersHomeComponent },
         { path: 'buscar', component: JobOffersSearchComponent },
-        { path: 'nova', component: JobOffersDetailComponent },
+        { path: 'incluir', component: JobOffersEditComponent },
+        { path: 'editar/:id', component: JobOffersEditComponent },
         { path: ':id', component: JobOffersDetailComponent }
       ]
   }

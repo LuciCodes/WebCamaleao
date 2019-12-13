@@ -15,10 +15,15 @@
     <div fxFlex="70%">
 
       <h3>
-        {{ jobOffer.title }}
+        <a href="javascript:;" routerLink="/vagas/{{ jobOffer.id }}">
+          {{ jobOffer.title }}
+        </a>
       </h3>
       <p>
         {{ jobOffer.description }}
+      </p>
+      <p *ngIf="company">
+        {{ company.name }}
       </p>
 
     </div>

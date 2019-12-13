@@ -6,7 +6,7 @@
     </h1>
     <div style="float:left; margin: -3.6em 0em 0em 15em">
     
-      <button mat-raised-button color="accent" routerLink="/vagas/nova">
+      <button mat-raised-button color="accent" routerLink="/vagas/incluir">
         Incluir Vaga
         <i class="fa fa-plus-circle"></i>
       </button>
@@ -207,7 +207,7 @@
           >
             <div fxFlex="49.5%" *ngFor="let offer of jobOffers">
 
-              <app-job-offer-card [jobOffer]="offer"></app-job-offer-card>
+              <app-job-offer-card [jobOffer]="offer" [company]="companies[offer.companyId]"></app-job-offer-card>
 
             </div>      
           </div>

@@ -1,4 +1,5 @@
-<div fxLayout="row">
+
+<div fxLayout="row" *ngIf="editingObj">
   <div fxFlex>
 
     <h1 class="m-t-20">
@@ -7,180 +8,90 @@
         &lt;
       </a>
 
-      Incluir Vaga
+      {{ editingObj.title }}
+
+      <small class="txt-xxsm" title="Vaga {{ editingObj.id }}">
+          &nbsp;&nbsp;
+          <a
+            href="javascript:;"
+            [routerLink]="'/vagas/editar/' + editingObj.id"
+            title="Editar vaga"
+          >
+            <i class="fa fa-edit"></i>
+          </a>
+      </small>
     </h1>
 
-    <form [formGroup]="frmJobOffer" novalidate>
-      <mat-card class="default-card">
-        <mat-card-content>
+    <mat-card class="default-card">
+      <mat-card-content>
 
-          <div fxLayout="row" fxLayoutGap="1%">
-            <div fxFlex="33%">
+        <div fxLayout="row" fxLayoutGap="1%">
+          <div fxFlex="33%">
 
-              <mat-form-field class="full-width">
-                
-                <mat-label>Empresa</mat-label>
-                <input
-                  matInput
-                  placeholder="Nome da empresa"
-                  formControlName="title"
-                >
-              </mat-form-field>
+            <span *ngIf="companies[editingObj.companyId]">
+              {{ companies[editingObj.companyId].name  }}
+            </span>
 
-            </div>
-            <div fxFlex="33%">
+          </div>
+          
+        </div>
 
-              <ng-container *ngIf="companies.length > 0">
+        <div fxLayout="row" fxLayoutGap="1%">
+          <div fxFlex="33%">
 
-                <button
-                  mat-button
-                  [matMenuTriggerFor]="belowMenu"
-                >
-                  <i class="fa fa-ellipsis-h"></i>
-                </button>
-                <mat-menu
-                  #belowMenu="matMenu"
-                  yPosition="below"
-                >
-                  <button mat-menu-item>Empresa 1</button>
-                  <button mat-menu-item>Empresa 2</button>
-                </mat-menu>
-                
-              </ng-container>
-
-            </div>
+            {{ editingObj.title }}
             
           </div>
+          <div fxFlex="33%">
 
-          <div fxLayout="row" fxLayoutGap="1%">
-            <div fxFlex="33%">
+            {{ editingObj.level }}
 
-              <mat-form-field class="full-width">
-              
-                <mat-label>Título</mat-label>
-                <input
-                  matInput 
-                  placeholder="Título da vaga" 
-                  formControlName="title"
-                >
-              </mat-form-field>
-              
-            </div>
-            <div fxFlex="33%">
-
-              <mat-form-field class="full-width">
-                  <mat-label>Nível</mat-label>
-                  <mat-select
-                    placeholder="Nível de atuação da vaga" 
-                    formControlName="level"
-                  >
-                    <mat-option
-                      *ngFor="let level of jobOfferLevels"
-                      [value]="level.value"
-                    >
-                      {{ level.name }}
-                    </mat-option>
-                  </mat-select>
-              </mat-form-field>
-
-            </div>
-            <div fxFlex="33%">
-
-              <mat-form-field class="full-width">
-
-                <mat-label>Tipo</mat-label>
-                <mat-select
-                  placeholder="Tipo de Trabalho"
-                  formControlName="jobOfferType"
-                >
-                  <mat-option *ngFor="let jobType of jobOfferTypes" [value]="jobType.value">
-                    {{ jobType.name }}
-                  </mat-option>
-                </mat-select>
-
-              </mat-form-field>
-
-            </div>
           </div>
+          <div fxFlex="33%">
 
-          <div fxLayout="row" fxLayoutGap="1%">
-            <div fxFlex>
+            {{ editingObj.jobOfferType }}
 
-              <mat-form-field class="full-width">
-          
-                <mat-label>Áreas</mat-label>
-                <mat-select
-                  placeholder="Áreas da vaga" 
-                  formControlName="areas"
-                  multiple
-                >
-                  <mat-option
-                    *ngFor="let prof of professions"
-                    [value]="prof"
-                  >
-                    {{ prof }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-
-            </div>
           </div>
+        </div>
 
-          <div fxLayout="row" fxLayoutGap="1%">
-            <div fxFlex>
+        <div fxLayout="row" fxLayoutGap="1%">
+          <div fxFlex>
 
-              <mat-form-field class="full-width">
-                <mat-label>Habilidades</mat-label>
-                <mat-select
-                  placeholder="Habilidades requisitadas" 
-                  formControlName="habilities"
-                  multiple
-                >
-                  <mat-option
-                    *ngFor="let skill of basicSkills"
-                    [value]="skill.category + ':' + skill.name"
-                  >
-                    {{ skill.name }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-              
-            </div>
+            {{ editingObj.areas | json }}
+
           </div>
+        </div>
 
-          <div fxLayout="row" fxLayoutGap="1%">
-            <div fxFlex>
+        <div fxLayout="row" fxLayoutGap="1%">
+          <div fxFlex>
 
-              <mat-form-field class="full-width">
-
-                <mat-label>Tags</mat-label>
-                <input
-                  matInput 
-                  placeholder="Tags da vaga (separar por vírgula)" 
-                  formControlName="tags"
-                >
-
-              </mat-form-field>
-
-            </div>
+            {{ editingObj.habilities | json }}
+            
           </div>
-    
-        </mat-card-content>
-        <mat-card-actions class="p-b-10">
-          <button
-            mat-raised-button
-            color="accent"
-            type="submit"
-            [disabled]="!isValid"
-            (click)="save($event)"
-          >
-            <i class="fa fa-save"></i>
-            Salvar Vaga
-          </button>
-        </mat-card-actions>
-      </mat-card>
+        </div>
 
-    </form>
+        <div fxLayout="row" fxLayoutGap="1%">
+          <div fxFlex>
+
+            {{ editingObj.tags | json }}
+
+          </div>
+        </div>
+  
+        <div fxLayout="row" fxLayoutGap="1%">
+          <div fxFlex>
+
+            {{ editingObj.description }}
+
+          </div>
+        </div>
+        
+      </mat-card-content>
+      <mat-card-actions class="p-b-10">
+       &nbsp;
+      </mat-card-actions>
+    </mat-card>
+
   </div>
 </div>
   

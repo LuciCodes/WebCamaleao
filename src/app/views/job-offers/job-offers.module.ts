@@ -11,11 +11,13 @@ import { JobOffersSearchComponent } from './job-offers-search/job-offers-search.
 import { JobOffersHomeComponent } from './job-offers-home/job-offers-home.component';
 
 import { JobOfferCardComponent } from '../app-common/job-offer-card/job-offer-card.component';
+import { JobOffersEditComponent } from './job-offers-edit/job-offers-edit.component';
 
 @NgModule({
   declarations: [
     JobOfferCardComponent,
     JobOffersIndexComponent,
+    JobOffersEditComponent ,
     JobOffersDetailComponent,
     JobOffersSearchComponent,
     JobOffersHomeComponent

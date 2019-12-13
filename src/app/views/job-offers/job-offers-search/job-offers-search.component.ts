@@ -1,16 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
 import { AppConstants } from '../../../etc/appConstants';
 import { JobOfferService } from 'src/app/services/job-offer.service';
 import { JobOfferSearchParams } from 'src/app/models/jobOfferSearchParams';
+import { CompanyService } from 'src/app/services/company.service';
 
 @Component({
   selector: 'app-job-offers-search',
   templateUrl: './job-offers-search.component.html',
   styleUrls: ['./job-offers-search.component.css']
 })
-export class JobOffersSearchComponent {
+export class JobOffersSearchComponent implements OnInit {
+
 
   get cepMask() { return AppConstants.cepMask; }
 
@@ -18,6 +20,20 @@ export class JobOffersSearchComponent {
 
   jobOffers: Array<any>;
 
+  companies: any = {};
+
+  async initCache(): Promise<any> {
+
+    await this.companyService.loadCompanies(true);
+
+    for(let c = 0; c < this.companyService.companies.length; c++) {
+
+      let comp = this.companyService.companies[c];
+
+      this.companies[comp.id] = comp;
+    }
+  }
+  
   get states(): Array<any> {
 
     return AppConstants.brazilianStates;
@@ -54,8 +70,18 @@ export class JobOffersSearchComponent {
   });
 
   constructor(private jobOfferService: JobOfferService,
+              private companyService: CompanyService,
               private fb: FormBuilder) {}
 
+  async ngOnInit(): Promise<any> {
+
+    this.flagLoadingData = true;
+
+    await this.initCache();
+    
+    this.flagLoadingData = false;
+  }
+  
   onSubmit() {
     
     this.flagLoadingData = true;

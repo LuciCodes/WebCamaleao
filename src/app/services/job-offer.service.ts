@@ -9,7 +9,7 @@ import { JobOfferSearchParams } from '../models/jobOfferSearchParams';
 @Injectable()
 export class JobOfferService {
 
-  mockAll: boolean = true;
+  mockAll: boolean = false;
   firebaseAll: boolean = true;
 
   mockFunctions: Array<string> = [];
@@ -105,5 +105,22 @@ export class JobOfferService {
     }
 
     return filteredSearch;
+  }
+  
+  async saveJobOffer(jobOffer?: JobOffer): Promise<any> {
+    
+    let result = null;
+
+    if (this.mockAll || this.userForMock('saveJobOffer')) {
+
+      result = await this.jobOfferMock.saveJobOffer(jobOffer);
+    }
+    
+    if (this.firebaseAll || this.userForFirebase('saveJobOffer')) {
+      
+      result = await this.jobOfferFirebase.saveJobOffer(jobOffer);
+    }
+    
+    return result;
   }
 }

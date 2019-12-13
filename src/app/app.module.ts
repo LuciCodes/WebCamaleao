@@ -21,6 +21,10 @@ import { CandidateService } from './services/candidate.service';
 import { CandidateFirebaseService } from './services/candidate.firebase.service';
 import { CandidateMockService } from './services/candidate.mock.service';
 
+import { CompanyService } from './services/company.service';
+import { CompanyFirebaseService } from './services/company.firebase.service';
+import { CompanyMockService } from './services/company.mock.service';
+
 import { JobOfferService } from './services/job-offer.service';
 import { JobOfferFirebaseService } from './services/job-offer.firebase.service';
 import { JobOfferMockService } from './services/job-offer.mock.service';
@@ -73,6 +77,9 @@ import { SharedModule } from './shared.module';
     CandidateService,
     CandidateFirebaseService,
     CandidateMockService,
+    CompanyService,
+    CompanyFirebaseService,
+    CompanyMockService,
     JobOfferService,
     JobOfferFirebaseService,
     JobOfferMockService

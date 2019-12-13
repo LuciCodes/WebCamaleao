@@ -46,29 +46,52 @@ export class JobOfferFirebaseService {
     
     if (!this._jobofferCache || reload) {
       
-      let jobofferQuery = await this.fireDb.collection('jobOffers').ref.where('id', '==', 'id');
+      let jobofferResult = await this.fireDb.collection('jobOffers').get().toPromise();
 
-      let jobofferResult = await jobofferQuery.get();
+      let results = [];
 
-      if (!jobofferResult.empty) {
+      for(let d = 0; d < jobofferResult.docs.length; d++) {
 
-        let results = [];
-
-        for(let d = 0; d < jobofferResult.docs.length; d++) {
-
-          results.push(new JobOffer(jobofferResult.docs[d].data()));
-          
-          results[d].id = jobofferResult.docs[d].id;
-        }
-
-        this._jobofferCache = results;
-
-      } else {
-
-        this._jobofferCache = [];
+        results.push(new JobOffer(jobofferResult.docs[d].data()));
+        
+        results[d].id = jobofferResult.docs[d].id;
       }
+
+      this._jobofferCache = results;
     }
 
     return this._jobofferCache;
+  }
+  
+  async saveJobOffer(jobOffer?: JobOffer): Promise<any> {
+
+    let saveResult = { msg: 'Dados salvados com sucesso!', success: true, obj: null };
+
+    try 
+    {
+      if (jobOffer.id == 'new') {
+
+        delete jobOffer['id'];
+
+        let newObjRef = await this.fireDb.collection('jobOffers').add(jobOffer);
+
+        jobOffer.id = newObjRef.id;
+
+      } else {
+
+        await this.fireDb.collection('jobOffers')
+                                      .doc(jobOffer.id)
+                                      .set(jobOffer, { merge: true });
+      }
+
+      saveResult.obj = jobOffer;
+    }
+    catch(err) {
+
+      saveResult.msg = 'Erro salvando dados... ' + (err || '');
+      saveResult.success = false;
+    }
+
+    return saveResult;
   }
 }

@@ -10,15 +10,22 @@ export class JobOffer {
   title: string;
   level: string;
   description: string;
-  hours: string;
+  jobOfferType: string;
 
-  locationTxt: string;
+  locationState: string;
+  locationCity: string;
+  locationDistrict: string;
+  locationZipCode: string;
+  locationLat: string;
+  locationLng: string;
 
   areas: Array<string> = [];
   habilities: Array<string> = [];
   tags: Array<string> = [];
 
+  created: any;
   updated: any;
+  ownerUserId: string;
   updatedUserId: string;
 
   constructor(baseObj?: any)

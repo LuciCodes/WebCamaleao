@@ -1,32 +1,35 @@
 import { Injectable } from '@angular/core';
-import { JobOffer } from '../models/jobOffer';
 import { HttpClient } from '@angular/common/http';
 
+import { Company } from '../models/company';
+
 @Injectable()
-export class JobOfferMockService {
+export class CompanyMockService {
 
-  private _jobOfferCache: Array<JobOffer> = [];
+  private _companyCache: Array<Company> = [];
   
-  get jobOffers(): Array<JobOffer> {
+  private _workExperienceCache: Array<any> = [];
+  
+  get companies(): Array<Company> {
 
-    return this._jobOfferCache;
+    return this._companyCache;
   }
 
   constructor(private http: HttpClient){}
 
-  async getJobOffer(jobOfferId: string): Promise<JobOffer> {
+  async getCompany(companyId: string): Promise<Company> {
     
-    let result: JobOffer = this._jobOfferCache.find(e => e.id == jobOfferId);
+    let result: Company = this._companyCache.find(e => e.id == companyId);
 
     if (!result) {
 
-      let url = `http://localhost:4200/assets/testData/jobOffer-${ jobOfferId }.json`;
+      let url = `http://localhost:4200/assets/testData/company-${ companyId }.json`;
 
       await this.http.get(url).toPromise().then(async (okResponse) => {
 
-        let cand = new JobOffer(okResponse);
+        let cand = new Company(okResponse);
 
-        this._jobOfferCache.push(cand);
+        this._companyCache.push(cand);
 
         result = cand;
 
@@ -36,15 +39,15 @@ export class JobOfferMockService {
     return result;
   }
 
-  async loadJobOffers(reload: boolean = false) : Promise<Array<JobOffer>> {
+  async loadCompanies(reload: boolean = false) : Promise<Array<Company>> {
     
-    if (!this._jobOfferCache || reload) {
+    if (!this._companyCache || reload) {
 
-      let url = 'http://localhost:4200/assets/testData/jobOffers.json';
+      let url = 'http://localhost:4200/assets/testData/companies.json';
 
       await this.http.get(url).toPromise().then((okResponse) => {
 
-        this._jobOfferCache = (okResponse as Array<any>);
+        this._companyCache = (okResponse as Array<any>);
 
       }, (errResponse) => {
 
@@ -52,10 +55,10 @@ export class JobOfferMockService {
       });
     }
 
-    return this._jobOfferCache;
+    return this._companyCache;
   }
   
-  async saveJobOffer(jobOffer?: JobOffer): Promise<any> {
+  async saveCompany(company?: Company): Promise<Company> {
 
     /*
     company.id = this.candidate.id;
@@ -83,6 +86,6 @@ export class JobOfferMockService {
     return saveResult;
     */
 
-    return jobOffer;
+    return company;
   }
 }

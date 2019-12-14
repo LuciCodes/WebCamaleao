@@ -8,6 +8,7 @@ import { Company } from 'src/app/models/company';
 import { MatSnackBar } from '@angular/material';
 import { UserService } from 'src/app/services/user.service';
 import * as firebase from 'firebase';
+import { ImageService } from 'src/app/services/image.service';
 
 @Component({
   selector: 'app-companies-edit',
@@ -26,6 +27,8 @@ export class CompaniesEditComponent implements OnInit {
   frmCompany: any;
 
   editingObj: Company;
+
+  displayLogo: string = '';
 
   get isValid(): boolean {
 
@@ -53,6 +56,7 @@ export class CompaniesEditComponent implements OnInit {
   constructor(private fb: FormBuilder,
               public location: Location,
               private companyService: CompanyService,
+              private imgService: ImageService,
               private userService: UserService,
               private route: ActivatedRoute,
               private snackBar: MatSnackBar) {
@@ -66,7 +70,8 @@ export class CompaniesEditComponent implements OnInit {
 
     this.frmCompany = this.fb.group({
       name: [obj.name, Validators.required],
-      description: [obj.description]
+      description: [obj.description],
+      logoUrl: [obj.logoUrl]
     });
   }
 
@@ -91,11 +96,25 @@ export class CompaniesEditComponent implements OnInit {
         this.editingObj = await this.companyService.getCompany(id);
       }
 
+      this.displayLogo = this.imgService.logoOf(this.editingObj);
+
       this.initForm(this.editingObj);
 
       this.flagLoadingData = false;
       
     });
+  }
+
+  updateDisplayLogo() {
+
+    this.displayLogo = this.imgService.logoOf(this.frmCompany.value);
+  }
+
+  useDefaultLogo() {
+
+    this.frmCompany.controls.logoUrl.setValue(null);
+
+    this.updateDisplayLogo();
   }
 
   async save() {

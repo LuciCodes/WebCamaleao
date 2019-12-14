@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Candidate } from 'src/app/models/candidate';
+import { ImageService } from 'src/app/services/image.service';
 
 @Component({
   selector: 'app-candidade-card',
@@ -11,7 +12,7 @@ export class CandidadeCardComponent implements OnInit {
   @Input()
   public candidate: Candidate;
 
-  constructor() { }
+  constructor(public imgService: ImageService) { }
 
   ngOnInit() {
   }
@@ -19,13 +20,6 @@ export class CandidadeCardComponent implements OnInit {
   isDefaultPhoto(person: Candidate) {
 
     return (!person || !person.photoUrl || person.photoUrl == '');
-  }
-
-  photoOf(person: Candidate) {
-
-    let result = (person && person.photoUrl) ? person.photoUrl : '/assets/img/default-avatar.png';
-
-    return result;
   }
 
   locationOf(person: Candidate) {

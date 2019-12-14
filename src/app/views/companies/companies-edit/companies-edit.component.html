@@ -19,7 +19,7 @@
         Incluir Empresa
       </span>
       <span *ngIf="!flagNewCompany && editingObj">
-        Editar Empresa <small>{{ editingObj.id }}</small>
+        Editar <small>{{ editingObj.name }}</small>
       </span>
     </h1>
 
@@ -28,7 +28,14 @@
         <mat-card-content>
 
           <div fxLayout="row" fxLayoutGap="1%">
-            <div fxFlex="50%">
+            
+            <div fxFlex="14%" style="padding: 0em 1em 1em 1em">
+
+              <img [src]="displayLogo" [title]="displayLogo" style="width: 100%" alt="">
+
+            </div>
+            
+            <div fxFlex="43%">
 
               <mat-form-field class="full-width">
                 
@@ -40,6 +47,29 @@
                 >
               </mat-form-field>
 
+            </div>
+            <div fxFlex="43%">
+
+              <mat-form-field class="full-width">
+                <mat-label>Logo</mat-label>
+                <input
+                  matInput
+                  placeholder="Url da logo"
+                  formControlName="logoUrl"
+                  (blur)="updateDisplayLogo()"
+                >
+              </mat-form-field>
+
+            </div>
+            <div fxFlex="36%">
+              <button
+                mat-button
+                color="accent"
+                [disabled]="!isValid"
+                (click)="useDefaultLogo()"
+              >
+                Usar Padrão
+              </button>
             </div>
             
           </div>
@@ -66,12 +96,11 @@
           <button
             mat-raised-button
             color="accent"
-            type="submit"
             [disabled]="!isValid"
             (click)="save($event)"
           >
             <i class="fa fa-save"></i>
-            Salvar Vaga
+            Salvar Empresa
           </button>
         </mat-card-actions>
       </mat-card>

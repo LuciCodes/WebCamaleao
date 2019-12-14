@@ -44,6 +44,7 @@ import { HomeCandidateComponent } from './views/home/home-candidate/home-candida
 import { HomeCompanyComponent } from './views/home/home-company/home-company.component';
 
 import { SharedModule } from './shared.module';
+import { ImageService } from './services/image.service';
 
 
 @NgModule({
@@ -82,7 +83,8 @@ import { SharedModule } from './shared.module';
     CompanyMockService,
     JobOfferService,
     JobOfferFirebaseService,
-    JobOfferMockService
+    JobOfferMockService,
+    ImageService
   ],
   bootstrap: [AppComponent]
 })

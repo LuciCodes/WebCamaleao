@@ -7,7 +7,7 @@
     <div fxFlex="30%" class="avatar-pic {{ isDefaultPhoto(candidate) ? 'default' : '' }}">
 
       <img
-        src="{{ photoOf(candidate) }}"
+        src="{{ imgService.photoOf(candidate) }}"
         alt="{{ candidate.name }}"
       >
   

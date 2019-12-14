@@ -10,6 +10,7 @@ import { Company } from 'src/app/models/company';
 import { MatSnackBar } from '@angular/material';
 import { UserService } from 'src/app/services/user.service';
 import * as firebase from 'firebase';
+import { ImageService } from 'src/app/services/image.service';
 
 @Component({
   selector: 'app-companies-detail',
@@ -36,7 +37,7 @@ export class CompaniesDetailComponent implements OnInit {
 
   constructor(public location: Location,
               private companyService: CompanyService,
-              private jobOfferService: JobOfferService,
+              private imgService: ImageService,
               private route: ActivatedRoute) {
 
   }
@@ -60,4 +61,8 @@ export class CompaniesDetailComponent implements OnInit {
     });
   }
 
+  public logoOf(obj?: any) {
+
+    return this.imgService.logoOf(obj);
+  }
 }

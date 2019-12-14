@@ -1,0 +1,28 @@
+
+<div
+  class="card-container"
+  *ngIf="company"
+>
+  <div fxLayout="row">
+      
+    <div fxFlex="30%" class="avatar-pic default">
+
+      <img
+        src="{{ photoOf(company) }}"
+      >
+
+    </div>
+    <div fxFlex="70%">
+
+      <h3>
+        <a href="javascript:;" routerLink="/empresas/{{ company.id }}">
+          {{ company.name }}
+        </a>
+      </h3>
+      <p>
+        {{ company.description }}
+      </p>
+
+    </div>
+  </div>
+</div>  

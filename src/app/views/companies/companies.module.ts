@@ -6,14 +6,19 @@ import { SharedModule } from 'src/app/shared.module';
 import { CompaniesRoutingModule } from './companies.routing.module';
 
 import { CompaniesIndexComponent } from './companies-index/companies-index.component';
-import { CompaniesBasicInfoComponent } from './companies-basic-info/companies-basic-info.component';
+import { CompaniesDetailComponent } from './companies-detail/companies-detail.component';
 import { CompaniesSearchComponent } from './companies-search/companies-search.component';
 import { CompaniesHomeComponent } from './companies-home/companies-home.component';
+import { CompaniesEditComponent } from './companies-edit/companies-edit.component';
+
+import { CompanyCardComponent } from '../app-common/company-card/company-card.component';
 
 @NgModule({
   declarations: [
+    CompanyCardComponent,
     CompaniesIndexComponent,
-    CompaniesBasicInfoComponent,
+    CompaniesDetailComponent,
+    CompaniesEditComponent,
     CompaniesSearchComponent,
     CompaniesHomeComponent
   ],

@@ -1,0 +1,68 @@
+
+<div class="row loader-panel tall" *ngIf="flagLoadingData">
+  <div class="col">
+    <fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon>
+  </div>
+</div>
+
+<div fxLayout="row" *ngIf="!flagLoadingData && editingObj">
+  <div fxFlex>
+
+    <h1 class="m-t-20">
+
+      <a href="javascript:;" routerLink="/empresas/buscar" style="text-decoration: none; color: #333">
+        &lt;
+      </a>
+
+      {{ editingObj.name }}
+
+      <small class="txt-xxsm" title="Vaga {{ editingObj.id }}">
+          &nbsp;&nbsp;
+          <a
+            href="javascript:;"
+            [routerLink]="'/empresas/editar/' + editingObj.id"
+            title="Editar empresa"
+          >
+            <i class="fa fa-edit"></i>
+          </a>
+      </small>
+    </h1>
+
+    <mat-card class="default-card">
+      <mat-card-content>
+
+        <div fxLayout="row" fxLayoutGap="1%">
+          <div fxFlex="10%">
+            <img [src]="editingObj.logoUrl" style="width: 100%" alt="">
+          </div>
+          <div fxFlex="33%">
+
+            <h4>Nome da Empresa:</h4>
+            <p>
+              {{ editingObj.name  }}
+            </p>
+
+          </div>
+          
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="1%">
+          <div fxFlex>
+
+            <h4>Descrição:</h4>
+            <p>
+              {{ editingObj.description }}
+            </p>
+
+          </div>
+        </div>
+        
+      </mat-card-content>
+      <mat-card-actions class="p-b-10">
+       &nbsp;
+      </mat-card-actions>
+    </mat-card>
+
+  </div>
+</div>
+  

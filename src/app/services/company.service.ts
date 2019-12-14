@@ -9,11 +9,14 @@ import { CompanySearchParams } from '../models/companySearchParams';
 @Injectable()
 export class CompanyService {
 
-  mockAll: boolean = true;
+  mockAll: boolean = false;
   firebaseAll: boolean = true;
 
   mockFunctions: Array<string> = [];
   fbFunctions: Array<string> = ['loadCompanies', 'searchCompanies'];
+
+  lastSearchParams?: CompanySearchParams;
+  lastSearchResults?: Array<Company>;
 
   private _companies: Array<Company> = [];
 
@@ -79,24 +82,33 @@ export class CompanyService {
 
   async saveCompany(company?: Company): Promise<any> {
     
+    let result = null;
+
     if (this.mockAll || this.userForMock('saveCompany')) {
 
-      await this.companyMock.saveCompany(company);
-
-      return this._companies;
+      result = await this.companyMock.saveCompany(company);
     }
     
     if (this.firebaseAll || this.userForFirebase('saveCompany')) {
       
-      this.companyFirebase.saveCompany(company);
-
-      return this._companies;
+      result = await this.companyFirebase.saveCompany(company);
     }
     
-    return this._companies;
+    if (this.lastSearchResults) {
+      // updates this cache
+
+      let idx = this.lastSearchResults.findIndex(j => j.id == company.id);
+
+      if (idx > -1) {
+
+        this.lastSearchResults[idx] = company;
+      }
+    }
+
+    return result;
   }
 
-  async searchCompanies(filterParams?: CompanySearchParams) : Promise<Array<any>> {
+  async searchCompanies(filterParams?: CompanySearchParams, companyList?: Array<Company>) : Promise<Array<any>> {
 
     let filters = {};
 
@@ -108,37 +120,33 @@ export class CompanyService {
 
     console.log('searchCompanies> ', filterParams);
 
+    if (filterParams.name) { filterParams.name = filterParams.name.toLowerCase(); }
+
     for (let c = 0; c < this._companies.length; c++) {
 
-      let cand = this._companies[c];
+      let company = this._companies[c];
 
       let include = true;
 
-      /*
-      if (filterParams.idCpf) {
+      if (filterParams.name) {
 
-        if (filterParams.idCpf.length <= 11) {
-
-          // cpf
-          include = (cand.cpf == filterParams.idCpf);
-
-        } else {
-
-          //id
-          include = (cand.id == filterParams.idCpf);
-        }
+        include = (company.name.toLowerCase().includes(filterParams.name));
       }
-      */
-      
 
       if (include) {
 
-        filteredSearch.push(cand);
-
-        console.log('searchCompanies> added', cand);
+        filteredSearch.push(company);
       }
     }
 
-    return filteredSearch;
+    this.lastSearchResults = filteredSearch;
+    this.lastSearchParams = filterParams;
+
+    return this.lastSearchResults;
+  }
+  
+  clearSearchParams() {
+
+    this.lastSearchParams = null;
   }
 }

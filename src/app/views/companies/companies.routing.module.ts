@@ -7,7 +7,8 @@ import {LoggedInGuard} from 'ngx-auth-firebaseui';
 import { CompaniesIndexComponent } from './companies-index/companies-index.component'
 import { CompaniesSearchComponent } from './companies-search/companies-search.component';
 import { CompaniesHomeComponent } from './companies-home/companies-home.component';
-import { CompaniesBasicInfoComponent } from './companies-basic-info/companies-basic-info.component';
+import { CompaniesDetailComponent } from './companies-detail/companies-detail.component';
+import { CompaniesEditComponent } from './companies-edit/companies-edit.component';
 
 const routes: Routes = [
   { 
@@ -17,7 +18,9 @@ const routes: Routes = [
       children: [
         { path: '', component: CompaniesHomeComponent },
         { path: 'buscar', component: CompaniesSearchComponent },
-        { path: ':id', component: CompaniesBasicInfoComponent }
+        { path: 'incluir', component: CompaniesEditComponent },
+        { path: 'editar/:id', component: CompaniesEditComponent },
+        { path: ':id', component: CompaniesDetailComponent }
       ]
   }
 ];

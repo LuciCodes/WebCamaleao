@@ -99,8 +99,8 @@ export class JobOfferService {
 
       if (filterParams.text) {
 
-        include = (job.title.toLowerCase().includes(filterParams.text.toLowerCase())
-                || job.description.toLowerCase().includes(filterParams.text.toLowerCase()));
+        include = (job.title.toLowerCase().includes(filterParams.text)
+                || job.description.toLowerCase().includes(filterParams.text));
       }
 
       if ((include) && filterParams.companyName && companyList) {

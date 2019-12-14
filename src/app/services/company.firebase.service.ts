@@ -47,27 +47,18 @@ export class CompanyFirebaseService {
     
     if (!this._companyCache || reload) {
       
-      let companyQuery = await this.fireDb.collection('companies').ref.where('signupState', '==', 'COMPLETED').orderBy('id');
+      let companyResult = await this.fireDb.collection('companies').get().toPromise();
 
-      let companyResult = await companyQuery.get();
+      let results = [];
 
-      if (!companyResult.empty) {
+      for(let d = 0; d < companyResult.docs.length; d++) {
 
-        let results = [];
-
-        for(let d = 0; d < companyResult.docs.length; d++) {
-
-          results.push(new Company(companyResult.docs[d].data()));
-          
-          results[d].id = companyResult.docs[d].id;
-        }
-
-        this._companyCache = results;
-
-      } else {
-
-        this._companyCache = [];
+        results.push(new Company(companyResult.docs[d].data()));
+        
+        results[d].id = companyResult.docs[d].id;
       }
+
+      this._companyCache = results;
     }
 
     return this._companyCache;
@@ -75,15 +66,26 @@ export class CompanyFirebaseService {
   
   async saveCompany(company?: Company): Promise<any> {
 
-    let saveResult = { msg: 'Dados salvados com sucesso!', success: true };
+    let saveResult = { msg: 'Dados salvados com sucesso!', success: true, obj: null };
 
     try 
     {
-      await this.fireDb.collection('companies')
-                                      .doc(company.id)  //TODO: fazer esses IDs serem uids ou inser/update separados
-                                      .set(company, { merge: true });
-                                 
+      if (company.id == 'new') {
 
+        delete company['id'];
+
+        let newObjRef = await this.fireDb.collection('companies').add(company);
+
+        company.id = newObjRef.id;
+
+      } else {
+
+        await this.fireDb.collection('companies')
+                                      .doc(company.id)
+                                      .set(company, { merge: true });
+      }
+
+      saveResult.obj = company;
     }
     catch(err) {
 

@@ -32,8 +32,6 @@ export class Candidate {
   ethinicity: string;
   gender: string;
   name: string;
-  pcd: boolean;
-  pcdNote: string;
   phone: string;
   photoUrl: string;
   region: string;

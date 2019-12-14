@@ -1,0 +1,45 @@
+
+<div fxLayout="row" *ngIf="habilityCollection">
+  <div fxFlex="80%" fxFlexOffset="10%" *ngIf="mode == 'json'">
+
+    <h5>
+      Habilidades
+    </h5>
+    <div>
+      {{ habilityCollection | json }}
+    </div>
+    
+  </div>
+</div>
+<div fxLayout="row" *ngIf="habilityCollection">
+  <div fxFlex="100%" *ngIf="mode == 'default'">
+
+    <h3>
+      Habilidades
+    </h3>
+
+    <div *ngIf="!categories || categories.length == 0" class="txt-center">
+      <br><br>
+      <small>(nenhuma definida)</small>
+    </div>
+
+    <table>
+      <tbody>
+        <tr *ngFor="let category of categories">
+          <th style="padding: 0.25em 0.42em 0em 0em">
+            {{ category }}:
+          </th>
+          <td *ngIf="habilityCollection[category]">
+
+            <p *ngFor="let skill of habilityCollection[category]" style="margin: 0em 0em 0.42em 0em">
+              {{ skill.name }}
+            </p>
+
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+
+  </div>
+</div>

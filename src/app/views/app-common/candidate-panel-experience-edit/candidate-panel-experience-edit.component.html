@@ -1,0 +1,84 @@
+
+<div fxLayout="row" *ngIf="candidateExperience">
+  <div fxFlex="80%" fxFlexOffset="10%" *ngIf="mode == 'json'">
+
+    <h5>Experiência</h5>
+
+    <div
+      fxLayout="row"
+      *ngFor="let experience of candidateExperience"
+    >
+      <div fxFlex>
+
+        <div fxLayout="row">
+          <div fxFlex>
+
+            {{ experience | json }}
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    
+  </div>
+</div>
+<div fxLayout="row" *ngIf="candidateExperience">
+  <div fxFlex="100%" *ngIf="mode == 'default'">
+
+    <h3>
+        Experiência
+    </h3>
+
+    <table>
+      <tbody>
+        <ng-container *ngFor="let experience of candidateExperience">
+
+          <tr>
+            <th style="width: 6em">
+              Empresa:
+            </th>
+            <td>
+              {{ experience.companyName }}
+            </td>
+            <th style="width: 3em">
+              De:
+            </th>
+            <td style="width: 10em">
+              {{ experience.startDate }}
+            </td>
+            <th style="width: 3em">
+              Até:
+            </th>
+            <td style="width: 20em">
+              <div *ngIf="!experience.isCurrent">
+
+                  {{ experience.endDate }}&nbsp;&nbsp;
+
+                  <small>({{ dateDiffString(experience.startDate, experience.endDate) }})</small>
+                  
+              </div>
+              <div *ngIf="experience.isCurrent">
+                <small>(atual)</small>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="experience.description && experience.description != ''">
+            <th style="width: 6em">
+              Descrição:
+              <br>
+              <br>
+              &nbsp;
+            </th>
+            <td colspan="4">
+              {{ experience.description }}
+            </td>
+          </tr>
+
+        </ng-container>
+      </tbody>
+    </table>
+
+  </div>
+</div>

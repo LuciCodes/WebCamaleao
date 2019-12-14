@@ -16,6 +16,9 @@ export class CandidateService {
   mockFunctions: Array<string> = [];
   fbFunctions: Array<string> = ['loadCandidates', 'searchCandidates'];
 
+  lastSearchParams?: CandidateSearchParams;
+  lastSearchResults?: Array<Candidate>;
+  
   private _candidates: Array<Candidate> = [];
 
   private _detailsCache: Array<CandidateDetails> = [];
@@ -125,11 +128,6 @@ export class CandidateService {
 
         include = (cand.name.toLowerCase().includes(filterParams.name.toLowerCase()));
       }
-      
-      if (include && filterParams.pcd) {
-
-        include = cand.pcd;
-      }
 
       if (include && filterParams.genders && filterParams.genders.length > 0) {
 
@@ -160,6 +158,14 @@ export class CandidateService {
       }
     }
 
-    return filteredSearch;
+    this.lastSearchResults = filteredSearch;
+    this.lastSearchParams = filterParams;
+
+    return this.lastSearchResults;
+  }
+  
+  clearSearchParams() {
+
+    this.lastSearchParams = null;
   }
 }

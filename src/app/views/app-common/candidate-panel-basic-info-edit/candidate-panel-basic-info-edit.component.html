@@ -1,0 +1,186 @@
+
+<div fxLayout="row" *ngIf="candidate">
+  
+  <!-- MODE: default -->
+  <form [formGroup]="frmCandidate" fxFlex="100%">
+
+    <h3>
+      Dados Básicos
+    </h3>
+
+    <div class="avatar-pic" style="top: -70px" *ngIf="candidate.photoUrl">
+
+      <img
+        src="{{ candidate.photoUrl }}"
+        alt="{{ candidate.name }}"
+      >
+  
+    </div>
+    
+    <div fxLayout="row">
+      <div fxFlex="68%" fxFlexOffset="15%">
+        
+        <mat-form-field class="full-width">
+                
+          <mat-label>Nome</mat-label>
+          <input
+            matInput
+            placeholder="Nome da pessoa"
+            formControlName="name"
+          >
+        </mat-form-field>
+
+      </div>
+    </div>
+    <div fxLayout="row">
+      <div fxFlex="23%" fxFlexOffset="2%">
+
+        <mat-form-field class="full-width">
+                
+          <mat-label>Data de Nascimento</mat-label>
+          <input
+            matInput
+            placeholder="Data de Nascimento"
+            formControlName="birth"
+          >
+        </mat-form-field>
+
+      </div>
+      <div fxFlex="23%" fxFlexOffset="2%">
+
+        <mat-form-field class="full-width">
+                
+          <mat-label>CPF</mat-label>
+          <input
+            matInput
+            placeholder="CPF"
+            formControlName="cpf"
+          >
+        </mat-form-field>
+
+      </div>
+      <div fxFlex="23%" fxFlexOffset="2%">
+
+        <mat-form-field class="full-width">
+                
+          <mat-label>RG</mat-label>
+          <input
+            matInput
+            placeholder="RG"
+            formControlName="docRg"
+          >
+        </mat-form-field>
+
+      </div>
+      <div fxFlex="23%" fxFlexOffset="2%">
+
+        <mat-form-field class="full-width">
+                
+          <mat-label>Telefone</mat-label>
+          <input
+            matInput
+            placeholder="Telefone"
+            formControlName="phone"
+          >
+        </mat-form-field>
+
+      </div>
+    </div>
+
+  </form>
+
+</div>
+<div fxLayout="row" *ngIf="candidateProfile">
+
+  <!-- MODE: default -->
+  <form [formGroup]="frmCandidateProfile" fxFlex="100%">
+
+    <h3>
+      Perfil
+    </h3>
+    
+    <div fxLayout="row">
+      <div fxFlex="23%" fxFlexOffset="2%">
+
+        <mat-form-field class="full-width">
+                
+          <mat-label>Gênero</mat-label>
+          <mat-select formControlName="gender">
+            <mat-option
+              [value]="gender.value"
+              *ngFor="let gender of genders"
+            >
+              {{ gender.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+      <div fxFlex="23%" fxFlexOffset="2%">
+
+        <mat-form-field class="full-width">
+                
+          <mat-label>Sexo</mat-label>
+          <mat-select formControlName="sex">
+            <mat-option
+              [value]="sex.value"
+              *ngFor="let sex of sexes"
+            >
+              {{ sex.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+      <div fxFlex="23%" fxFlexOffset="2%">
+
+        <mat-form-field class="full-width">
+                
+          <mat-label>Etnia</mat-label>
+          <mat-select formControlName="ethnicity">
+            <mat-option
+              [value]="eth.value"
+              *ngFor="let eth of etnicities"
+            >
+              {{ eth.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+      <div fxFlex="23%" fxFlexOffset="2%" [title]="pne">
+
+        <mat-radio-group
+          aria-label="Pne?"
+          formControlName="pne"
+        >
+          <mat-label>
+            Pne?
+          </mat-label>
+          <br>
+          <mat-radio-button [value]="true">Sim</mat-radio-button>
+          &nbsp;&nbsp;
+          <mat-radio-button [value]="false">Não</mat-radio-button>
+        </mat-radio-group>
+        
+        <div fxLayout="row" *ngIf="pne == true">
+          <div fxFlex>
+
+            <mat-form-field class="full-width">
+                
+              <mat-label>Obs</mat-label>
+              <input
+                matInput
+                placeholder="Obs"
+                formControlName="pneNote"
+              >
+            </mat-form-field>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </form>
+</div>

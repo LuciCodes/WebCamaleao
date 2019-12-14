@@ -41,14 +41,16 @@
           color="primary"
           type="button"
           class="m-r-20"
+          [routerLink]="'/candidates/editar/' + candidate.id"
         >
-          <i class="fa fa-search"></i> Ver Detalhes
+          <i class="fa fa-edit"></i> Editar
         </button>
         
         <button
           mat-stroked-button
           color="accent"
           type="button"
+          style="display: none"
         >
           <i class="fa fa-external-link-alt"></i> Destacar
         </button>

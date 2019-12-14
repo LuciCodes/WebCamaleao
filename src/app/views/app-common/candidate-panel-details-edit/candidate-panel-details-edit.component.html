@@ -1,0 +1,30 @@
+
+<div class="candidate-container" *ngIf="candidateDetails">
+
+  <app-candidate-panel-basic-info-edit
+    [candidate]="candidateDetails.candidate"
+    [candidateProfile]="candidateDetails.candidateProfile"
+  ></app-candidate-panel-basic-info-edit>
+
+  <div fxLayout="row">
+    <div fxFlex="40%">
+
+      <app-candidate-panel-habilities-edit
+        [candidateHabilities]="candidateDetails.candidateHabilities"
+      ></app-candidate-panel-habilities-edit>
+
+    </div>
+    <div fxFlex="60%">
+
+      <app-candidate-panel-education-edit
+        [candidateEducation]="candidateDetails.candidateEducation"
+      ></app-candidate-panel-education-edit>
+
+    </div>
+  </div>
+
+  <app-candidate-panel-experience-edit
+    [candidateExperience]="candidateDetails.candidateExperience"
+  ></app-candidate-panel-experience-edit>
+
+</div>

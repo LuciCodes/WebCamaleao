@@ -18,6 +18,8 @@ export class CandidatesSearchComponent  {
 
   candidates: Array<any>;
 
+  frmSearch: FormGroup;
+
   get states(): Array<any> {
 
     return AppConstants.brazilianStates;
@@ -39,25 +41,42 @@ export class CandidatesSearchComponent  {
     } else { return []; }
   }
 
-  frmSearch = this.fb.group({
-    idCpf: '',
-    name: '',
-    gender: '',
-    sex: '',
-    pcd: '',
-    locationType: '',
-    seachNearZip: null,
-    searchInStates: null,
-    searchInCities: null,
-    searchInCitiesOfState: null,
-    searchInProfessions: null
-  });
+  initForm(obj: any) {
 
-  constructor(private webApi: WebApiService,
-              private candidateService: CandidateService,
-              private fb: FormBuilder) {}
+    this.frmSearch = this.fb.group({
+      idCpf: [obj.idCpf],
+      name: [obj.name],
+      gender: [obj.gender],
+      sex: [obj.sex],
+      pcd: [obj.pcd],
+      locationType: [obj.locationType],
+      seachNearZip: [obj.seachNearZip],
+      searchInStates: [obj.searchInStates],
+      searchInCities: [obj.searchInCities],
+      searchInCitiesOfState: [obj.searchInCitiesOfState],
+      searchInProfessions: [obj.searchInProfessions]
+    });
+  }
 
-  onSubmit() {
+  constructor(private candidateService: CandidateService,
+              private fb: FormBuilder) {
+
+    this.initForm({});
+  }
+
+  async ngOnInit(): Promise<any> {
+
+    await this.candidateService.loadCandidates();
+
+    this.initForm(this.candidateService.lastSearchParams || {});
+    
+    if (this.candidateService.lastSearchResults) {
+
+      this.candidates = this.candidateService.lastSearchResults;
+    }
+  }
+  
+  search() {
     
     this.flagLoadingData = true;
     
@@ -77,4 +96,8 @@ export class CandidatesSearchComponent  {
     }, 420);
   }
 
+  clearParams() {
+
+    this.candidateService.clearSearchParams();
+  }
 }

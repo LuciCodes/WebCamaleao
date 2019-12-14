@@ -20,21 +20,32 @@
     <mat-card-content *ngIf="!flagLoadingData">
 
       <div fxLayout="row">
-        <div fxFlex>
+        <div fxFlex="50%" class="txt-center" style="padding: 2em">
 
-          <!--mat-form-field>
-            <mat-label>
-              Qual é a sua auto-identificação de raça-etnia?
-            </mat-label>
-            <mat-select formControlName="ethnicity">
-              <mat-option
-                [value]="eth.value"
-                *ngFor="let eth of etnicities"
-              >
-                {{ eth.name }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field-->
+          <a href="javascript:;" rouerLink="/matches/vagas-para-candidate" class="txt-xlg button">
+            
+            <span class="txt-xxlg">
+              <i class="fa fa-building"></i>
+              <i class="fa fa-arrow-right"></i>
+              <i class="fa fa-user"></i>
+            </span>
+            
+            Vagas para Candidates
+          </a>
+          
+        </div>
+        <div fxFlex="50%" class="txt-center" style="padding: 2em">
+
+          <a href="javascript:;" rouerLink="/matches/candidates-para-vagas" class="txt-xlg button">
+
+            <span class="txt-xxlg">
+              <i class="fa fa-user"></i>
+              <i class="fa fa-arrow-right"></i>
+              <i class="fa fa-building"></i>
+            </span>
+
+            Candidates para Vagas
+          </a>
 
         </div>
       </div>

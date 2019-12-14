@@ -5,6 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import {LoggedInGuard} from 'ngx-auth-firebaseui';
 
 import { CandidatesIndexComponent } from './candidates-index/candidates-index.component'
+import { CandidatesEditComponent } from './candidates-edit/candidates-edit.component'
 import { CandidatesSearchComponent } from './candidates-search/candidates-search.component';
 import { CandidatesDetailsComponent } from './candidates-details/candidates-details.component';
 
@@ -16,6 +17,7 @@ const routes: Routes = [
     children: [
       { path: '', component: CandidatesSearchComponent },
       { path: 'buscar', component: CandidatesSearchComponent },
+      { path: 'editar/:id', component: CandidatesEditComponent },
       { path: ':id', component: CandidatesDetailsComponent }
     ]
   }

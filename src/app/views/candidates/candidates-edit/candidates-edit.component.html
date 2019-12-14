@@ -1,0 +1,90 @@
+
+<div class="row loader-panel tall" *ngIf="flagLoadingData">
+  <div class="col">
+    <fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon>
+  </div>
+</div>
+
+<div fxLayout="row" *ngIf="!flagLoadingData && candidateDetails">
+  <div fxFlex>
+
+    <h1 class="m-t-20">
+
+      <a href="javascript:;" routerLink="/candidates/buscar" class="txt-sm" style="text-decoration: none; color: #333">
+        &lt;
+      </a>
+
+      <span *ngIf="flagNewCandidate">
+        Incluir Candidate
+      </span>
+      <span *ngIf="!flagNewCandidate && candidateDetails">
+        <small>Editando</small> {{ candidateDetails.candidate.name }}
+
+        <button
+          mat-raised-button
+          color="accent"
+          class="m-l-20"
+          style="position: relative; top: -0.4em"
+          [disabled]="!isValid"
+          (click)="save($event)"
+        >
+          <i class="fa fa-save"></i>&nbsp;
+          Salvar
+        </button>
+
+      </span>
+    </h1>
+  
+    <form [formGroup]="frmCandidate" novalidate>
+      <mat-card class="default-card">
+        <mat-card-content>
+
+          <!--
+            
+          <div fxLayout="row" fxLayoutGap="1%">
+            
+            <div fxFlex="14%" style="padding: 0em 1em 1em 1em">
+
+              <img [src]="candidateDetails.candidate.photoUrl" [alt]="candidateDetails.candidate.photoUrl" style="width: 100%">
+
+            </div>
+            
+            <div fxFlex="43%">
+
+              <mat-form-field class="full-width">
+                
+                <mat-label>Nome</mat-label>
+                <input
+                  matInput
+                  placeholder="Nome da pessoa"
+                  formControlName="biName"
+                >
+              </mat-form-field>
+
+            </div>
+            
+            
+          </div>
+
+          -->
+
+          <app-candidate-panel-details-edit [candidateDetails]="candidateDetails"></app-candidate-panel-details-edit>
+
+        </mat-card-content>
+        <mat-card-actions class="p-b-10">
+          <button
+            mat-raised-button
+            color="accent"
+            [disabled]="!isValid"
+            (click)="save($event)"
+          >
+            <i class="fa fa-save"></i>
+            Salvar Candidate
+          </button>
+        </mat-card-actions>
+      </mat-card>
+
+    </form>
+
+  </div>
+</div>

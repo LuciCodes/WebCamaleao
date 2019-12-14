@@ -24,7 +24,24 @@
     <div fxFlex="70%">
 
       <h1>
+        
+        <a href="javascript:;" routerLink="/candidates/buscar" style="text-decoration: none; color: #333">
+          &lt;
+        </a>
+
         {{ candidateDetails.candidate.name }}
+        
+        <small>
+          
+          &nbsp;&nbsp;
+          <a
+            href="javascript:;"
+            [routerLink]="'/candidates/editar/' + candidateDetails.candidate.id"
+            title="Editar dados da pesssoa"
+          >
+            <i class="fa fa-edit"></i>
+          </a>
+        </small>
       </h1>
         
     </div>

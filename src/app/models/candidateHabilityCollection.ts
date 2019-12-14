@@ -18,19 +18,21 @@ export class CandidateHabilityCollection {
     }
   }
 
-  public static fromString(value: string): CandidateHabilityCollection {
+  public static fromString(value: string, uiList: string = ''): CandidateHabilityCollection {
 
     let result = new CandidateHabilityCollection();
 
-    let items = value.split(',');
+    let items = value.split(', ');
 
     let values;
+
+    let uiSelected = uiList.split(', ');
 
     result.categories = [];
 
     for (let i = 0; i < items.length; i++) {
      
-      values = items[i].split(':');
+      values = items[i].split(': ');
 
       if (values.length == 2) {
 
@@ -41,7 +43,9 @@ export class CandidateHabilityCollection {
           result.categories.push(key);
         }
 
-        result.items.push(new Skill(values[0].trim(), values[1].trim()));
+        let skill = new Skill(values[0].trim(), values[1].trim(), uiSelected.includes(items[i]));
+
+        result.items.push(skill);
       }
     }
 

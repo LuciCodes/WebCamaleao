@@ -2,13 +2,14 @@ import { Component, OnInit, Input } from '@angular/core';
 import { WorkExperience } from 'src/app/models/workExperience';
 
 import * as moment from 'moment';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-candidate-panel-experience-edit',
   templateUrl: './candidate-panel-experience-edit.component.html',
   styleUrls: ['./candidate-panel-experience-edit.component.css']
 })
-export class CandidatePanelExperienceEditComponent implements OnInit {
+export class CandidatePanelExperienceEditComponent {
 
   @Input()
   candidateExperience: Array<WorkExperience>;
@@ -19,9 +20,24 @@ export class CandidatePanelExperienceEditComponent implements OnInit {
   @Input()
   mode: string = 'default';
 
-  constructor() { }
+  frmCandidateExperience: FormGroup;
+  
+  constructor(private fb: FormBuilder) { 
 
-  ngOnInit() {
+    this.initForm();
+  }
+
+  initForm() {
+
+    this.frmCandidateExperience = this.fb.group({
+
+      companyName: ['', Validators.required],
+      roleName: ['', Validators.required],
+      description: [''],
+      startDate: [''],
+      endDate: [''],
+      isCurrent: [false]
+    });
   }
 
   dateDiffString(date1, date2) {
@@ -45,5 +61,9 @@ export class CandidatePanelExperienceEditComponent implements OnInit {
     }
 
     return result;
+  }
+
+  removeExperience(experience: any) {
+
   }
 }

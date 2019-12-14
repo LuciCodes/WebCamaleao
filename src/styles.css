@@ -122,6 +122,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .op-8 { opacity: 0.8; }
 .op-9 { opacity: 0.9; }
 
+.op-hover:hover { opacity: 1; transition: linear opacity 0.2s; }
+
 .w-100 { width: 100%; }
 .w-90 { width: 90%; }
 .w-80 { width: 80%; }
@@ -137,6 +139,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   border: none;
   background-color: transparent;
   outline: none;
+}
+
+.btn-sm {
+  font-size: 0.9em !important;
+  padding: 0.2em 0.4em !important;
+  line-height: normal;
 }
 
 .btn-xsm {

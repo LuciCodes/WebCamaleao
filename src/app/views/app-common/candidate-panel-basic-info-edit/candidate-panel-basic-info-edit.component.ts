@@ -74,6 +74,28 @@ export class CandidatePanelBasicInfoEditComponent implements OnInit {
     return AppConstants.sexes;
   }
   
+  get states(): Array<any> {
+
+    return AppConstants.brazilianStates;
+  }
+  
+  get cities(): Array<any> {
+
+    if (this.frmCandidate && this.frmCandidate.controls.addrState.valid) {
+
+      let theStateId = this.frmCandidate.controls.addrState.value
+
+      let theState = AppConstants.brazilianStates.find(s => s.abrev == theStateId);
+
+      if (theState) {
+
+        return theState.cities;
+      }
+    }
+
+    return [];
+  }
+
   constructor(private fb: FormBuilder) {  }
 
   initFormCandidate(obj?: any) {
@@ -90,6 +112,7 @@ export class CandidatePanelBasicInfoEditComponent implements OnInit {
       addrCity: [obj.addrCity],
       addrState: [obj.addrState],
       addrDistrict: [obj.addrDistrict],
+      addrPostalCode: [obj.addrPostalCode],
       isSocialName: [obj.isSocialName]
     });
   }

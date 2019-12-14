@@ -368,6 +368,31 @@ export class AppConstants {
     new Skill('Software', 'Photoshop')
   ];
 
+  static getSKillsByCategoriesObject(uiSelectedList: string): any {
+
+    let result = {};
+
+    let list = [];
+
+    for (let c = 0; c < AppConstants.basicSkillsCategories.length; c++) {
+      
+      AppConstants.basicSkills
+      .filter(s => s.category == AppConstants.basicSkillsCategories[c])
+      .forEach(item => {
+
+        let key = item.toString();
+
+        list.push(new Skill(item.category, item.name, uiSelectedList.includes(key)))
+      });
+
+      result[AppConstants.basicSkillsCategories[c]] = list;
+
+      list = [];
+    }
+
+    return result;
+  }
+
   static professions = [
     
     "Administrador",

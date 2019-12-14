@@ -87,6 +87,72 @@
       </div>
     </div>
 
+    <div fxLayout="row">
+      <div fxFlex="23%" fxFlexOffset="2%">
+
+        <mat-form-field class="full-width">
+                
+          <mat-label>Estado</mat-label>
+          <mat-select formControlName="addrState" placeholder="Estado">
+            <mat-option
+              [value]="state.abrev"
+              *ngFor="let state of states"
+            >
+              {{ state.name }}
+            </mat-option>
+          </mat-select>
+
+        </mat-form-field>
+
+      </div>
+      <div fxFlex="23%" fxFlexOffset="2%">
+
+        <mat-form-field class="full-width">
+                
+          <mat-label>Cidade</mat-label>
+          <mat-select formControlName="addrCity" placeholder="Cidade">
+            <mat-option
+              [value]="city"
+              *ngFor="let city of cities"
+              [disabled]="cities.length == 0"
+            >
+              {{ city }}
+            </mat-option>
+          </mat-select>
+
+        </mat-form-field>
+
+      </div>
+      <div fxFlex="23%" fxFlexOffset="2%">
+
+        <mat-form-field class="full-width">
+                
+          <mat-label>Bairro</mat-label>
+          <input
+            matInput
+            placeholder="Bairro"
+            formControlName="addrDistrict"
+          >
+        </mat-form-field>
+
+      </div>
+      <div fxFlex="23%" fxFlexOffset="2%">
+
+        <mat-form-field class="full-width">
+                
+          <mat-label>CEP</mat-label>
+          <input
+            matInput
+            placeholder="CEP"
+            formControlName="addrPostalCode"
+          >
+
+        </mat-form-field>
+
+      </div>
+    </div>
+    
+
   </form>
 
 </div>

@@ -6,22 +6,13 @@
     [candidateProfile]="candidateDetails.candidateProfile"
   ></app-candidate-panel-basic-info-edit>
 
-  <div fxLayout="row">
-    <div fxFlex="40%">
+  <app-candidate-panel-habilities-edit
+    [candidateHabilities]="candidateDetails.candidateHabilities"
+  ></app-candidate-panel-habilities-edit>
 
-      <app-candidate-panel-habilities-edit
-        [candidateHabilities]="candidateDetails.candidateHabilities"
-      ></app-candidate-panel-habilities-edit>
-
-    </div>
-    <div fxFlex="60%">
-
-      <app-candidate-panel-education-edit
-        [candidateEducation]="candidateDetails.candidateEducation"
-      ></app-candidate-panel-education-edit>
-
-    </div>
-  </div>
+  <app-candidate-panel-education-edit
+    [candidateEducation]="candidateDetails.candidateEducation"
+  ></app-candidate-panel-education-edit>
 
   <app-candidate-panel-experience-edit
     [candidateExperience]="candidateDetails.candidateExperience"

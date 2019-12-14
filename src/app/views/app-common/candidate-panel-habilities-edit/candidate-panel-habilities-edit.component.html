@@ -1,45 +1,56 @@
 
-<div fxLayout="row" *ngIf="habilityCollection">
-  <div fxFlex="80%" fxFlexOffset="10%" *ngIf="mode == 'json'">
-
-    <h5>
-      Habilidades
-    </h5>
-    <div>
-      {{ habilityCollection | json }}
-    </div>
-    
-  </div>
-</div>
-<div fxLayout="row" *ngIf="habilityCollection">
-  <div fxFlex="100%" *ngIf="mode == 'default'">
+<div fxLayout="row">
+  <form [formGroup]="frmCandidateHabilities" fxFlex="100%">
 
     <h3>
       Habilidades
     </h3>
 
-    <div *ngIf="!categories || categories.length == 0" class="txt-center">
+    <div
+      *ngIf="!categories || categories.length == 0"
+      class="txt-center"
+    >
       <br><br>
       <small>(nenhuma definida)</small>
     </div>
 
-    <table>
-      <tbody>
-        <tr *ngFor="let category of categories">
-          <th style="padding: 0.25em 0.42em 0em 0em">
-            {{ category }}:
-          </th>
-          <td *ngIf="habilityCollection[category]">
+    <ng-container *ngIf="categories.length > 0">
 
-            <p *ngFor="let skill of habilityCollection[category]" style="margin: 0em 0em 0.42em 0em">
-              {{ skill.name }}
-            </p>
+      <div fxLayout="row wrap">
+        <div
+          fxFlex="18%"
+          fxFlexOffset="2%"
+          *ngFor="let category of categories"
+        >
 
-          </td>
-        </tr>
+          <h5>{{ category }}</h5>
+          <div style="height: 18.2em; overflow-y: scroll; overflow-x: hidden;">
 
-      </tbody>
-    </table>
+            <div
+              fxLayout="row"
+              *ngFor="let skill of habilitiesByCategory[category]"
+            >
+              <div fxFlex>
 
-  </div>
+                <button
+                  mat-flat-button
+                  class="m-b-10 btn-sm"
+                  style="width: 97%"
+                  [color]="skill.uiSelected ? 'accent' : 'primary'"
+                  (click)="toggleSkill(skill)"
+                >
+                  {{ skill.name }}
+                </button>
+
+              </div>
+            </div>
+            
+          </div>
+          
+        </div>
+      </div>
+      
+    </ng-container>
+    
+  </form>
 </div>

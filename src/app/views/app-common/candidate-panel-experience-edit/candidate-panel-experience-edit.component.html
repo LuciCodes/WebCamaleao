@@ -1,84 +1,198 @@
 
-<div fxLayout="row" *ngIf="candidateExperience">
-  <div fxFlex="80%" fxFlexOffset="10%" *ngIf="mode == 'json'">
+<div fxLayout="row">
 
-    <h5>Experiência</h5>
-
-    <div
-      fxLayout="row"
-      *ngFor="let experience of candidateExperience"
-    >
-      <div fxFlex>
-
-        <div fxLayout="row">
-          <div fxFlex>
-
-            {{ experience | json }}
-
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    
-  </div>
-</div>
-<div fxLayout="row" *ngIf="candidateExperience">
-  <div fxFlex="100%" *ngIf="mode == 'default'">
+  <!-- MODE: default -->
+  <div fxFlex="100%">
 
     <h3>
-        Experiência
+      Eperiência
     </h3>
 
-    <table>
-      <tbody>
-        <ng-container *ngFor="let experience of candidateExperience">
+    <form [formGroup]="frmCandidateExperience">
+        
+      <div fxLayout="row">          
+        <div fxFlex="40%">
+          <!--  Experiências Left Col (form) -->
 
-          <tr>
-            <th style="width: 6em">
-              Empresa:
-            </th>
-            <td>
-              {{ experience.companyName }}
-            </td>
-            <th style="width: 3em">
-              De:
-            </th>
-            <td style="width: 10em">
-              {{ experience.startDate }}
-            </td>
-            <th style="width: 3em">
-              Até:
-            </th>
-            <td style="width: 20em">
-              <div *ngIf="!experience.isCurrent">
+          <h5 class="txt-center m-t-0 m-b-0">Incluir Experiência</h5>
 
-                  {{ experience.endDate }}&nbsp;&nbsp;
+          <div fxLayout="row">
+            <div fxFlex>
 
-                  <small>({{ dateDiffString(experience.startDate, experience.endDate) }})</small>
+              <mat-form-field>
+                <mat-label>
+                  Nome da Empresa
+                </mat-label>
+                <input
+                  matInput
+                  formControlName="companyName"
+                >
+              </mat-form-field>          
+
+            </div>
+          </div>
+
+          <div fxLayout="row">          
+            <div fxFlex>
+
+              <mat-form-field>
+                <mat-label>
+                  Cargo
+                </mat-label>
+                <input
+                  matInput
+                  formControlName="roleName"
+                >
+              </mat-form-field>          
+
+            </div>
+          </div>
+
+          <div fxLayout="row">
+            <div fxFlex="50%">
+
+              <mat-form-field>
+                <mat-label>
+                  Data de Início
+                </mat-label>
+                <input
+                  matInput
+                  formControlName="startDate"
+                >
+              </mat-form-field>
+
+            </div>
+            <div fxFlex="48%" fxFlexOffset="2%">
+
+              <mat-form-field>
+                <mat-label>
+                  Data de Saída
+                </mat-label>
+                <input
+                  matInput
+                  formControlName="endDate"
+                >
+              </mat-form-field>    
+
+            </div>
+          </div>
+
+          <div fxLayout="row">          
+            <div fxFlex>
+
+              <mat-form-field>
+                <mat-label>
+                  Descrição
+                </mat-label>
+                <input
+                  matInput
+                  formControlName="description"
+                >
+              </mat-form-field>          
+
+            </div>
+          </div>
+
+          <div fxLayout="row txt-center">
+            <div fxFlex>
+
+              <mat-checkbox>
+                Emprego atual
+              </mat-checkbox>
+
+            </div>
+          </div>
+          
+          <div fxLayout="row" class="m-t-30">
+            <div fxFlex="60%" fxFlexOffset="20%">
+              
+              <button
+                color="accent"
+                class="w-100"
+                mat-flat-button
+                [disabled]="!isValid || flagSavingData"
+                (click)="addWorkExperience()"
+              >
+                Adicionar Experiência
+              </button>
+              
+            </div>  
+          </div> 
+
+          <!-- / Experiências Left Col (form) -->
+        </div>
+        <div fxFlex="58%" fxFlexOffset="2%">
+          <!--  Experiências Right Col (list) -->
+          
+          <h5 class="txt-center m-t-0 m-b-0">Experiências Cadastradas</h5>
+
+          <div
+            fxLayout="row"
+            class="txt-center"
+            *ngIf="candidateExperience.length == 0"
+          >
+            <div fxFlex>
+              (nenhuma experiência cadastrada)
+            </div>
+          </div>
+          <div
+            fxLayout="row"
+            *ngFor="let experience of candidateExperience"
+          >
+            <div fxFlex>
+              
+              <mat-card class="default-card">
+                <mat-card-content>
+
+                  <div>
+                    <div fxFlex="90%">
+
+                      <h2 class="m-t-0">
+                        {{ experience.companyName }}
+                      </h2>
+
+                    </div>
+                    <div fxFlex="10%" class="txt-right">
+
+                      <button
+                        color="warn"
+                        class="btn-sm op-5 op-hover"
+                        mat-flat-button
+                        (click)="removeExperience(experience)"
+                      >
+                        <i class="fa fa-trash"></i>
+                      </button>
+
+                    </div>
+                  </div>
                   
-              </div>
-              <div *ngIf="experience.isCurrent">
-                <small>(atual)</small>
-              </div>
-            </td>
-          </tr>
-          <tr *ngIf="experience.description && experience.description != ''">
-            <th style="width: 6em">
-              Descrição:
-              <br>
-              <br>
-              &nbsp;
-            </th>
-            <td colspan="4">
-              {{ experience.description }}
-            </td>
-          </tr>
+                  <div fxLayout="row">
+                    <div fxFlex *ngIf="experience.startDate || experience.endDate">
+                      
+                      <strong>Período:</strong>
+                      {{ experience.startDate ? 'de ' + experience.startDate : ''    }}
+                      {{ experience.endDate ? ' até ' + experience.endDate : ''  }}
+                      {{ dateDiffString(experience.startDate, experience.endDate) }} 
+                      
+                    </div>
+                  </div>
+                  <p>
+                    {{ experience.description }}
+                  </p>
+                  
+                </mat-card-content>
+              </mat-card>
 
-        </ng-container>
-      </tbody>
-    </table>
+            </div>
+          </div>
 
+          <!-- / Experiências Right Col (list) -->
+        </div>
+      </div>
+      
+    </form>
+    
   </div>
+
 </div>
+

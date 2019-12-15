@@ -6,6 +6,10 @@ import { CandidateMockService } from './candidate.mock.service';
 import { CandidateFirebaseService } from './candidate.firebase.service';
 import { CandidateSearchParams } from '../models/candidateSearchParams';
 import { CandidateDetails } from '../models/candidateDetails';
+import { CandidateProfile } from '../models/candidateProfile';
+import { CandidateHabilities } from '../models/candidateHabilities';
+import { CandidateEducation } from '../models/candidateEducation';
+import { WorkExperience } from '../models/workExperience';
 
 @Injectable()
 export class CandidateService {
@@ -23,6 +27,8 @@ export class CandidateService {
 
   private _detailsCache: Array<CandidateDetails> = [];
   
+  public editingCandidate: CandidateDetails;
+
   get candidates(): Array<Candidate> {
 
     return this._candidates;
@@ -167,5 +173,147 @@ export class CandidateService {
   clearSearchParams() {
 
     this.lastSearchParams = null;
+  }
+
+  async saveEditingCandidate() {
+
+    let result: any = {};
+
+    if (this.mockAll || this.userForMock('saveEditingCandidate')) {
+
+      result = await this.candidateMock.saveCandidate(this.editingCandidate);
+    }
+    
+    if (this.firebaseAll || this.userForFirebase('saveEditingCandidate')) {
+      
+      result = await this.candidateFirebase.saveCandidate(this.editingCandidate.toDocumentObject());
+
+    }
+
+    return result;
+  }
+  
+  async saveCandidate(candidateDetails?: CandidateDetails): Promise<any> {
+
+    if (this.mockAll || this.userForMock('saveCandidate')) {
+
+      return await this.candidateMock.saveCandidate(candidateDetails);
+    }
+    
+    if (this.firebaseAll || this.userForFirebase('saveCandidate')) {
+      
+      return await this.candidateFirebase.saveCandidate(candidateDetails.toDocumentObject());
+
+    }
+
+    return null;
+  }
+  
+  async saveCandidateBasicInfo(candidate?: Candidate): Promise<any> {
+
+    if (this.mockAll || this.userForMock('saveCandidateBasicInfo')) {
+
+      return await this.candidateMock.saveCandidateBasicInfo(candidate);
+    }
+    
+    if (this.firebaseAll || this.userForFirebase('saveCandidateBasicInfo')) {
+      
+      return await this.candidateFirebase.saveCandidateBasicInfo(candidate);
+
+    }
+
+    return null;
+  }
+  
+  async saveCandidateProfile(candidateProfile?: CandidateProfile): Promise<any> {
+
+    if (this.mockAll || this.userForMock('saveCandidateProfile')) {
+
+      return await this.candidateMock.saveCandidateProfile(candidateProfile);
+    }
+    
+    if (this.firebaseAll || this.userForFirebase('saveCandidateProfile')) {
+      
+      return await this.candidateFirebase.saveCandidateProfile(candidateProfile);
+
+    }
+
+    return null;
+  }
+  
+  async saveCandidateHabilities(candidateHabilities?: CandidateHabilities): Promise<any> {
+
+    if (this.mockAll || this.userForMock('saveCandidateProfile')) {
+
+      return await this.candidateMock.saveCandidateHabilities(candidateHabilities);
+    }
+    
+    if (this.firebaseAll || this.userForFirebase('saveCandidateHabilities')) {
+      
+      return await this.candidateFirebase.saveCandidateHabilities(candidateHabilities);
+
+    }
+
+    return null;
+  }
+  
+  async saveCandidateEducation(candidateEducation?: CandidateEducation): Promise<any> {
+
+    if (this.mockAll || this.userForMock('saveCandidateEducation')) {
+
+      return await this.candidateMock.saveCandidateEducation(candidateEducation);
+    }
+    
+    if (this.firebaseAll || this.userForFirebase('saveCandidateEducation')) {
+      
+      return await this.candidateFirebase.saveCandidateEducation(candidateEducation.toDocumentObject());
+
+    }
+
+    return null;
+  }
+  
+  async removeCandidateWorkExperience(candidateId: string, workExperience?: WorkExperience): Promise<any> {
+
+    if (this.mockAll || this.userForMock('saveCandidateEducation')) {
+
+      return await this.candidateMock.removeCandidateWorkExperience(candidateId, workExperience);
+    }
+    
+    if (this.firebaseAll || this.userForFirebase('saveCandidateEducation')) {
+      
+      return await this.candidateFirebase.removeCandidateWorkExperience(candidateId, workExperience);
+
+    }
+
+    return null;
+  }
+
+  async saveCandidateWorkExperiences(workExperiences?: Array<WorkExperience>): Promise<any> {
+
+    let results = [];
+
+    for (let e = 0; e < workExperiences.length; e++) {
+
+      results.push(await this.saveCandidateWorkExperience(workExperiences[e]));
+    }
+
+    return results;
+  }
+
+  async saveCandidateWorkExperience(workExperience?: WorkExperience): Promise<any> {
+
+    if (this.mockAll || this.userForMock('saveCandidateWorkExperience')) {
+
+      return await this.candidateMock.saveCandidateWorkExperience(workExperience);
+    }
+    
+    if (this.firebaseAll || this.userForFirebase('saveCandidateWorkExperience')) {
+      
+      return await this.candidateFirebase.saveCandidateWorkExperience(workExperience);
+
+    }
+
+    return null;
   }
 }

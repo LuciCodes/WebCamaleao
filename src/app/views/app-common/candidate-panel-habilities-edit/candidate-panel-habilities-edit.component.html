@@ -2,6 +2,18 @@
 <div fxLayout="row">
   <form [formGroup]="frmCandidateHabilities" fxFlex="100%">
 
+    <div class="top-right-form-label">
+      <button
+        color="accent"
+        class="w-100"
+        mat-flat-button
+        (click)="save($event)"
+      > 
+        <i class="fa fa-save"></i>
+        Salvar
+      </button>
+    </div>
+
     <h3>
       Habilidades
     </h3>
@@ -23,7 +35,7 @@
           *ngFor="let category of categories"
         >
 
-          <h5>{{ category }}</h5>
+          <h5>{{ category }} ({{ categoryCounts[category] || 0 }})</h5>
           <div style="height: 18.2em; overflow-y: scroll; overflow-x: hidden;">
 
             <div
@@ -37,6 +49,7 @@
                   class="m-b-10 btn-sm"
                   style="width: 97%"
                   [color]="skill.uiSelected ? 'accent' : 'primary'"
+                  [title]="skill.toString()"
                   (click)="toggleSkill(skill)"
                 >
                   {{ skill.name }}

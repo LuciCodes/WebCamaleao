@@ -203,4 +203,52 @@ export class CandidateMockService {
 
     return this._candidateCache;
   }
+
+    
+  async saveCandidate(candidateDetails?: CandidateDetails): Promise<any> {
+
+    return candidateDetails;
+  }
+  
+  async saveCandidateBasicInfo(candidate?: Candidate): Promise<any> {
+
+    return candidate;
+  }
+  
+  async saveCandidateProfile(candidateProfile?: CandidateProfile): Promise<any> {
+
+    return candidateProfile;
+  }
+  
+  async saveCandidateHabilities(candidateHabilities?: CandidateHabilities): Promise<any> {
+
+    return candidateHabilities;
+  }
+  
+  async saveCandidateEducation(candidateEducation?: CandidateEducation): Promise<any> {
+
+    return candidateEducation;
+  }
+  
+  async removeCandidateWorkExperience(candidateId: string, workExperience?: WorkExperience): Promise<any> {
+
+    return WorkExperience;
+  }
+
+  async saveCandidateWorkExperiences(workExperiences?: Array<WorkExperience>): Promise<any> {
+
+    let results = [];
+
+    for (let e = 0; e < workExperiences.length; e++) {
+
+      results.push(await this.saveCandidateWorkExperience(workExperiences[e]));
+    }
+
+    return results;
+  }
+
+  async saveCandidateWorkExperience(workExperience?: WorkExperience): Promise<any> {
+
+    return workExperience;
+  }
 }

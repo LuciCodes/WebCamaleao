@@ -113,23 +113,21 @@ export class CandidatesEditComponent implements OnInit {
 
     if (!this.flagSavingData && this.frmCandidate.valid) {
 
-      /*
       this.flagSavingData = true;
 
       let msg = this.snackBar.open('Salvando dados...');
 
-      let candidate: any = new Candidate(this.frmCandidate.value).toDocumentObject();
+      console.log('Saving candidate:', this.candidateDetails);
 
-      console.log('Saving candidate:', candidate);
+      let result = await this.candidateService.saveCandidate(this.candidateDetails);
 
-      let result = await this.userService.saveUserCandidate(candidate);
+      console.log('Saving result:', result.obj);
 
       msg.dismiss();
 
       msg = this.snackBar.open(result.msg, 'OK');
 
       this.flagSavingData = false;
-      */
     }
   }
 }

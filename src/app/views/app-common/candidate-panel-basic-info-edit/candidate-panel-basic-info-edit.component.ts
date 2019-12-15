@@ -1,10 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Candidate } from 'src/app/models/candidate';
 import { CandidateProfile } from 'src/app/models/candidateProfile';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CandidateService } from 'src/app/services/candidate.service';
 import { ActivatedRoute } from '@angular/router';
 import { AppConstants } from 'src/app/etc/appConstants';
+import { CandidateDetails } from 'src/app/models/candidateDetails';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-candidate-panel-basic-info-edit',
@@ -27,6 +29,14 @@ export class CandidatePanelBasicInfoEditComponent implements OnInit {
 
     this._candidate = value;
     this.initFormCandidate(this._candidate);
+
+    if (!this.candidateService.editingCandidate) {
+
+      this.candidateService.editingCandidate = new CandidateDetails();
+    }
+
+    this.candidateService.editingCandidate.candidate = this._candidate;
+    this.candidateService.editingCandidate.candidateProfile = this._candidateProfile;
   }
   
   @Input()
@@ -39,6 +49,14 @@ export class CandidatePanelBasicInfoEditComponent implements OnInit {
 
     this._candidateProfile = value;
     this.initFormCandidateProfile(this._candidateProfile);
+    
+    if (!this.candidateService.editingCandidate) {
+
+      this.candidateService.editingCandidate = new CandidateDetails();
+    }
+
+    this.candidateService.editingCandidate.candidate = this._candidate;
+    this.candidateService.editingCandidate.candidateProfile = this._candidateProfile;
   }
 
   flagLoadingData = false;
@@ -46,8 +64,13 @@ export class CandidatePanelBasicInfoEditComponent implements OnInit {
 
   public frmCandidate: FormGroup;
   public frmCandidateProfile: FormGroup;
-  
-  get isValid(): boolean {
+
+  get isCandidateValid(): boolean {
+
+    return this.frmCandidate && this.frmCandidate.valid;
+  }
+
+  get isProfileValid(): boolean {
 
     return this.frmCandidateProfile && this.frmCandidateProfile.valid;
   }
@@ -96,19 +119,21 @@ export class CandidatePanelBasicInfoEditComponent implements OnInit {
     return [];
   }
 
-  constructor(private fb: FormBuilder) {  }
+  constructor(private fb: FormBuilder,
+              private candidateService: CandidateService,
+              private snackBar: MatSnackBar) {  }
 
   initFormCandidate(obj?: any) {
     
     if (!obj) { obj = {}; }
 
     this.frmCandidate = this.fb.group({
-      name: [obj.name],
+      id: [obj.id],
+      name: [obj.name, Validators.required],
       birth: [obj.birth],
       cpf: [obj.cpf],
       docRg: [obj.docRg],
       phone: [obj.phone],
-      signupState: ['COMPLETED'],
       addrCity: [obj.addrCity],
       addrState: [obj.addrState],
       addrDistrict: [obj.addrDistrict],
@@ -122,6 +147,7 @@ export class CandidatePanelBasicInfoEditComponent implements OnInit {
     if (!obj) { obj = {}; }
 
     this.frmCandidateProfile = this.fb.group({
+      id: [obj.id],
       gender: [obj.gender],
       sex: [obj.sex],
       ethnicity: [obj.ethnicity],
@@ -134,27 +160,51 @@ export class CandidatePanelBasicInfoEditComponent implements OnInit {
 
   }
 
-  async save() {
+  async saveBasicInfo() {
 
-    if (!this.flagSavingData && this.frmCandidate.valid) {
+    if (!this.flagSavingData && this.frmCandidate.valid && this.frmCandidateProfile.valid) {
 
-      /*
       this.flagSavingData = true;
 
       let msg = this.snackBar.open('Salvando dados...');
 
       let candidate: any = new Candidate(this.frmCandidate.value).toDocumentObject();
+      let profile: any = new CandidateProfile(this.frmCandidateProfile.value).toDocumentObject();
 
-      console.log('Saving candidate:', candidate);
+      console.log('Saving candidate/profile:', { candidate, profile });
 
-      let result = await this.userService.saveUserCandidate(candidate);
+      let result = { msg: 'Dados salvados com sucesso!', candidate: null, profile: null };
+
+      result.candidate = await this.candidateService.saveCandidateBasicInfo(candidate);
+      result.profile = await this.candidateService.saveCandidateProfile(profile);
+
+      console.log('Saved:', result);
 
       msg.dismiss();
 
       msg = this.snackBar.open(result.msg, 'OK');
 
       this.flagSavingData = false;
-      */
+    }
+  }
+
+  updateCandidateValue(propertyName: string, evtObj) {
+
+    if (this.frmCandidate.valid
+     && this.candidateService.editingCandidate) {
+
+      this.candidateService.editingCandidate.candidate[propertyName] = evtObj.srcElement.value;
+    }
+  }
+  
+
+  updateProfileValue(propertyName: string, evtObj) {
+
+    if (this.frmCandidate.valid
+     && this.candidateService.editingCandidate) {
+
+      debugger;
+      this.candidateService.editingCandidate.candidate[propertyName] = evtObj.value;
     }
   }
 }

@@ -1,8 +1,28 @@
 
 <div fxLayout="row" *ngIf="candidate">
   
-  <!-- MODE: default -->
   <form [formGroup]="frmCandidate" fxFlex="100%">
+
+    <div class="top-right-form-label" *ngIf="isCandidateValid && isProfileValid">
+      <button
+        color="accent"
+        class="w-100"
+        mat-flat-button
+        (click)="saveBasicInfo($event)"
+      > 
+        <i class="fa fa-save"></i>
+        Salvar
+      </button>
+    </div>
+
+    <div class="top-right-form-label invalid-form-label" *ngIf="!isCandidateValid || !isProfileValid">
+
+      <i class="fa fa-exclamation-triangle"></i>
+      <small>
+        Dados inválidos no formulário
+      </small>
+
+    </div>
 
     <h3>
       Dados Básicos
@@ -16,7 +36,7 @@
       >
   
     </div>
-    
+
     <div fxLayout="row">
       <div fxFlex="68%" fxFlexOffset="15%">
         
@@ -27,6 +47,7 @@
             matInput
             placeholder="Nome da pessoa"
             formControlName="name"
+            (change)="updateCandidateValue('name', $event)"
           >
         </mat-form-field>
 
@@ -42,6 +63,7 @@
             matInput
             placeholder="Data de Nascimento"
             formControlName="birth"
+            (change)="updateCandidateValue('birth', $event)"
           >
         </mat-form-field>
 
@@ -55,6 +77,7 @@
             matInput
             placeholder="CPF"
             formControlName="cpf"
+            (change)="updateCandidateValue('cpf', $event)"
           >
         </mat-form-field>
 
@@ -68,6 +91,7 @@
             matInput
             placeholder="RG"
             formControlName="docRg"
+            (change)="updateCandidateValue('docRg', $event)"
           >
         </mat-form-field>
 
@@ -81,6 +105,7 @@
             matInput
             placeholder="Telefone"
             formControlName="phone"
+            (change)="updateCandidateValue('phone', $event)"
           >
         </mat-form-field>
 
@@ -97,6 +122,7 @@
             <mat-option
               [value]="state.abrev"
               *ngFor="let state of states"
+              (change)="updateCandidateValue('addrState', $event)"
             >
               {{ state.name }}
             </mat-option>
@@ -115,6 +141,7 @@
               [value]="city"
               *ngFor="let city of cities"
               [disabled]="cities.length == 0"
+              (change)="updateCandidateValue('addrCity', $event)"
             >
               {{ city }}
             </mat-option>
@@ -132,6 +159,7 @@
             matInput
             placeholder="Bairro"
             formControlName="addrDistrict"
+            (change)="updateCandidateValue('addrDistrict', $event)"
           >
         </mat-form-field>
 
@@ -145,6 +173,7 @@
             matInput
             placeholder="CEP"
             formControlName="addrPostalCode"
+            (change)="updateCandidateValue('addrPostalCode', $event)"
           >
 
         </mat-form-field>
@@ -175,6 +204,7 @@
             <mat-option
               [value]="gender.value"
               *ngFor="let gender of genders"
+              (change)="updateProfileValue('gender', $event)"
             >
               {{ gender.name }}
             </mat-option>
@@ -191,6 +221,7 @@
             <mat-option
               [value]="sex.value"
               *ngFor="let sex of sexes"
+              (change)="updateProfileValue('sex', $event)"
             >
               {{ sex.name }}
             </mat-option>
@@ -207,6 +238,7 @@
             <mat-option
               [value]="eth.value"
               *ngFor="let eth of etnicities"
+              (change)="updateProfileValue('ethnicity', $event)"
             >
               {{ eth.name }}
             </mat-option>
@@ -219,6 +251,7 @@
         <mat-radio-group
           aria-label="Pne?"
           formControlName="pne"
+          (change)="updateProfileValue('pne', $event)"
         >
           <mat-label>
             Pne?
@@ -239,6 +272,7 @@
                 matInput
                 placeholder="Obs"
                 formControlName="pneNote"
+                (change)="updateProfileValue('pneNote', $event)"
               >
             </mat-form-field>
 

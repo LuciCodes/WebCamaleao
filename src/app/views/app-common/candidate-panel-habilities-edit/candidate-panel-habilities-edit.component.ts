@@ -4,6 +4,9 @@ import { CandidateHabilityCollection } from 'src/app/models/candidateHabilityCol
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Skill } from 'src/app/models/skill';
 import { AppConstants } from 'src/app/etc/appConstants';
+import { CandidateService } from 'src/app/services/candidate.service';
+import { MatSnackBar } from '@angular/material';
+import { CandidateDetails } from 'src/app/models/candidateDetails';
 
 @Component({
   selector: 'app-candidate-panel-habilities-edit',
@@ -27,6 +30,8 @@ export class CandidatePanelHabilitiesEditComponent implements OnInit {
       this._habilitiesByCategory = AppConstants.getSKillsByCategoriesObject(this._candidateHabilities.list);
     }
 
+    this.countCategories();
+
     return this._habilitiesByCategory;
   }
 
@@ -40,23 +45,42 @@ export class CandidatePanelHabilitiesEditComponent implements OnInit {
 
     this._candidateHabilities = value;
 
-    this.habilityCollection = CandidateHabilityCollection.fromString(value.list, this._candidateHabilities.list);
-
-    console.log('hab col:', this.habilityCollection);
+    //this.habilityCollection = CandidateHabilityCollection.fromString(value.list, this._candidateHabilities.list);
 
     this.initForm(this._candidateHabilities);
+    
+    if (!this.candidateService.editingCandidate) {
+
+      this.candidateService.editingCandidate = new CandidateDetails();
+    }
+
+    this.candidateService.editingCandidate.candidateHabilities = this._candidateHabilities;
   }
 
-  habilityCollection: CandidateHabilityCollection;
+  //habilityCollection: CandidateHabilityCollection;
 
   frmCandidateHabilities: FormGroup;
 
   public get selectedSkills(): Array<Skill> {
 
-    return this.habilityCollection.items.filter(s => s.uiSelected);
+    let result = [];
+
+    for (let i = 0; i < AppConstants.basicSkillsCategories.length; i++) {
+
+      let cat = AppConstants.basicSkillsCategories[i];
+
+      if (this._habilitiesByCategory[cat]) {
+
+        result.splice(-1, 0, this._habilitiesByCategory[cat].filter(c => c.uiSelected));
+      }
+    }
+
+    return result;
   }
 
-  constructor(private fb: FormBuilder) {  }
+  constructor(private fb: FormBuilder,
+              private candidateService: CandidateService,
+              private snackBar: MatSnackBar) {  }
 
   initForm(obj?: any) {
     
@@ -69,39 +93,42 @@ export class CandidatePanelHabilitiesEditComponent implements OnInit {
     this.frmCandidateHabilities = this.fb.group({
       list: [list]
     });
-  }
-  
-  hasHability(category, hability) {
-
-    let key = `{ category }: { hability }`;
-
-    return this._candidateHabilities.list.includes(key);
+    
+    this.countCategories();
   }
 
   toggleSkill(skill: Skill) {
 
-    //let key = `{ skill.category }: { skill.name }`;
-
     skill.uiSelected = !skill.uiSelected;
 
-    this.countCategories(true);
+    let keys = this.selectedSkills.join(', ');
+
+    this.candidateService.editingCandidate.candidateHabilities.list = keys;
+
+    console.log('this.candidateService.editingCandidate.candidateHabilities.list> ', keys);
+
+    this.countCategories();
 
     //this.saveOnTime();
   }
   
-  countCategories(force: boolean = false) {
+  countCategories() {
 
-    if (!this.categoryCounts || force) {
+    if (!this.categoryCounts) { this.categoryCounts = {}; }
 
-      this.categoryCounts = {};
+    if (!this._habilitiesByCategory) { return; }
 
-      this.habilityCollection.categories.forEach(cat => {
-  
-        this.categoryCounts[cat] = this.selectedSkills.filter(s => s.category == cat).length || 0;
-      });
+    for (let i = 0; i < AppConstants.basicSkillsCategories.length; i++) {
 
-      console.log('Counted', this.categoryCounts);
+      let cat = AppConstants.basicSkillsCategories[i];
+
+      if (this._habilitiesByCategory[cat]) {
+
+        this.categoryCounts[cat] = this._habilitiesByCategory[cat].filter(c => c.uiSelected).length;
+      }
     }
+
+    console.log('Counted', this.categoryCounts);
   }
 
   async ngOnInit() {
@@ -110,25 +137,23 @@ export class CandidatePanelHabilitiesEditComponent implements OnInit {
 
   async save() {
 
-    if (!this.flagSavingData && this.frmCandidateHabilities.valid) {
+    if (!this.flagSavingData) {
 
-      /*
       this.flagSavingData = true;
 
       let msg = this.snackBar.open('Salvando dados...');
 
-      let candidate: any = new Candidate(this.frmCandidate.value).toDocumentObject();
+      console.log('Salvando list> ', this.candidateService.editingCandidate.candidateHabilities.list);
 
-      console.log('Saving candidate:', candidate);
+      let result = await this.candidateService.saveCandidateHabilities(this.candidateService.editingCandidate.candidateHabilities);
 
-      let result = await this.userService.saveUserCandidate(candidate);
+      console.log('Salvadas habilidades:', result);
 
       msg.dismiss();
 
       msg = this.snackBar.open(result.msg, 'OK');
 
       this.flagSavingData = false;
-      */
     }
   }
 }

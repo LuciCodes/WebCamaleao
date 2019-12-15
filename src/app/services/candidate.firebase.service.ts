@@ -187,4 +187,193 @@ export class CandidateFirebaseService {
 
     return this._candidateCache;
   }
+  
+  async saveCandidate(candidateDetails?: CandidateDetails): Promise<any> {
+
+    let saveResult = { msg: 'Dados salvados com sucesso!', success: true, obj: {} };
+
+    saveResult.obj['saveBasicInfoResult'] = await this.saveCandidateBasicInfo(candidateDetails.candidate);
+    saveResult.obj['saveCandidateProfileResult'] = await this.saveCandidateProfile(candidateDetails.candidateProfile);
+    saveResult.obj['saveCandidateHabilitiesResult'] = await this.saveCandidateHabilities(candidateDetails.candidateHabilities);
+    saveResult.obj['saveCandidateEducationResult'] = await this.saveCandidateEducation(candidateDetails.candidateEducation);
+    saveResult.obj['saveCandidateWorkExperiencesResult'] = await this.saveCandidateWorkExperiences(candidateDetails.candidateExperience);
+
+    return saveResult;
+  }
+  
+  async saveCandidateBasicInfo(candidate?: Candidate): Promise<any> {
+
+    if (candidate.toDocumentObject) { candidate = candidate.toDocumentObject() };
+
+    candidate.updated = firebase.firestore.Timestamp.fromDate(new Date());
+
+    let saveResult = { msg: 'Dados salvados com sucesso!', success: true, obj: null };
+
+    try 
+    {
+      await this.fireDb.collection('candidates')
+                                      .doc(candidate.id)
+                                      .set(candidate, { merge: true });
+                                        
+      saveResult.obj = candidate;
+
+      let idx = this._candidateCache.findIndex(c => c.id == candidate.id);
+
+      if (idx > -1) { this._candidateCache[idx] = candidate; }
+    }
+    catch(err) {
+
+      saveResult.msg = 'Erro salvando dados... ' + (err || '');
+      saveResult.success = false;
+    }
+
+    return saveResult;
+  }
+  
+  async saveCandidateProfile(candidateProfile?: CandidateProfile): Promise<any> {
+
+    if (candidateProfile.toDocumentObject) { candidateProfile = candidateProfile.toDocumentObject() };
+
+    candidateProfile.updated = firebase.firestore.Timestamp.fromDate(new Date());
+
+    let saveResult = { msg: 'Dados salvados com sucesso!', success: true, obj: null };
+
+    try 
+    {
+      await this.fireDb.collection('candidateProfiles')
+                                      .doc(candidateProfile.id)
+                                      .set(candidateProfile, { merge: true });
+                                        
+      saveResult.obj = candidateProfile;
+      
+      let idx = this._candidateProfilesCache.findIndex(p => p.id == candidateProfile.id);
+
+      if (idx > -1) { this._candidateProfilesCache[idx] = candidateProfile; }
+    }
+    catch(err) {
+
+      saveResult.msg = 'Erro salvando dados... ' + (err || '');
+      saveResult.success = false;
+    }
+
+    return saveResult;
+  }
+  
+  async saveCandidateHabilities(candidateHabilities?: CandidateHabilities): Promise<any> {
+
+    if (candidateHabilities.toDocumentObject) { candidateHabilities = candidateHabilities.toDocumentObject() };
+
+    candidateHabilities.updated = firebase.firestore.Timestamp.fromDate(new Date());
+
+    let saveResult = { msg: 'Dados salvados com sucesso!', success: true, obj: null };
+
+    try 
+    {
+      await this.fireDb.collection('candidateHabilities')
+                                      .doc(candidateHabilities.id)
+                                      .set(candidateHabilities, { merge: true });
+        
+      saveResult.obj = candidateHabilities;
+      
+      let idx = this._candidateHabiitiesCache.findIndex(p => p.id == candidateHabilities.id);
+
+      if (idx > -1) { this._candidateHabiitiesCache[idx] = candidateHabilities; }
+    }
+    catch(err) {
+
+      saveResult.msg = 'Erro salvando dados... ' + (err || '');
+      saveResult.success = false;
+    }
+
+    return saveResult;
+  }
+  
+  async saveCandidateEducation(candidateEducation?: any): Promise<any> {
+
+    if (candidateEducation.toDocumentObject) { candidateEducation = candidateEducation.toDocumentObject() };
+
+    candidateEducation.updated = firebase.firestore.Timestamp.fromDate(new Date());
+
+    let saveResult = { msg: 'Dados salvados com sucesso!', success: true, obj: null };
+
+    try 
+    {
+      await this.fireDb.collection('candidateEducation')
+                                      .doc(candidateEducation.id)
+                                      .set(candidateEducation, { merge: true });
+
+      saveResult.obj = candidateEducation;
+      
+      let idx = this._candidateEducationCache.findIndex(p => p.id == candidateEducation.id);
+
+      if (idx > -1) { this._candidateEducationCache[idx] = candidateEducation; }
+    }
+    catch(err) {
+
+      saveResult.msg = 'Erro salvando dados... ' + (err || '');
+      saveResult.success = false;
+    }
+
+    return saveResult;
+  }
+  
+  async removeCandidateWorkExperience(candidateId: string, workExperience?: WorkExperience): Promise<any> {
+
+    let expQuery = await this.fireDb.collection('candidateWorkExperiences').ref.where('candidateId', "==", candidateId);
+
+    let expResult = await expQuery.get();
+
+    if (!expResult.empty) {
+
+      let existingExp = expResult.docs.find(d => d.id == workExperience.id);
+
+      if (existingExp) {
+
+        await this.fireDb.collection('candidateWorkExperiences').doc(existingExp.id).delete();
+      }
+    }
+  }
+
+  async saveCandidateWorkExperiences(workExperiences?: Array<any>): Promise<any> {
+
+    let results = [];
+
+    for (let e = 0; e < workExperiences.length; e++) {
+
+      results.push(await this.saveCandidateWorkExperience(workExperiences[e]));
+    }
+
+    return results;
+  }
+
+  async saveCandidateWorkExperience(workExperience?: any): Promise<any> {
+
+    if (workExperience.toDocumentObject) { workExperience = workExperience.toDocumentObject() };
+
+    workExperience.updated = firebase.firestore.Timestamp.fromDate(new Date());
+
+    let saveResult = { msg: 'Dados salvados com sucesso!', success: true, obj: null };
+
+    try 
+    {
+      let obj = workExperience.toDocumentObject();
+
+      let newExpRef = await this.fireDb.collection('candidateWorkExperiences').add(obj);
+
+      workExperience.id = newExpRef.id;
+
+      saveResult.obj = workExperience;
+
+      let idx = this._workExperienceCache.findIndex(p => p.id == workExperience.id);
+
+      if (idx > -1) { this._workExperienceCache[idx] = workExperience; }
+    }
+    catch(err) {
+
+      saveResult.msg = 'Erro salvando dados... ' + (err || '');
+      saveResult.success = false;
+    }
+
+    return saveResult;
+  }
 }

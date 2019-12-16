@@ -6,6 +6,8 @@ import { Course } from 'src/app/models/course';
 import { UserService } from 'src/app/services/user.service';
 import { MatSnackBar } from '@angular/material';
 import { Certification } from 'src/app/models/certification';
+import { CandidateService } from 'src/app/services/candidate.service';
+import { CandidateDetails } from 'src/app/models/candidateDetails';
 
 @Component({
   selector: 'app-candidate-panel-education-edit',
@@ -14,18 +16,22 @@ import { Certification } from 'src/app/models/certification';
 })
 export class CandidatePanelEducationEditComponent implements OnInit {
 
-  _candidateEducation: CandidateEducation;
-
   @Input()
   set candidateEducation(value: CandidateEducation) {
 
-    this._candidateEducation = value;
-    this.initForm(this._candidateEducation);
+    if (!this.candidateService.editingCandidate) {
+
+      this.candidateService.editingCandidate = new CandidateDetails();
+    }
+
+    this.candidateService.editingCandidate.candidateEducation = value;
+
+    this.initForm(this.candidateService.editingCandidate.candidateEducation);
   }
   
   get candidateEducation(): CandidateEducation {
 
-    return this._candidateEducation;
+    return this.candidateService.editingCandidate.candidateEducation;
   }
   
   private flagSavingData = false;
@@ -79,7 +85,7 @@ export class CandidatePanelEducationEditComponent implements OnInit {
     return this.candidateEducation ? this.candidateEducation.certifications : [];
   }
 
-  public get cursosDescription(): string {
+  public get coursesDescription(): string {
 
     if (this.courses.length > 0) {
 
@@ -95,63 +101,12 @@ export class CandidatePanelEducationEditComponent implements OnInit {
 
   public get years(): Array<string> {
 
-    return [
-      '1970',
-      '1971',
-      '1972',
-      '1973',
-      '1974',
-      '1975',
-      '1976',
-      '1977',
-      '1978',
-      '1979',
-      '1980',
-      '1981',
-      '1982',
-      '1983',
-      '1984',
-      '1985',
-      '1986',
-      '1987',
-      '1988',
-      '1989',
-      '1990',
-      '1991',
-      '1992',
-      '1993',
-      '1994',
-      '1995',
-      '1996',
-      '1997',
-      '1998',
-      '1999',
-      '2000',
-      '2001',
-      '2002',
-      '2003',
-      '2004',
-      '2005',
-      '2006',
-      '2007',
-      '2008',
-      '2009',
-      '2010',
-      '2011',
-      '2012',
-      '2013',
-      '2014',
-      '2015',
-      '2016',
-      '2017',
-      '2018',
-      '2019',
-      '2020'
-    ]
+    return AppConstants.years;
   }
 
   constructor(private fb: FormBuilder,
     private userService: UserService,
+    private candidateService: CandidateService,
     private snackBar: MatSnackBar
   ) {
 
@@ -207,7 +162,7 @@ export class CandidatePanelEducationEditComponent implements OnInit {
         area: courseObj.newCourseArea
       });
 
-      this.userService.candidateEducation.courses.push(newCourse);
+      this.candidateEducation.courses.push(newCourse);
 
       await this.save();
     }
@@ -217,39 +172,86 @@ export class CandidatePanelEducationEditComponent implements OnInit {
 
     if (!this.flagSavingData) {
 
-      /*
       this.flagSavingData = true;
 
       let msg = this.snackBar.open('Salvando dados...');
 
-      let courseIdx = this.userService.candidateEducation.courses.findIndex(c => c.id == course.id);
+      let courseIdx = this.candidateEducation.courses.findIndex(c => c.id == course.id);
 
-      this.userService.candidateEducation.courses.splice(courseIdx, 1);
+      if (courseIdx > -1) {
+
+        this.candidateEducation.courses.splice(courseIdx, 1);
+      }
 
       await this.save();
-      */
+    }
+  }
+
+  async addCertification() {
+
+    if (this.frmCandidateCertification.valid && !this.flagSavingData) {
+
+      this.flagSavingData = true;
+
+      let msg = this.snackBar.open('Salvando dados...');
+
+      let certObj = this.frmCandidateCertification.value;
+
+      let newCertification = new Certification({
+        name: certObj.newCertificationName,
+        institution: certObj.newCertificationInstitution,
+        year: certObj.newCertificationYear,
+        description: certObj.newCertificationDescription
+      });
+
+      this.candidateEducation.certifications.push(newCertification);
+
+      await this.save();
+    }
+  }
+
+  async removeCertification(certification: Certification) {
+
+    if (!this.flagSavingData) {
+
+      this.flagSavingData = true;
+
+      let msg = this.snackBar.open('Salvando dados...');
+
+      let certIdx = this.candidateEducation.certifications.findIndex(c => c.id == certification.id);
+
+      if (certIdx > -1) {
+
+        this.candidateEducation.courses.splice(certIdx, 1);
+      }
+
+      await this.save();
     }
   }
 
   async save() {
 
-    let lvl = this.frmCandidateEducation.value.level;
+    this.candidateEducation.level = this.frmCandidateEducation.controls.level.value;
 
-    let edu = new CandidateEducation(this.userService.candidateEducation)
+    let edu = new CandidateEducation(this.candidateEducation);
 
-    /*
-    edu.level = lvl;
+    let msg = this.snackBar.open('Salvando dados...');
 
-    let obj = edu.toDocumentObject();
+    console.log('Saving edu:', edu);
 
-    let msg = this.snackBar.open('Salvando dados...', obj);
+    let result = await this.candidateService.saveCandidateEducation(edu);
 
-    let result = await this.userService.saveUserCandidateEducation(obj);
+    if (result.success) {
+
+      this.candidateEducation = result.obj;
+
+      console.log('Save result:', this.candidateEducation);
+    }
+    //result = await this.candidateService.saveCandidateEducation(obj);
 
     msg.dismiss();
 
     msg = this.snackBar.open(result.msg, 'OK');
-    */
    
     this.flagSavingData = false;
   }

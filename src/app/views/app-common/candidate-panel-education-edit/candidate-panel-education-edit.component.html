@@ -4,12 +4,24 @@
   <!-- MODE: default -->
   <div fxFlex="100%">
 
-    <h3>
-      Educação
-    </h3>
-
     <form [formGroup]="frmCandidateEducation">
-        
+          
+      <div class="top-right-form-label" style="top: 4px">
+        <button
+          color="accent"
+          class="w-100"
+          mat-flat-button
+          (click)="save($event)"
+        > 
+          <i class="fa fa-save"></i>
+          Salvar
+        </button>
+      </div>
+
+      <h3>
+        Educação
+      </h3>
+  
       <div fxFlexLayout="row">
         <div fxFlex="50%" fxFlexOffset="25%">
 
@@ -20,7 +32,6 @@
             >
               <mat-option
                 [value]="level.value"
-                (blur)="save()"
                 *ngFor="let level of educationalLevels"
               >
                 {{ level.name }}
@@ -371,7 +382,7 @@
 
                   <h2>{{ certification.name }} {{ certification.year ? (' - ' + certification.year) : ('') }}</h2>
                   
-                  <h3 *ngIf="certification.institution">{{ certification.institution }}</h3>
+                  <h3 class="txt-left" [innerHtml]="certification.institution || '&nbsp;'"></h3>
 
                   <div fxLayout="row" *ngIf="certification.description">
                     <div fxFlex>

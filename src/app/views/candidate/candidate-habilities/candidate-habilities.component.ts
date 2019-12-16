@@ -85,8 +85,6 @@ export class CandidateHabilitiesComponent implements OnInit {
   
         this.categoryCounts[cat] = this.selectedSkills.filter(s => s.category == cat).length || 0;
       });
-
-      console.log('Counted', this.categoryCounts);
     }
   }
 

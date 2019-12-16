@@ -127,8 +127,6 @@ export class CandidatePanelHabilitiesEditComponent implements OnInit {
         this.categoryCounts[cat] = this._habilitiesByCategory[cat].filter(c => c.uiSelected).length;
       }
     }
-
-    console.log('Counted', this.categoryCounts);
   }
 
   async ngOnInit() {

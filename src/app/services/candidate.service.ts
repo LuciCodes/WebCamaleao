@@ -266,7 +266,7 @@ export class CandidateService {
     
     if (this.firebaseAll || this.userForFirebase('saveCandidateEducation')) {
       
-      return await this.candidateFirebase.saveCandidateEducation(candidateEducation.toDocumentObject());
+      return await this.candidateFirebase.saveCandidateEducation(candidateEducation);
 
     }
 

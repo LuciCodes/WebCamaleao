@@ -10,7 +10,7 @@ import * as firebase from 'firebase';
 import { CandidateProfile } from '../models/candidateProfile';
 import { CandidateHabilities } from '../models/candidateHabilities';
 import { CandidateEducation } from '../models/candidateEducation';
-import { WorkExperience } from '../models/workExperience';
+import { Experience } from '../models/experience';
 import { UserProfile } from '../models/userProfile';
 
 @Injectable()
@@ -22,7 +22,7 @@ export class UserService {
   candidateHabilities: CandidateHabilities;
   candidateEducation: CandidateEducation;
 
-  candidateWorkExperiences: Array<WorkExperience>;
+  candidateExperiences: Array<Experience>;
 
   user$: Observable<User | null>;
 
@@ -87,7 +87,7 @@ export class UserService {
 
       } else {
 
-        this.candidate = (new Candidate(candidateResult.docs[0].data()));
+        this.candidate = (new Candidate({ id: candidateResult.docs[0], ...candidateResult.docs[0].data() }));
 
         this.candidate.id = candidateResult.docs[0].id;
         
@@ -110,10 +110,7 @@ export class UserService {
 
         for (let p = 0; p < profilesResult.docs.length; p++) {
 
-          this.userProfiles.push(new UserProfile({
-            id: profilesResult.docs[p].id,
-            ... profilesResult.docs[p].data()
-          }));
+          this.userProfiles.push(new UserProfile({ id: profilesResult.docs[p].id, ...profilesResult.docs[p].data() }));
         }
 
         console.log('Loaded user profiles:', this.userProfiles);
@@ -151,10 +148,8 @@ export class UserService {
 
       } else {
 
-        this.candidateProfile = (candidateResult.docs[0].data() as CandidateProfile);
+        this.candidateProfile = new CandidateProfile({ id: candidateResult.docs[0].id, ...candidateResult.docs[0].data() });
           
-        this.candidateProfile.id = candidateResult.docs[0].id;
-        
         console.log('Loaded user candidateProfile:', this.candidateProfile);
       }
     }
@@ -191,10 +186,8 @@ export class UserService {
 
       } else {
 
-        this.candidateHabilities = (candidateResult.docs[0].data() as CandidateHabilities);
-          
-        this.candidateHabilities.id = candidateResult.docs[0].id;
-        
+        this.candidateHabilities = new CandidateHabilities({ id: candidateResult.docs[0].id, ...candidateResult.docs[0].data() });
+
         if (!this.candidateHabilities.list) {
 
           this.candidateHabilities.list = '';
@@ -235,7 +228,7 @@ export class UserService {
 
       } else {
 
-        this.candidateEducation = (candidateResult.docs[0].data() as CandidateEducation);
+        this.candidateEducation = new CandidateEducation({ id: candidateResult.docs[0].data, ...candidateResult.docs[0].data() });
           
         this.candidateEducation.id = candidateResult.docs[0].id;
         
@@ -244,7 +237,7 @@ export class UserService {
     }
   }
 
-  async loadUsercandidateWorkExperiences() {
+  async loadUsercandidateExperiences() {
     
     if (this.user) {
 
@@ -253,13 +246,13 @@ export class UserService {
         await this.loadUserCandidate();
       }
 
-      let candidateQuery = await this.fireDb.collection('candidateWorkExperiences').ref.where('candidateId', "==", this.candidate.id);
+      let candidateQuery = await this.fireDb.collection('candidateExperiences').ref.where('candidateId', "==", this.candidate.id);
 
       let candidateResult = await candidateQuery.get();
 
       if (candidateResult.empty) {
 
-        this.candidateWorkExperiences = [];
+        this.candidateExperiences = [];
 
       } else {
 
@@ -267,15 +260,12 @@ export class UserService {
 
         for (let c = 0; c < candidateResult.docs.length; c++) {
 
-          experiences.push(new WorkExperience( { 
-            id: candidateResult.docs[c].id ,
-            ...candidateResult.docs[c].data()
-          } ));
+          experiences.push(new Experience({ id: candidateResult.docs[c].id, ...candidateResult.docs[c].data()} ));
         }
         
-        this.candidateWorkExperiences = experiences;
+        this.candidateExperiences = experiences;
         
-        console.log('Loaded user candidateWorkExperiences:', experiences);
+        console.log('Loaded user candidateExperiences:', experiences);
       }
     }
   }
@@ -403,46 +393,46 @@ export class UserService {
     return saveResult;
   }
   
-  async removeUsercandidateWorkExperience(workExperience?: WorkExperience): Promise<any> {
+  async removeUsercandidateExperience(experience?: Experience): Promise<any> {
 
-    let expQuery = await this.fireDb.collection('candidateWorkExperiences').ref.where('candidateId', "==", this.candidate.id);
+    let expQuery = await this.fireDb.collection('candidateExperiences').ref.where('candidateId', "==", this.candidate.id);
 
     let expResult = await expQuery.get();
 
     if (!expResult.empty) {
 
-      let existingExp = expResult.docs.find(d => d.id == workExperience.id);
+      let existingExp = expResult.docs.find(d => d.id == experience.id);
 
       if (existingExp) {
 
-        await this.fireDb.collection('candidateWorkExperiences').doc(existingExp.id).delete();
+        await this.fireDb.collection('candidateExperiences').doc(existingExp.id).delete();
       }
     }
   }
 
-  async saveUsercandidateWorkExperience(workExperience?: WorkExperience): Promise<any> {
+  async saveUsercandidateExperience(experience?: Experience): Promise<any> {
 
     if (!this.candidate) { await this.loadUserCandidate(); }
 
-    workExperience = new WorkExperience(workExperience);
+    experience = new Experience(experience);
 
-    workExperience.userId = this.user.uid;
-    workExperience.candidateId = this.candidate.id;
+    experience.userId = this.user.uid;
+    experience.candidateId = this.candidate.id;
 
-    workExperience.updated = firebase.firestore.Timestamp.fromDate(new Date());
-    workExperience.updatedUserId = this.user.uid;
+    experience.updated = firebase.firestore.Timestamp.fromDate(new Date());
+    experience.updatedUserId = this.user.uid;
 
     let saveResult = { msg: 'Dados salvados com sucesso!', success: true };
 
     try 
     {
-      let obj = workExperience.toDocumentObject();
+      let obj = experience.toDocumentObject();
 
-      let newExpRef = await this.fireDb.collection('candidateWorkExperiences').add(obj);
+      let newExpRef = await this.fireDb.collection('candidateExperiences').add(obj);
 
-      workExperience.id = newExpRef.id;
+      experience.id = newExpRef.id;
 
-      this.candidateWorkExperiences.push(workExperience);
+      this.candidateExperiences.push(experience);
 
     }
     catch(err) {

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { WorkExperience } from 'src/app/models/workExperience';
+import { Experience } from 'src/app/models/experience';
 
 import * as moment from 'moment';
 
@@ -11,7 +11,7 @@ import * as moment from 'moment';
 export class CandidatePanelExperienceComponent implements OnInit {
 
   @Input()
-  candidateExperience: Array<WorkExperience>;
+  candidateExperience: Array<Experience>;
   
   @Input()
   showTitle: boolean = true;

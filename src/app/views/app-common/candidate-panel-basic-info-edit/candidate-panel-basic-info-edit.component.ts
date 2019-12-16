@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AppConstants } from 'src/app/etc/appConstants';
 import { CandidateDetails } from 'src/app/models/candidateDetails';
 import { MatSnackBar } from '@angular/material';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-candidate-panel-basic-info-edit',
@@ -15,48 +16,41 @@ import { MatSnackBar } from '@angular/material';
 })
 export class CandidatePanelBasicInfoEditComponent implements OnInit {
 
-  
-  private _candidate: Candidate;
-  private _candidateProfile: CandidateProfile;
-
   @Input()
   get candidate(): Candidate {
 
-    return this._candidate;
+    return this.candidateService.editingCandidate.candidate;
   }
 
   set candidate(value: Candidate) {
-
-    this._candidate = value;
-    this.initFormCandidate(this._candidate);
 
     if (!this.candidateService.editingCandidate) {
 
       this.candidateService.editingCandidate = new CandidateDetails();
     }
 
-    this.candidateService.editingCandidate.candidate = this._candidate;
-    this.candidateService.editingCandidate.candidateProfile = this._candidateProfile;
+    this.candidateService.editingCandidate.candidate = value;
+    
+    this.initFormCandidate(this.candidate);
+
   }
   
   @Input()
   get candidateProfile(): CandidateProfile {
 
-    return this._candidateProfile;
+    return this.candidateService.editingCandidate.candidateProfile;
   }
 
   set candidateProfile(value: CandidateProfile) {
-
-    this._candidateProfile = value;
-    this.initFormCandidateProfile(this._candidateProfile);
     
     if (!this.candidateService.editingCandidate) {
 
       this.candidateService.editingCandidate = new CandidateDetails();
     }
 
-    this.candidateService.editingCandidate.candidate = this._candidate;
-    this.candidateService.editingCandidate.candidateProfile = this._candidateProfile;
+    this.candidateService.editingCandidate.candidateProfile = value;
+    
+    this.initFormCandidateProfile(this.candidateProfile);
   }
 
   flagLoadingData = false;
@@ -120,6 +114,7 @@ export class CandidatePanelBasicInfoEditComponent implements OnInit {
   }
 
   constructor(private fb: FormBuilder,
+              private userService: UserService,
               private candidateService: CandidateService,
               private snackBar: MatSnackBar) {  }
 
@@ -168,17 +163,21 @@ export class CandidatePanelBasicInfoEditComponent implements OnInit {
 
       let msg = this.snackBar.open('Salvando dados...');
 
-      let candidate: any = new Candidate(this.frmCandidate.value).toDocumentObject();
-      let profile: any = new CandidateProfile(this.frmCandidateProfile.value).toDocumentObject();
+      let candidate: any = new Candidate(this.frmCandidate.value);
+      let profile: any = new CandidateProfile(this.frmCandidateProfile.value);
 
-      console.log('Saving candidate/profile:', { candidate, profile });
+      candidate.candidateId = this.candidateService.editingCandidate.candidate.id;
+      profile.candidateId = this.candidateService.editingCandidate.candidate.id;
+
+      profile.updatedUserId = this.userService.user.uid;
+      profile.updatedUserId = this.userService.user.uid;
 
       let result = { msg: 'Dados salvados com sucesso!', candidate: null, profile: null };
 
       result.candidate = await this.candidateService.saveCandidateBasicInfo(candidate);
       result.profile = await this.candidateService.saveCandidateProfile(profile);
 
-      console.log('Saved:', result);
+      //console.log('Saved:', result);
 
       msg.dismiss();
 

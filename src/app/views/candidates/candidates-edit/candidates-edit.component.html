@@ -25,7 +25,6 @@
           color="accent"
           class="m-l-20"
           style="position: relative; top: -0.4em"
-          [disabled]="!isValid"
           (click)="save($event)"
         >
           <i class="fa fa-save"></i>&nbsp;
@@ -35,56 +34,13 @@
       </span>
     </h1>
   
-    <form [formGroup]="frmCandidate" novalidate>
-      <mat-card class="default-card">
-        <mat-card-content>
+    <mat-card class="default-card">
+      <mat-card-content>
 
-          <!--
-            
-          <div fxLayout="row" fxLayoutGap="1%">
-            
-            <div fxFlex="14%" style="padding: 0em 1em 1em 1em">
+        <app-candidate-panel-details-edit [candidateDetails]="candidateDetails"></app-candidate-panel-details-edit>
 
-              <img [src]="candidateDetails.candidate.photoUrl" [alt]="candidateDetails.candidate.photoUrl" style="width: 100%">
-
-            </div>
-            
-            <div fxFlex="43%">
-
-              <mat-form-field class="full-width">
-                
-                <mat-label>Nome</mat-label>
-                <input
-                  matInput
-                  placeholder="Nome da pessoa"
-                  formControlName="biName"
-                >
-              </mat-form-field>
-
-            </div>
-            
-            
-          </div>
-
-          -->
-
-          <app-candidate-panel-details-edit [candidateDetails]="candidateDetails"></app-candidate-panel-details-edit>
-
-        </mat-card-content>
-        <mat-card-actions class="p-b-10">
-          <button
-            mat-raised-button
-            color="accent"
-            [disabled]="!isValid"
-            (click)="save($event)"
-          >
-            <i class="fa fa-save"></i>
-            Salvar Candidate
-          </button>
-        </mat-card-actions>
-      </mat-card>
-
-    </form>
+      </mat-card-content>
+    </mat-card>
 
   </div>
 </div>

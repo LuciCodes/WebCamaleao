@@ -105,7 +105,7 @@ export class CandidateBasicInfoComponent implements OnInit {
 
       let msg = this.snackBar.open('Salvando dados...');
 
-      let candidate: any = new Candidate(this.frmCandidateBasicInfo.value).toDocumentObject();
+      let candidate: any = new Candidate(this.frmCandidateBasicInfo.value);
 
       console.log('Saving candidate:', candidate);
 

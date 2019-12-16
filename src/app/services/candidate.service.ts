@@ -9,7 +9,7 @@ import { CandidateDetails } from '../models/candidateDetails';
 import { CandidateProfile } from '../models/candidateProfile';
 import { CandidateHabilities } from '../models/candidateHabilities';
 import { CandidateEducation } from '../models/candidateEducation';
-import { WorkExperience } from '../models/workExperience';
+import { Experience } from '../models/experience';
 
 @Injectable()
 export class CandidateService {
@@ -273,44 +273,43 @@ export class CandidateService {
     return null;
   }
   
-  async removeCandidateWorkExperience(candidateId: string, workExperience?: WorkExperience): Promise<any> {
+  async removeCandidateExperience(experience?: Experience): Promise<any> {
 
     if (this.mockAll || this.userForMock('saveCandidateEducation')) {
 
-      return await this.candidateMock.removeCandidateWorkExperience(candidateId, workExperience);
+      return await this.candidateMock.removeCandidateExperience(experience);
     }
-    
+
     if (this.firebaseAll || this.userForFirebase('saveCandidateEducation')) {
       
-      return await this.candidateFirebase.removeCandidateWorkExperience(candidateId, workExperience);
-
+      return await this.candidateFirebase.removeCandidateExperience(experience);
     }
 
     return null;
   }
 
-  async saveCandidateWorkExperiences(workExperiences?: Array<WorkExperience>): Promise<any> {
+  async saveCandidateExperiences(experiences?: Array<Experience>): Promise<any> {
 
     let results = [];
 
-    for (let e = 0; e < workExperiences.length; e++) {
+    for (let e = 0; e < experiences.length; e++) {
 
-      results.push(await this.saveCandidateWorkExperience(workExperiences[e]));
+      results.push(await this.saveCandidateExperience(experiences[e]));
     }
 
     return results;
   }
 
-  async saveCandidateWorkExperience(workExperience?: WorkExperience): Promise<any> {
+  async saveCandidateExperience(experience?: Experience): Promise<any> {
 
-    if (this.mockAll || this.userForMock('saveCandidateWorkExperience')) {
+    if (this.mockAll || this.userForMock('saveCandidateExperience')) {
 
-      return await this.candidateMock.saveCandidateWorkExperience(workExperience);
+      return await this.candidateMock.saveCandidateExperience(experience);
     }
     
-    if (this.firebaseAll || this.userForFirebase('saveCandidateWorkExperience')) {
+    if (this.firebaseAll || this.userForFirebase('saveCandidateExperience')) {
       
-      return await this.candidateFirebase.saveCandidateWorkExperience(workExperience);
+      return await this.candidateFirebase.saveCandidateExperience(experience);
 
     }
 

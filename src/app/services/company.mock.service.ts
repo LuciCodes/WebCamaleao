@@ -8,7 +8,7 @@ export class CompanyMockService {
 
   private _companyCache: Array<Company> = [];
   
-  private _workExperienceCache: Array<any> = [];
+  private _experienceCache: Array<any> = [];
   
   get companies(): Array<Company> {
 

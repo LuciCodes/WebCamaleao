@@ -5,7 +5,7 @@
   <div fxFlex="100%">
 
     <h3>
-      Eperiência
+      Experiência
     </h3>
 
     <form [formGroup]="frmCandidateExperience">
@@ -111,7 +111,7 @@
                 class="w-100"
                 mat-flat-button
                 [disabled]="!isValid || flagSavingData"
-                (click)="addWorkExperience()"
+                (click)="addExperience()"
               >
                 Adicionar Experiência
               </button>
@@ -141,7 +141,7 @@
           >
             <div fxFlex>
               
-              <mat-card class="default-card">
+              <mat-card class="default-card" title="id: {{ experience.id }}">
                 <mat-card-content>
 
                   <div>

@@ -35,7 +35,7 @@ export class JobOfferFirebaseService {
   
       if (jobofferResult) {
   
-        result = new JobOffer(jobofferResult.data());
+        result = new JobOffer({ id: jobofferResult.id, ...jobofferResult.data() });
       }
     }
 
@@ -52,7 +52,7 @@ export class JobOfferFirebaseService {
 
       for(let d = 0; d < jobofferResult.docs.length; d++) {
 
-        results.push(new JobOffer(jobofferResult.docs[d].data()));
+        results.push(new JobOffer({ id: jobofferResult.docs[d].id, ...jobofferResult.docs[d].data() }));
         
         results[d].id = jobofferResult.docs[d].id;
       }

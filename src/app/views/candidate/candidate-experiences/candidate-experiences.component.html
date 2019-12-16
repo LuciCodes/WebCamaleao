@@ -1,7 +1,7 @@
 
 <h1>Experiências</h1>
 
-<form [formGroup]="frmcandidateWorkExperiences">
+<form [formGroup]="frmcandidateExperiences">
 
   <mat-card class="default-card">
   
@@ -114,7 +114,7 @@
             class="w-100"
             mat-flat-button
             [disabled]="!isValid || flagSavingData"
-            (click)="addWorkExperience()"
+            (click)="addExperience()"
           >
             Adicionar Experiência
           </button>
@@ -174,7 +174,7 @@
                 color="warn"
                 class="w-100"
                 mat-flat-button
-                (click)="removeWorkExperience(experience)"
+                (click)="removeExperience(experience)"
               >
                 <i class="fa fa-trash"></i>
                 Excluir Experiência

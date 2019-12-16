@@ -22,7 +22,7 @@ export class CandidatesEditComponent implements OnInit {
   public frmCandidate: FormGroup;
   public frmCandidateProfile: FormGroup;
   public frmCandidateHabilities: FormGroup;
-  public frmcandidateWorkExperiences: FormGroup;
+  public frmcandidateExperiences: FormGroup;
 
   private flagLoadingData = false;
   private flagSavingData = false;
@@ -35,60 +35,10 @@ export class CandidatesEditComponent implements OnInit {
 
     return AppConstants.brazilianStates;
   }
-  
-  get isValid(): boolean {
-    return this.frmCandidate && this.frmCandidate.valid;
-  }
 
-  constructor(private fb: FormBuilder,
-              private userService: UserService,
-              private candidateService: CandidateService,
+  constructor(private candidateService: CandidateService,
               private route: ActivatedRoute,
               private snackBar: MatSnackBar) {  }
-
-  initForm(obj?: any) {
-
-    if (!obj) { obj = {}; }
-
-    if (!obj.candidate) { obj.candidate = {}; }
-    if (!obj.candidateProfile) { obj.candidateProfile = {}; }
-
-    this.frmCandidate = this.fb.group({
-      biName: [obj.candidate.name],
-      biBirth: [obj.candidate.birth],
-      biDocRg: [obj.candidate.docRg],
-      biSignupState: ['COMPLETED'],
-      biAddrCity: [obj.candidate.addrCity],
-      biAddrState: [obj.candidate.addrState],
-      biAddrDistrict: [obj.candidate.addrDistrict],
-      biIsSocialName: [obj.candidate.isSocialName],
-      pfGender: [obj.candidateProfile.gender],
-      pgSex: [obj.candidateProfile.sex],
-      pfEthnicity: [obj.candidateProfile.ethnicity],
-      pfPne: [obj.candidateProfile.pne],
-      pfPneNote: [obj.candidateProfile.pneNote],
-      habilities: [obj.candidateHabilities],
-      weCompanyName: [obj.companyName],
-      weRoleName: [obj.roleName],
-      weDescription: [obj.description],
-      weStartDate: [obj.startDate],
-      weEndDate: [obj.endDate],
-      weIsCurrent: [false],
-      edLevel: [ obj.level],
-      newCourseName: [''],
-      newCourseInstitution: [''],
-      newCourseLevel: [''],
-      newCourseStartDate: [''],
-      newCourseEndDate: [''],
-      newCourseDuration: [''],
-      newCourseState: [''],
-      newCourseArea: [''],
-      newCertificationName: [''],
-      newCertificationInstitution: [''],
-      newCertificationYear: [''],
-      newCertificationDescription: [''],
-    });
-  }
   
   async ngOnInit() {
 
@@ -101,8 +51,6 @@ export class CandidatesEditComponent implements OnInit {
       console.log(`getCandidateDetails(${ id })`);
 
       this.candidateDetails = await this.candidateService.getCandidateDetails(id);
-
-      this.initForm(this.candidateDetails);
 
       this.flagLoadingData = false;
       

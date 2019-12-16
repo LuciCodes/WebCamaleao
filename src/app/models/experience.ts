@@ -1,5 +1,5 @@
 
-export class WorkExperience {
+export class Experience {
 
   id: string;
   userId: string;

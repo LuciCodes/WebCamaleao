@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { WorkExperience } from 'src/app/models/workExperience';
+import { Experience } from 'src/app/models/experience';
 import { MatSnackBar } from '@angular/material';
 import { UserService } from 'src/app/services/user.service';
 import { CandidateEducation } from 'src/app/models/candidateEducation';
 
 @Component({
-  selector: 'app-candidate-WorkExperiences',
+  selector: 'app-candidate-Experiences',
   templateUrl: './candidate-experiences.component.html',
   styleUrls: ['./candidate-experiences.component.css']
 })
@@ -15,18 +15,18 @@ export class CandidateExperiencesComponent implements OnInit {
   private flagLoadingData = false;
   private flagSavingData = false;
 
-  public frmcandidateWorkExperiences: FormGroup;
+  public frmcandidateExperiences: FormGroup;
 
   get isValid(): boolean {
 
-    return this.frmcandidateWorkExperiences && this.frmcandidateWorkExperiences.valid;
+    return this.frmcandidateExperiences && this.frmcandidateExperiences.valid;
   }
 
   public get experiences(): Array<any> {
 
-     if (this.userService && this.userService.candidateWorkExperiences) {
+     if (this.userService && this.userService.candidateExperiences) {
 
-        return this.userService.candidateWorkExperiences || [];
+        return this.userService.candidateExperiences || [];
 
     } else {
 
@@ -44,7 +44,7 @@ export class CandidateExperiencesComponent implements OnInit {
 
   initForm() {
 
-    this.frmcandidateWorkExperiences = this.fb.group({
+    this.frmcandidateExperiences = this.fb.group({
 
       companyName: [ 'Teste', Validators.required],
       roleName: ['Admin', Validators.required],
@@ -59,9 +59,9 @@ export class CandidateExperiencesComponent implements OnInit {
 
     this.flagLoadingData = true;
 
-    if (!this.userService.candidateWorkExperiences) {
+    if (!this.userService.candidateExperiences) {
 
-      await this.userService.loadUsercandidateWorkExperiences();
+      await this.userService.loadUsercandidateExperiences();
     }
 
     this.initForm();
@@ -69,7 +69,7 @@ export class CandidateExperiencesComponent implements OnInit {
     this.flagLoadingData = false;
   }
 
-  async addWorkExperience() {
+  async addExperience() {
 
     if (this.isValid && !this.flagSavingData) {
 
@@ -77,11 +77,11 @@ export class CandidateExperiencesComponent implements OnInit {
 
       let msg = this.snackBar.open('Salvando dados...');
 
-      let WorkExperienceObj = this.frmcandidateWorkExperiences.value;
+      let ExperienceObj = this.frmcandidateExperiences.value;
 
-      let exp = new WorkExperience(WorkExperienceObj);
+      let exp = new Experience(ExperienceObj);
 
-      let result = await this.userService.saveUsercandidateWorkExperience(exp.toDocumentObject());
+      let result = await this.userService.saveUsercandidateExperience(exp.toDocumentObject());
 
       msg.dismiss();
 
@@ -91,7 +91,7 @@ export class CandidateExperiencesComponent implements OnInit {
     }
   }
 
-  async removeWorkExperience(workExperience: WorkExperience) {
+  async removeExperience(experience: Experience) {
 
     if (!this.flagSavingData) {
 
@@ -99,15 +99,15 @@ export class CandidateExperiencesComponent implements OnInit {
 
       let msg = this.snackBar.open('Salvando dados...');
 
-      let workExperienceIdx = this.userService.candidateWorkExperiences.findIndex(c => c.id == workExperience.id);
+      let experienceIdx = this.userService.candidateExperiences.findIndex(c => c.id == experience.id);
 
-      if (workExperienceIdx >= 0) {
+      if (experienceIdx >= 0) {
 
-        let exp = this.userService.candidateWorkExperiences[workExperienceIdx];
+        let exp = this.userService.candidateExperiences[experienceIdx];
 
-        await this.userService.removeUsercandidateWorkExperience(exp);
+        await this.userService.removeUsercandidateExperience(exp);
   
-        this.userService.candidateWorkExperiences.splice(workExperienceIdx, 1);
+        this.userService.candidateExperiences.splice(experienceIdx, 1);
   
         this.flagSavingData = false;
           

@@ -235,6 +235,9 @@ export class CandidatePanelEducationEditComponent implements OnInit {
 
     let edu = new CandidateEducation(this.candidateEducation);
 
+    edu.candidateId = this.candidateService.editingCandidate.candidate.id;
+    edu.updatedUserId = this.userService.user.uid;
+
     let msg = this.snackBar.open('Salvando dados...');
 
     console.log('Saving edu:', edu);

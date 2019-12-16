@@ -18,8 +18,6 @@ export class CandidatePanelHabilitiesEditComponent implements OnInit {
   flagSavingData = false;
 
   private categoryCounts: any = {};
-  
-  private _candidateHabilities: CandidateHabilities;
 
   private _habilitiesByCategory: any = null;
 
@@ -27,7 +25,7 @@ export class CandidatePanelHabilitiesEditComponent implements OnInit {
 
     if (this._habilitiesByCategory == null) {
 
-      this._habilitiesByCategory = AppConstants.getSKillsByCategoriesObject(this._candidateHabilities.list);
+      this._habilitiesByCategory = AppConstants.getSKillsByCategoriesObject(this.candidateHabilities.list);
     }
 
     this.countCategories();
@@ -43,18 +41,19 @@ export class CandidatePanelHabilitiesEditComponent implements OnInit {
   @Input()
   set candidateHabilities(value: CandidateHabilities) {
 
-    this._candidateHabilities = value;
-
-    //this.habilityCollection = CandidateHabilityCollection.fromString(value.list, this._candidateHabilities.list);
-
-    this.initForm(this._candidateHabilities);
-    
     if (!this.candidateService.editingCandidate) {
 
       this.candidateService.editingCandidate = new CandidateDetails();
     }
 
-    this.candidateService.editingCandidate.candidateHabilities = this._candidateHabilities;
+    this.candidateService.editingCandidate.candidateHabilities = value;
+    
+    this.initForm(this.candidateHabilities);
+  }
+
+  get candidateHabilities(): CandidateHabilities {
+
+    return this.candidateService.editingCandidate.candidateHabilities;
   }
 
   //habilityCollection: CandidateHabilityCollection;

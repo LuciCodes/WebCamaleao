@@ -12,7 +12,7 @@ import * as firebase from 'firebase';
 export class CompanyFirebaseService {
 
   private _companyCache: Array<Company> = [];
-  private _workExperienceCache: Array<any> = [];
+  private _experienceCache: Array<any> = [];
 
   get companies(): Array<Company> {
 
@@ -36,7 +36,7 @@ export class CompanyFirebaseService {
   
       if (companyResult) {
   
-        result = new Company(companyResult.data());
+        result = new Company({ id: companyResult.id, ...companyResult.data() });
       }
     }
 
@@ -53,7 +53,7 @@ export class CompanyFirebaseService {
 
       for(let d = 0; d < companyResult.docs.length; d++) {
 
-        results.push(new Company(companyResult.docs[d].data()));
+        results.push(new Company({ id: companyResult.docs[d].id, ...companyResult.docs[d].data() }));
         
         results[d].id = companyResult.docs[d].id;
       }

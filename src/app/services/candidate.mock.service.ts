@@ -5,7 +5,7 @@ import { CandidateDetails } from '../models/candidateDetails';
 import { CandidateEducation } from '../models/candidateEducation';
 import { CandidateHabilities } from '../models/candidateHabilities';
 import { CandidateProfile } from '../models/candidateProfile';
-import { WorkExperience } from '../models/workExperience';
+import { Experience } from '../models/experience';
 
 @Injectable()
 export class CandidateMockService {
@@ -15,7 +15,7 @@ export class CandidateMockService {
   private _candidateHabiitiesCache: Array<CandidateHabilities> = [];
   private _candidateProfilesCache: Array<CandidateProfile> = [];
   
-  private _workExperienceCache: Array<any> = [];
+  private _experienceCache: Array<any> = [];
   
   get candidates(): Array<Candidate> {
 
@@ -102,13 +102,13 @@ export class CandidateMockService {
     return result;
   }
   
-  async getCandidateExperience(candidateId: string): Promise<Array<WorkExperience>> {
+  async getCandidateExperience(candidateId: string): Promise<Array<Experience>> {
         
-    let result: any = this._workExperienceCache.find(w => w.candidateId == candidateId);
+    let result: any = this._experienceCache.find(w => w.candidateId == candidateId);
 
     if (!result) {
 
-      let url = `http://localhost:4200/assets/testData/candidateWorkExperiences-${ candidateId }.json`;
+      let url = `http://localhost:4200/assets/testData/candidateExperiences-${ candidateId }.json`;
 
       try {
 
@@ -120,11 +120,11 @@ export class CandidateMockService {
   
             for(let i = 0; i < okResponse.length; i++) {
   
-              result.push(new WorkExperience(okResponse[i]));
+              result.push(new Experience(okResponse[i]));
             }
           }
   
-          this._workExperienceCache.push({
+          this._experienceCache.push({
             candidateId: candidateId,
             experience: result
           });
@@ -230,25 +230,20 @@ export class CandidateMockService {
     return candidateEducation;
   }
   
-  async removeCandidateWorkExperience(candidateId: string, workExperience?: WorkExperience): Promise<any> {
+  async removeCandidateExperience(experience?: Experience): Promise<any> {
 
-    return WorkExperience;
+    return Experience;
   }
 
-  async saveCandidateWorkExperiences(workExperiences?: Array<WorkExperience>): Promise<any> {
+  async saveCandidateExperiences(experiences?: Array<Experience>): Promise<any> {
 
     let results = [];
-
-    for (let e = 0; e < workExperiences.length; e++) {
-
-      results.push(await this.saveCandidateWorkExperience(workExperiences[e]));
-    }
 
     return results;
   }
 
-  async saveCandidateWorkExperience(workExperience?: WorkExperience): Promise<any> {
+  async saveCandidateExperience(experience?: Experience): Promise<any> {
 
-    return workExperience;
+    return experience;
   }
 }

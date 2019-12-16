@@ -10,7 +10,7 @@ import * as firebase from 'firebase';
 import { CandidateProfile } from '../models/candidateProfile';
 import { CandidateHabilities } from '../models/candidateHabilities';
 import { CandidateEducation } from '../models/candidateEducation';
-import { WorkExperience } from '../models/workExperience';
+import { Experience } from '../models/experience';
 import { UserProfile } from '../models/userProfile';
 import { CandidateDetails } from '../models/candidateDetails';
 
@@ -21,7 +21,7 @@ export class CandidateFirebaseService {
   private _candidateEducationCache: Array<CandidateEducation> = [];
   private _candidateHabiitiesCache: Array<CandidateHabilities> = [];
   private _candidateProfilesCache: Array<CandidateProfile> = [];
-  private _workExperienceCache: Array<any> = [];
+  private _experienceCache: Array<any> = [];
 
   get candidates(): Array<Candidate> {
 
@@ -62,7 +62,7 @@ export class CandidateFirebaseService {
   
       if (candidateResult) {
   
-        result = new Candidate(candidateResult.data());
+        result = new Candidate({ id: candidateResult.id, ...candidateResult.data() });
       }
     }
 
@@ -81,22 +81,22 @@ export class CandidateFirebaseService {
   
       if (!candidateResult.empty) {
   
-        result = new CandidateEducation(candidateResult.docs[0].data());
+        result = new CandidateEducation({ id: candidateResult.docs[0].id, ...candidateResult.docs[0].data() });
       }
     }
 
     return result;
   }
   
-  async getCandidateExperience(candidateId: string): Promise<Array<WorkExperience>> {
+  async getCandidateExperience(candidateId: string): Promise<Array<Experience>> {
         
-    let exp = this._workExperienceCache.find(w => w.candidateId == candidateId);
+    let exp = this._experienceCache.find(w => w.candidateId == candidateId);
 
     let result;
 
     if (!exp) {
 
-      let candidateQuery = await this.fireDb.collection('candidateWorkExperiences').ref.where('candidateId', '==', candidateId);
+      let candidateQuery = await this.fireDb.collection('candidateExperiences').ref.where('candidateId', '==', candidateId);
 
       let candidateResult = await candidateQuery.get();
   
@@ -106,11 +106,11 @@ export class CandidateFirebaseService {
   
         for(let d = 0; d < candidateResult.docs.length; d++) {
 
-          result.push(new WorkExperience(candidateResult.docs[d].data()));
+          result.push(new Experience({ id: candidateResult.docs[d].id, ...candidateResult.docs[d].data() }));
         }
       }
         
-      this._workExperienceCache.push({ candidateId: candidateId, experience: result });
+      this._experienceCache.push({ candidateId: candidateId, experience: result });
 
     } else {
 
@@ -132,7 +132,7 @@ export class CandidateFirebaseService {
   
       if (!candidateResult.empty) {
   
-        result = new CandidateHabilities(candidateResult.docs[0].data());
+        result = new CandidateHabilities({ id: candidateResult.docs[0].id, ...candidateResult.docs[0].data() });
       }
     }
 
@@ -151,7 +151,7 @@ export class CandidateFirebaseService {
   
       if (!candidateResult.empty) {
   
-        return new CandidateProfile(candidateResult.docs[0].data());
+        return new CandidateProfile({ id: candidateResult.docs[0].id, ...candidateResult.docs[0].data() });
       }
     }
 
@@ -196,7 +196,7 @@ export class CandidateFirebaseService {
     saveResult.obj['saveCandidateProfileResult'] = await this.saveCandidateProfile(candidateDetails.candidateProfile);
     saveResult.obj['saveCandidateHabilitiesResult'] = await this.saveCandidateHabilities(candidateDetails.candidateHabilities);
     saveResult.obj['saveCandidateEducationResult'] = await this.saveCandidateEducation(candidateDetails.candidateEducation);
-    saveResult.obj['saveCandidateWorkExperiencesResult'] = await this.saveCandidateWorkExperiences(candidateDetails.candidateExperience);
+    saveResult.obj['saveCandidateExperiencesResult'] = await this.saveCandidateExperiences(candidateDetails.candidateExperience);
 
     return saveResult;
   }
@@ -317,56 +317,37 @@ export class CandidateFirebaseService {
     return saveResult;
   }
   
-  async removeCandidateWorkExperience(candidateId: string, workExperience?: WorkExperience): Promise<any> {
+  async removeCandidateExperience(experience?: Experience): Promise<any> {
 
-    let expQuery = await this.fireDb.collection('candidateWorkExperiences').ref.where('candidateId', "==", candidateId);
-
-    let expResult = await expQuery.get();
-
-    if (!expResult.empty) {
-
-      let existingExp = expResult.docs.find(d => d.id == workExperience.id);
-
-      if (existingExp) {
-
-        await this.fireDb.collection('candidateWorkExperiences').doc(existingExp.id).delete();
-      }
-    }
+    await this.fireDb.collection('candidateExperiences').doc(experience.id).delete();
   }
 
-  async saveCandidateWorkExperiences(workExperiences?: Array<any>): Promise<any> {
+  async saveCandidateExperiences(experiences?: Array<any>): Promise<any> {
 
     let results = [];
-
-    for (let e = 0; e < workExperiences.length; e++) {
-
-      results.push(await this.saveCandidateWorkExperience(workExperiences[e]));
-    }
 
     return results;
   }
 
-  async saveCandidateWorkExperience(workExperience?: any): Promise<any> {
+  async saveCandidateExperience(experience?: any): Promise<any> {
 
-    if (workExperience.toDocumentObject) { workExperience = workExperience.toDocumentObject() };
+    if (experience.toDocumentObject) { experience = experience.toDocumentObject() };
 
-    workExperience.updated = firebase.firestore.Timestamp.fromDate(new Date());
+    experience.updated = firebase.firestore.Timestamp.fromDate(new Date());
 
     let saveResult = { msg: 'Dados salvados com sucesso!', success: true, obj: null };
 
     try 
     {
-      let obj = workExperience.toDocumentObject();
+      let newExpRef = await this.fireDb.collection('candidateExperiences').add(experience);
 
-      let newExpRef = await this.fireDb.collection('candidateWorkExperiences').add(obj);
+      experience.id = newExpRef.id;
 
-      workExperience.id = newExpRef.id;
+      saveResult.obj = experience;
 
-      saveResult.obj = workExperience;
+      let idx = this._experienceCache.findIndex(p => p.id == experience.id);
 
-      let idx = this._workExperienceCache.findIndex(p => p.id == workExperience.id);
-
-      if (idx > -1) { this._workExperienceCache[idx] = workExperience; }
+      if (idx > -1) { this._experienceCache[idx] = experience; }
     }
     catch(err) {
 

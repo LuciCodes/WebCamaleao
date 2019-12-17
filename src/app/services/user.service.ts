@@ -17,6 +17,7 @@ import { UserProfile } from '../models/userProfile';
 export class UserService {
 
   user: User;
+  userToken: firebase.auth.IdTokenResult;
   candidate: Candidate;
   candidateProfile: CandidateProfile;
   candidateHabilities: CandidateHabilities;
@@ -29,6 +30,11 @@ export class UserService {
   userProfiles: Array<UserProfile> = [];
 
   get hasUser(): boolean { return this.user != null; }
+
+  get userRole(): string {
+
+    return this.userToken.claims['userRole'] || 'CANDIDATE';
+  }
 
   get userIsCandidate(): boolean {
 
@@ -59,13 +65,21 @@ export class UserService {
 
     this.user$ = this.fireAuth.user;
 
+    this.fireAuth.idTokenResult.subscribe(async (result: firebase.auth.IdTokenResult) => { 
+
+      this.userToken = result;
+
+      if (!this.userToken.claims['userRole']) {
+
+        console.log('No role!');
+      }
+    });
+
     this.user$.subscribe(async (user: User) => {
 
       this.user = user;
 
       await this.loadUserCandidate();
-
-      await this.loadUserProfiles();
     });
   }
 
@@ -92,28 +106,6 @@ export class UserService {
         this.candidate.id = candidateResult.docs[0].id;
         
         console.log('Loaded user candidate:', this.candidate);
-      }
-    }
-  }
-  
-  async loadUserProfiles() {
-    
-    if (this.user) {
-
-      let profilesQuery = await this.fireDb.collection('userProfiles').ref.where('userId', "==", this.user.uid);
-
-      let profilesResult = await profilesQuery.get();
-
-      this.userProfiles = [];
-
-      if (!profilesResult.empty) {
-
-        for (let p = 0; p < profilesResult.docs.length; p++) {
-
-          this.userProfiles.push(new UserProfile({ id: profilesResult.docs[p].id, ...profilesResult.docs[p].data() }));
-        }
-
-        console.log('Loaded user profiles:', this.userProfiles);
       }
     }
   }
@@ -207,7 +199,8 @@ export class UserService {
         await this.loadUserCandidate();
       }
 
-      let candidateQuery = await this.fireDb.collection('candidateEducation').ref.where('candidateId', "==", this.candidate.id);
+      let candidateQuery = await this.fireDb.collection('candidateEducation').ref
+                                                 .where('candidateId', "==", this.candidate.id);
 
       let candidateResult = await candidateQuery.get();
 

@@ -145,7 +145,8 @@ export class CandidateFirebaseService {
 
     if (!result) {    
 
-      let candidateQuery = await this.fireDb.collection('candidateProfiles').ref.where('candidateId', '==', candidateId);
+      let candidateQuery = await this.fireDb.collection('candidateProfiles').ref
+                                                  .where('candidateId', '==', candidateId);
   
       let candidateResult = await candidateQuery.get();
   

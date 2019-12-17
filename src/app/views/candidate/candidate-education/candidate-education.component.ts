@@ -101,8 +101,17 @@ export class CandidateEducationComponent implements OnInit {
   }
 
   async ngOnInit() {
-
     
+    this.flagLoadingData = true;
+
+    if (!this.userService.candidateEducation) {
+
+      await this.userService.loadUserCandidateEducation();
+    }
+
+    this.initForm();
+
+    this.flagLoadingData = false;
   }
 
   async addCourse() {

@@ -7,68 +7,6 @@
   
       <div fxLayout="row" fxLayoutGap="1%">
         <div fxFlex="50%">
-      
-          <mat-card class="default-card">
-            <mat-card-header>
-              <mat-card-title>
-                <i class="fa fa-email"></i>  
-                Mensagens
-              </mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-            
-              <div *ngIf="messageList.length == 0">
-                <p class="txt-center">
-                  Nenhuma mensagem nova.
-                </p>
-              </div>
-
-              <mat-list>
-                <mat-list-item
-                  *ngFor="let message of messageList"
-                >
-                  <!--img
-                    matListAvatar
-                    src="{{ person.photoUrl }}"
-                    alt="{{ person.name }}"
-                  >
-                  <h3 matLine>
-                      {{ person.name }}
-                  </h3>
-          
-                  <div matLine>
-                    <div fxLayout="row">
-                      <div fxFlex class="txt-xsm">
-  
-                        <a
-                          href="javascript:;"
-                          routerLink="/candidates/{{ person.id }}"
-                        >
-                          <fa-icon [icon]="['fas', 'eye']"></fa-icon>
-                          ver perfil
-                        </a>
-  
-                        <a
-                          href="javascript:;"
-                          routerLink="/candidates/{{ person.id }}"
-                          class="m-l-20"
-                        >
-                          <i class="far fa-star"></i>
-                          favoritar
-                        </a>
-  
-                      </div>
-                    </div>
-                  </div-->
-                  
-                </mat-list-item>
-              </mat-list>
-  
-            </mat-card-content>
-          </mat-card> 
-  
-        </div>
-        <div fxFlex="50%">
   
           <mat-card class="default-card">
             <mat-card-header>
@@ -76,11 +14,13 @@
             </mat-card-header>
             <mat-card-content>
   
-              <mat-list>
+              <p class="txt-center">Sem Vagas no Momento.</p>
+
+              <mat-list style="display:none">
                 <mat-list-item
                   *ngFor="let job of jobList"
                 >
-                  <img
+                  <!--img
                     matListAvatar
                     src="job.company.logoUrl"
                     alt="..."
@@ -102,13 +42,27 @@
                       </div>
                     </div>
           
-                  </div>
+                  </div-->
           
                 </mat-list-item>
               </mat-list>
   
             </mat-card-content>
           </mat-card> 
+  
+        </div>
+        <div fxFlex="50%" *ngIf="!user.emailVerified" class="p-t-20">
+      
+          <ngx-auth-firebaseui-email-confirmation
+            [email]="user.email"
+            verifyEmailTitleText="Confirme seu Cadastro"
+            verifyEmailConfirmationText="Clique no link enviado para seu email e confirme seu cadastro no Camaleão!"
+            sendNewVerificationEmailText="Enviar Email Novamente"
+            signOutText="Logout"
+
+            messageOnEmailConfirmationSuccess="Email enviado com sucesso!"
+          >
+          </ngx-auth-firebaseui-email-confirmation>
   
         </div>
       </div>

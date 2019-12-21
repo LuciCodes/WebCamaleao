@@ -45,6 +45,7 @@ import { HomeCompanyComponent } from './views/home/home-company/home-company.com
 
 import { SharedModule } from './shared.module';
 import { ImageService } from './services/image.service';
+import { LoggedUserRouteActivator } from './etc/loggedUserRouteActivator';
 
 
 @NgModule({
@@ -75,6 +76,7 @@ import { ImageService } from './services/image.service';
     WebApiFirebaseService,
     WebApiMockService,
     UserService,
+    LoggedUserRouteActivator,
     CandidateService,
     CandidateFirebaseService,
     CandidateMockService,

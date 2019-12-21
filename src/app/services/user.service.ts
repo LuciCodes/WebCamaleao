@@ -69,7 +69,7 @@ export class UserService {
 
       this.userToken = result;
 
-      if (!this.userToken.claims['userRole']) {
+      if (!this.userToken || !this.userToken.claims['userRole']) {
 
         console.log('No role!');
       }

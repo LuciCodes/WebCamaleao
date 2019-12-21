@@ -9,6 +9,8 @@
       guestEnabled="false"
       signInTabText="Login"
       signInCardTitleText="Entrar"
+      verifyEmailGoBackText="Voltar"
+      signOutText="Logout"
       loginButtonText="Login"
       homeButtonText="Home"
       forgotPasswordButtonText="Esqueci a senha"
@@ -33,11 +35,26 @@
       emailConfirmationTitle="Confirmar"
       emailConfirmationText="Confirmar e-mail"
       messageOnAuthSuccess="Login realizado com sucesso!"
+
+      verifyEmailTitleText="Confirme o Email"
+      verifyEmailConfirmationText="Abra seu email e clique no link para confirmar seu cadastro."
+      verifyEmailGoBackText="Voltar"
+      sendNewVerificationEmailText="Enviar Novo Email"
+      signOutText="Logout"
+      messageOnEmailConfirmationSuccess="Email enviado com sucesso!"
+
       (onSuccess)="redirectUser($event)"
-      (onError)="printError()"
+      (onError)="handleError($event)"
     >
     </ngx-auth-firebaseui>
 
+    <div fxLayout="row" *ngIf="authError" class="p-20 txt-center">
+      <div fxFlex [title]="authError.code">
+
+        {{ authError.message }}
+
+      </div>
+    </div>
 
   </div>
 </div>

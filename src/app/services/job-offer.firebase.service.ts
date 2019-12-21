@@ -5,17 +5,17 @@ import { User } from 'firebase';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { JobOffer } from '../models/joboffer';
+import { JobOffer } from '../models/jobOffer';
 import * as firebase from 'firebase';
 
 @Injectable()
 export class JobOfferFirebaseService {
 
-  private _jobofferCache: Array<JobOffer> = [];
+  private _jobOfferCache: Array<JobOffer> = [];
 
-  get joboffers(): Array<JobOffer> {
+  get jobOffers(): Array<JobOffer> {
 
-    return this._jobofferCache;
+    return this._jobOfferCache;
   }
 
   constructor(private fireAuth: AngularFireAuth,
@@ -23,19 +23,19 @@ export class JobOfferFirebaseService {
 
   }
 
-  async getJobOffer(jobofferId: string): Promise<JobOffer> {
+  async getJobOffer(jobOfferId: string): Promise<JobOffer> {
     
-    let result: JobOffer = this._jobofferCache.find(e => e.id == jobofferId);
+    let result: JobOffer = this._jobOfferCache.find(e => e.id == jobOfferId);
 
     if (!result) {
 
-      let jobofferQuery = await this.fireDb.collection('jobOffers').doc(jobofferId);
+      let jobOfferQuery = await this.fireDb.collection('jobOffers').doc(jobOfferId);
 
-      let jobofferResult = await jobofferQuery.get().toPromise();
+      let jobOfferResult = await jobOfferQuery.get().toPromise();
   
-      if (jobofferResult) {
+      if (jobOfferResult) {
   
-        result = new JobOffer({ id: jobofferResult.id, ...jobofferResult.data() });
+        result = new JobOffer({ id: jobOfferResult.id, ...jobOfferResult.data() });
       }
     }
 
@@ -44,23 +44,23 @@ export class JobOfferFirebaseService {
   
   async loadJobOffers(reload: boolean = false): Promise<Array<JobOffer>> {
     
-    if (!this._jobofferCache || reload) {
+    if (!this._jobOfferCache || reload) {
       
-      let jobofferResult = await this.fireDb.collection('jobOffers').get().toPromise();
+      let jobOfferResult = await this.fireDb.collection('jobOffers').get().toPromise();
 
       let results = [];
 
-      for(let d = 0; d < jobofferResult.docs.length; d++) {
+      for(let d = 0; d < jobOfferResult.docs.length; d++) {
 
-        results.push(new JobOffer({ id: jobofferResult.docs[d].id, ...jobofferResult.docs[d].data() }));
+        results.push(new JobOffer({ id: jobOfferResult.docs[d].id, ...jobOfferResult.docs[d].data() }));
         
-        results[d].id = jobofferResult.docs[d].id;
+        results[d].id = jobOfferResult.docs[d].id;
       }
 
-      this._jobofferCache = results;
+      this._jobOfferCache = results;
     }
 
-    return this._jobofferCache;
+    return this._jobOfferCache;
   }
   
   async saveJobOffer(jobOffer?: JobOffer): Promise<any> {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { WebApiService } from 'src/app/services/webApi.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-home-candidate',
@@ -14,7 +15,12 @@ export class HomeCandidateComponent implements OnInit {
   jobList: Array<any> = [];
   messageList: Array<any> = [];
 
-  constructor(private webApi: WebApiService) {}
+  constructor(private webApi: WebApiService, private userService: UserService) {}
+
+  get user(): any {
+
+    return this.userService.user || {};
+  }
 
   ngOnInit(): void {
     
@@ -38,7 +44,8 @@ export class HomeCandidateComponent implements OnInit {
   }
 
   loadJobs() {
-    
+
+    /*
     this.flagLoadingJobs = true;
 
     this.webApi.getTopJobOffers().then((offers) => {
@@ -47,5 +54,6 @@ export class HomeCandidateComponent implements OnInit {
   
       this.flagLoadingJobs = false;
     });
+    */
   }
 }

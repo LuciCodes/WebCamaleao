@@ -24,23 +24,14 @@ export class HomeCandidateComponent implements OnInit {
 
   ngOnInit(): void {
     
-    //this.loadCandidates();
+    this.loadCandidate();
     
     this.loadJobs();
   }
 
-  loadCandidates() {
+  loadCandidate() {
 
-    /*
-    this.flagLoadingCandidates = true;
-    
-    this.webApi.getTopCandidates().then((candidates) => {
-
-      this.candidateList = candidates;
-  
-      this.flagLoadingJobs = false;
-    });
-    */
+    this.userService.loadUserCandidate();
   }
 
   loadJobs() {

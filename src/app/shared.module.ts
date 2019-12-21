@@ -9,6 +9,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireFunctionsModule } from '@angular/fire/functions';
 import { AngularFireAuthModule } from '@angular/fire/auth';
  
 import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';

@@ -12,6 +12,7 @@ import { CandidateHabilities } from '../models/candidateHabilities';
 import { CandidateEducation } from '../models/candidateEducation';
 import { Experience } from '../models/experience';
 import { UserProfile } from '../models/userProfile';
+import { AngularFireFunctions } from '@angular/fire/functions';
 
 @Injectable()
 export class UserService {
@@ -24,6 +25,8 @@ export class UserService {
   candidateEducation: CandidateEducation;
 
   candidateExperiences: Array<Experience>;
+
+  loading = false;
 
   user$: Observable<User | null>;
 
@@ -61,7 +64,8 @@ export class UserService {
   }
 
   constructor(private fireAuth: AngularFireAuth,
-              private fireDb: AngularFirestore) {
+              private fireDb: AngularFirestore,
+              private fbFuncs: AngularFireFunctions) {
 
     this.user$ = this.fireAuth.user;
 
@@ -69,9 +73,17 @@ export class UserService {
 
       this.userToken = result;
 
-      if (!this.userToken || !this.userToken.claims['userRole']) {
+      if (this.user && (this.userToken && !this.userToken.claims['userRole'])) {
 
-        console.log('No role!');
+        console.log('Getting SetClaims...');
+
+        const setClaims = this.fbFuncs.httpsCallable('setUserClaims');
+
+        console.log('Calling...');
+
+        let funcResult = await setClaims({ userId: this.user.uid }).toPromise();
+
+        console.log('Result:', funcResult);
       }
     });
 
@@ -79,13 +91,26 @@ export class UserService {
 
       this.user = user;
 
-      await this.loadUserCandidate();
+      if (this.user) {
+
+        await this.loadUserCandidate();
+
+      } else {
+
+        this.candidate = null;
+        this.candidateExperiences = null;
+        this.candidateEducation = null;
+        this.candidateHabilities = null;
+        this.candidateProfile = null;
+      }
     });
   }
 
   async loadUserCandidate() {
     
-    if (this.user) {
+    if (this.user && !this.loading && !this.candidate) {
+
+      this.loading = true;
 
       let candidateQuery = await this.fireDb.collection('candidates').ref.where('userId', "==", this.user.uid);
 
@@ -107,6 +132,8 @@ export class UserService {
         
         console.log('Loaded user candidate:', this.candidate);
       }
+      
+      this.loading = false;
     }
   }
 

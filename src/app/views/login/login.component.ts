@@ -17,8 +17,7 @@ export class LoginComponent {
 
   authError: any = null;
 
-  constructor(private router: Router, private userService: UserService, private db: AngularFirestore ) {
-
+  constructor(private router: Router, private userService: UserService, private db: AngularFirestore) {
 
   }
 

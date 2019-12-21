@@ -23,6 +23,8 @@ export class LogoutComponent implements OnInit {
 
       await this.afa.auth.signOut();
 
+      console.log('signout ok!');
+
     } catch (e) {
 
       console.error('An error happened while signing out!', e);

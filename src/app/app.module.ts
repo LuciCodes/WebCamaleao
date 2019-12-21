@@ -45,6 +45,7 @@ import { HomeCompanyComponent } from './views/home/home-company/home-company.com
 
 import { SharedModule } from './shared.module';
 import { ImageService } from './services/image.service';
+import { AngularFireFunctionsModule } from '@angular/fire/functions';
 
 
 @NgModule({
@@ -68,7 +69,11 @@ import { ImageService } from './services/image.service';
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
-    SharedModule
+    SharedModule,
+    AngularFireFunctionsModule
+  ],
+  exports: [
+    AngularFireFunctionsModule
   ],
   providers: [
     WebApiService,

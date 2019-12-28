@@ -75,23 +75,15 @@ export class UserFirebaseService {
 
       this.userToken = result;
 
+      console.log('Got userToken>', result);
+
       if (result) console.log('User claim:', this.userToken.claims['userRole']);
 
-      if (this.user && (this.userToken && !this.userToken.claims['userRole'])) {
-
-        console.log('Getting SetClaims...');
-
-        const setClaims = this.fbFuncs.httpsCallable('setUserClaims');
-
-        console.log('Calling...');
-
-        let funcResult = await setClaims({ userId: this.user.uid }).toPromise();
-
-        console.log('Result:', funcResult);
-      }
     });
 
     this.user$.subscribe(async (user: User) => {
+
+      console.log('Got user>', user);
 
       this.user = user;
 
@@ -114,6 +106,8 @@ export class UserFirebaseService {
     
     if (this.user && !this.loading && !this.candidate) {
 
+      console.log('loadUserCandidate()> loading...');
+
       this.loading = true;
 
       let candidateQuery = await this.fireDb.collection('candidates').ref.where('userId', "==", this.user.uid);
@@ -122,9 +116,12 @@ export class UserFirebaseService {
 
       if (candidateResult.empty) {
 
-        let newCandidateRef = await this.fireDb.collection('candidates').add({ userId: this.user.uid });
+        let newCandidateRef = await this.fireDb.collection('candidates').add({
+          userId: this.user.uid,
+          name: this.user.displayName
+        });
 
-        this.candidate = new Candidate({ userId: this.user.uid, id: newCandidateRef.id });
+        this.candidate = new Candidate({ userId: this.user.uid, id: newCandidateRef.id, name: this.user.displayName });
 
         console.log('Created new user candidate:', this.candidate);
 
@@ -138,11 +135,18 @@ export class UserFirebaseService {
       }
       
       this.loading = false;
+
+    } else {
+    
+      console.log('loadUserCandidate()> already loading.');
     }
+    
   }
 
   async loadUserCandidateProfile() {
-    
+  
+    console.log('loadUserCandidateProfile()');
+
     if (this.user) {
 
       if (!this.candidate) {

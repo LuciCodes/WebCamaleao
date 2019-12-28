@@ -14,7 +14,7 @@ export class HomeCompanyComponent implements OnInit {
   jobList: Array<any>;
   candidateList: Array<any>;
 
-  constructor(private webApi: WebApiService) {}
+  constructor() {}
 
   ngOnInit(): void {
     
@@ -27,23 +27,27 @@ export class HomeCompanyComponent implements OnInit {
 
     this.flagLoadingCandidates = true;
     
+    /*
     this.webApi.getTopCandidates().then((candidates) => {
 
       this.candidateList = candidates;
   
       this.flagLoadingJobs = false;
     });
+    */
   }
 
   loadJobs() {
     
     this.flagLoadingJobs = true;
 
+  /*
     this.webApi.getTopJobOffers().then((offers) => {
 
       this.jobList = offers;
   
       this.flagLoadingJobs = false;
     });
+    */
   }
 }

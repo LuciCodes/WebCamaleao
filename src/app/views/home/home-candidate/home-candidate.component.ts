@@ -10,7 +10,6 @@ import { UserService } from 'src/app/services/user.service';
 export class HomeCandidateComponent implements OnInit {
 
   flagLoadingCandidates: boolean = false;
-  flagLoadingJobs: boolean = false;
 
   jobList: Array<any> = [];
   messageList: Array<any> = [];
@@ -25,26 +24,10 @@ export class HomeCandidateComponent implements OnInit {
   ngOnInit(): void {
     
     this.loadCandidate();
-    
-    this.loadJobs();
   }
 
   loadCandidate() {
 
     this.userService.loadUserCandidate();
-  }
-
-  loadJobs() {
-
-    /*
-    this.flagLoadingJobs = true;
-
-    this.webApi.getTopJobOffers().then((offers) => {
-
-      this.jobList = offers;
-  
-      this.flagLoadingJobs = false;
-    });
-    */
   }
 }

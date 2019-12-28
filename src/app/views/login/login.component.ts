@@ -5,6 +5,7 @@ import {AuthProvider} from 'ngx-auth-firebaseui';
 
 import { AngularFirestore } from '@angular/fire/firestore';
 import { UserService } from 'src/app/services/user.service';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,9 @@ export class LoginComponent {
 
   authError: any = null;
 
-  constructor(private router: Router, private userService: UserService, private db: AngularFirestore) {
+  constructor(private router: Router,
+              private userService: UserService,
+              private afa: AngularFireAuth) {
 
   }
 
@@ -36,12 +39,10 @@ export class LoginComponent {
     //get the user profileInfo, 
     console.log('Auth error:', error);
 
+    this.userService.user = null;
+
+    this.afa.auth.signOut();
+
     this.authError = error;
-    
-    window.setTimeout(() => {
-
-      this.authError = null;
-
-    }, 4200);
   }
 }

@@ -11,11 +11,8 @@ import { CompaniesSearchComponent } from './companies-search/companies-search.co
 import { CompaniesHomeComponent } from './companies-home/companies-home.component';
 import { CompaniesEditComponent } from './companies-edit/companies-edit.component';
 
-import { CompanyCardComponent } from '../app-common/company-card/company-card.component';
-
 @NgModule({
   declarations: [
-    CompanyCardComponent,
     CompaniesIndexComponent,
     CompaniesDetailComponent,
     CompaniesEditComponent,

@@ -53,8 +53,11 @@ import { CourseLevelNamePipe } from './pipes/course-level-name.pipe';
 import { BusinessAreaNamePipe } from './pipes/business-area-name.pipe';
 import { CommonModule } from '@angular/common';
 
+import { CompanyCardComponent } from './views/app-common/company-card/company-card.component';
+
 @NgModule({
   declarations: [
+    CompanyCardComponent,
     AreaNamePipe,
     SimpleLabelPipe,
     EducationLevelPipe,
@@ -115,6 +118,7 @@ import { CommonModule } from '@angular/common';
     ReactiveFormsModule
   ],
   exports: [
+    CompanyCardComponent,
     NgxAuthFirebaseUIModule,
     CommonModule,
     AngularFirestoreModule,

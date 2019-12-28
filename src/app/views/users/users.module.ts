@@ -11,11 +11,8 @@ import { UsersSearchComponent } from './users-search/users-search.component';
 import { UsersHomeComponent } from './users-home/users-home.component';
 import { UsersEditComponent } from './users-edit/users-edit.component';
 
-import { CompanyCardComponent } from '../app-common/company-card/company-card.component';
-
 @NgModule({
   declarations: [
-    CompanyCardComponent,
     UsersIndexComponent,
     UsersDetailComponent,
     UsersEditComponent,

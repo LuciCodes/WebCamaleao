@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { JobOffer } from 'src/app/models/jobOffer';
 import { CompanyService } from 'src/app/services/company.service';
 import { Company } from 'src/app/models/company';
+import { ImageService } from 'src/app/services/image.service';
 
 @Component({
   selector: 'app-job-offer-card',
@@ -16,7 +17,7 @@ export class JobOfferCardComponent implements OnInit {
   @Input()
   public company: Company;
 
-  constructor(private companyService: CompanyService) { }
+  constructor(private companyService: CompanyService, public imgService: ImageService) { }
 
   async ngOnInit() {
 

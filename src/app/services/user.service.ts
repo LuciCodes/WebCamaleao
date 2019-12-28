@@ -30,7 +30,7 @@ export class UserService {
   
   set user(value: User) {
 
-    if (this.mockAll) { this.userMock.user = value; }
+    if (this.mockAll) { this.userMock.user = value; return; }
   
     this.userFirebase.user = value;
   }

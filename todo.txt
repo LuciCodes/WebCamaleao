@@ -10,3 +10,5 @@ Adicionar habilidade Idioma:
 Adicionar Voluntariado: (experiencia)
 
 Matematica (elétrons) > Hardware > Software > Ideias (output)
+
+ver o erro de permissao no login que parece nao ser problema

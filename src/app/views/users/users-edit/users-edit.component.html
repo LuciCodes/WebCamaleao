@@ -1,0 +1,111 @@
+
+
+<div class="row loader-panel tall" *ngIf="flagLoadingData">
+  <div class="col">
+    <fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon>
+  </div>
+</div>
+
+<div fxLayout="row" *ngIf="!flagLoadingData && editingObj">
+  <div fxFlex>
+
+    <h1 class="m-t-20">
+
+      <a href="javascript:;" routerLink="/empresas/buscar" style="text-decoration: none; color: #333">
+        &lt;
+      </a>
+
+      <span *ngIf="flagNewCompany">
+        Incluir Empresa
+      </span>
+      <span *ngIf="!flagNewCompany && editingObj">
+        Editar <small>{{ editingObj.name }}</small>
+      </span>
+    </h1>
+
+    <form [formGroup]="frmCompany" novalidate>
+      <mat-card class="default-card">
+        <mat-card-content>
+
+          <div fxLayout="row" fxLayoutGap="1%">
+            
+            <div fxFlex="14%" style="padding: 0em 1em 1em 1em">
+
+              <img [src]="displayLogo" [title]="displayLogo" style="width: 100%" alt="">
+
+            </div>
+            
+            <div fxFlex="43%">
+
+              <mat-form-field class="full-width">
+                
+                <mat-label>Empresa</mat-label>
+                <input
+                  matInput
+                  placeholder="Nome da empresa"
+                  formControlName="name"
+                >
+              </mat-form-field>
+
+            </div>
+            <div fxFlex="43%">
+
+              <mat-form-field class="full-width">
+                <mat-label>Logo</mat-label>
+                <input
+                  matInput
+                  placeholder="Url da logo"
+                  formControlName="logoUrl"
+                  (blur)="updateDisplayLogo()"
+                >
+              </mat-form-field>
+
+            </div>
+            <div fxFlex="36%">
+              <button
+                mat-button
+                color="accent"
+                [disabled]="!isValid"
+                (click)="useDefaultLogo()"
+              >
+                Usar Padrão
+              </button>
+            </div>
+            
+          </div>
+
+          <div fxLayout="row" fxLayoutGap="1%">
+            <div fxFlex>
+
+              <mat-form-field class="full-width">
+
+                <mat-label>Descrição</mat-label>
+                <textarea
+                  matInput
+                  formControlName="description"
+                  style="height:14em"
+                ></textarea>
+
+              </mat-form-field>
+
+            </div>
+          </div>
+          
+        </mat-card-content>
+        <mat-card-actions class="p-b-10">
+          <button
+            mat-raised-button
+            color="accent"
+            [disabled]="!isValid"
+            (click)="save($event)"
+          >
+            <i class="fa fa-save"></i>
+            Salvar Empresa
+          </button>
+        </mat-card-actions>
+      </mat-card>
+
+    </form>
+  </div>
+</div>
+  

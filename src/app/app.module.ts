@@ -35,11 +35,6 @@ import { OnboardComponent } from './views/onboard/onboard.component';
 import { AppHeaderComponent } from './views/app-common/app-header/app-header.component';
 import { CamaleaoTagsComponent } from './views/app-common/camaleao-tags/camaleao-tags.component';
 
-import { UserIndexComponent } from './views/users/user-index/user-index.component';
-import { UserHomeComponent } from './views/users/user-home/user-home.component';
-import { UserBasicInfoComponent } from './views/users/user-basic-info/user-basic-info.component';
-import { UserSearchComponent } from './views/users/user-search/user-search.component';
-
 import { HomeCandidateComponent } from './views/home/home-candidate/home-candidate.component';
 import { HomeCompanyComponent } from './views/home/home-company/home-company.component';
 
@@ -59,11 +54,7 @@ import { AngularFireFunctionsModule } from '@angular/fire/functions';
     LogoutComponent,
     OnboardComponent,
     AppHeaderComponent,
-    CamaleaoTagsComponent,
-    UserIndexComponent,
-    UserHomeComponent,
-    UserBasicInfoComponent,
-    UserSearchComponent
+    CamaleaoTagsComponent
   ],
   imports: [
     AppRoutingModule,

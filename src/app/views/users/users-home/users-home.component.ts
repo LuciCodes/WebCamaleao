@@ -8,10 +8,10 @@ import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-users-home',
-  templateUrl: './user-home.component.html',
-  styleUrls: ['./user-home.component.css']
+  templateUrl: './users-home.component.html',
+  styleUrls: ['./users-home.component.css']
 })
-export class UserHomeComponent implements OnInit {
+export class UsersHomeComponent implements OnInit {
 
   public frmMatchProfile: FormGroup;
 

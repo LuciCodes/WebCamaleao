@@ -15,11 +15,11 @@ export class AppConstants {
     staff: 'STAFF',
     admin: 'ADMIN',
     list: [
-      { name: 'CANDIDATE', value: 'Candidate' },
-      { name: 'CSTAFF', value: 'Usuário de Empresa' },
-      { name: 'CADMIN', value: 'Admin de Empresa' },
-      { name: 'STAFF', value: 'Usuário da Camaleão' },
-      { name: 'ADMIN', value: 'Admin da Camaleão' }
+      { value: 'CANDIDATE', name: 'Candidate' },
+      { value: 'CSTAFF', name: 'Usuário de Empresa' },
+      { value: 'CADMIN', name: 'Admin de Empresa' },
+      { value: 'STAFF', name: 'Usuário da Camaleão' },
+      { value: 'ADMIN', name: 'Admin da Camaleão' }
     ]
   } 
 

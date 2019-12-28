@@ -14,6 +14,7 @@ import { Experience } from '../models/experience';
 import { UserProfile } from '../models/userProfile';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { AppConstants } from '../etc/appConstants';
+import { UserSearchParams } from '../models/userSearchParams';
 
 @Injectable()
 export class UserService {
@@ -32,6 +33,11 @@ export class UserService {
   user$: Observable<User | null>;
 
   userProfiles: Array<UserProfile> = [];
+
+  users: Array<any>;
+  
+  lastSearchParams?: UserSearchParams;
+  lastSearchResults?: Array<any>;
 
   get hasUser(): boolean { return this.user != null; }
 
@@ -467,5 +473,50 @@ export class UserService {
     }
 
     return saveResult;
+  }
+
+  async searchUsers(filterParams?: UserSearchParams, companyList?: Array<any>) {
+
+    let filters = {};
+
+    if (filterParams.forceReload) { this.users = null; }
+
+    let results = [];
+
+    let usersResult = await this.fireDb.collection('users').get().toPromise();
+
+    for(let d = 0; d < usersResult.docs.length; d++) {
+
+      results.push({ id: usersResult.docs[d].id, ...usersResult.docs[d].data() });
+      
+      results[d].id = usersResult.docs[d].id;
+    }
+
+    this.lastSearchResults = results;
+    
+    /*
+    const searchUsers = this.fbFuncs.httpsCallable('searchUsers');
+
+    console.log('Calling searchUsers...');
+
+    let funcResult = await searchUsers(filterParams).toPromise();  
+    
+    console.log('Result:', funcResult);
+
+    if (funcResult.success) {
+      
+      this.lastSearchResults = funcResult.result.users;
+      this.lastSearchParams = filterParams;
+    }
+
+    */
+    
+    return this.lastSearchResults;
+
+  }
+
+  clearSearchParams() {
+  
+    this.lastSearchParams = null;
   }
 }

@@ -33,6 +33,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -97,6 +99,8 @@ import { CommonModule } from '@angular/common';
     MatIconModule,
     MatButtonModule,
     MatDatepickerModule,
+    MatTableModule,
+    MatPaginatorModule,
     MatMomentDateModule,
     LayoutModule,
     MatToolbarModule,
@@ -127,6 +131,8 @@ import { CommonModule } from '@angular/common';
     MatButtonModule,
     MatDatepickerModule,
     MatMomentDateModule,
+    MatTableModule,
+    MatPaginatorModule,
     LayoutModule,
     MatToolbarModule,
     MatTabsModule,

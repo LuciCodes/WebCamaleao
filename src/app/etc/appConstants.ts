@@ -8,6 +8,21 @@ export class AppConstants {
   static phoneMask = { mask: ['(', /[1-9]/, /[1-9]/, ')', ' ', /[1-9]/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/] };
   static cepMask = { mask: [/\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/] };
 
+  static userRoles ={
+    candidate: 'CANDIDATE',
+    cstaff: 'CSTAFF',
+    cadmin: 'CADMIN',
+    staff: 'STAFF',
+    admin: 'ADMIN',
+    list: [
+      { name: 'CANDIDATE', value: 'Candidate' },
+      { name: 'CSTAFF', value: 'Usuário de Empresa' },
+      { name: 'CADMIN', value: 'Admin de Empresa' },
+      { name: 'STAFF', value: 'Usuário da Camaleão' },
+      { name: 'ADMIN', value: 'Admin da Camaleão' }
+    ]
+  } 
+
   static educationalLevels = [
     { value: 'INDEFINIDA', name:'Indefinida' },
     { value: 'ENSINO_FUNDAMENTAL_INTERROMPIDO', name:'Ensino Fundamental: Interrompido' },

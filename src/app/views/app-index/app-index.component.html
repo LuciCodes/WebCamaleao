@@ -51,7 +51,7 @@
 
     <mat-nav-list>
 
-      <ng-container *ngIf="userIsAdmin">
+      <ng-container *ngIf="userService.userIsStaff">
     
         <h5 class="txt-center op-7">Admin</h5>
 
@@ -67,13 +67,18 @@
         <a mat-list-item href="javascript:;" routerLink="/matches">
           <i class="fa fa-users m-r-5"></i> Matches
         </a>
-        <a mat-list-item href="javascript:;" routerLink="/usuarios/buscar" title="Buscar Usuários">
-          <i class="fa fa-user-circle m-r-5"></i> Usuários
-        </a>
+          
+        <ng-container *ngIf="userService.userIsAdmin">
+        
+          <a mat-list-item href="javascript:;" routerLink="/usuarios/buscar" title="Buscar Usuários">
+            <i class="fa fa-user-circle m-r-5"></i> Usuários
+          </a>
+          
+        </ng-container> 
         
       </ng-container>
       
-      <ng-container *ngIf="userIsCompany">
+      <ng-container *ngIf="userService.userIsCompanyStaff">
     
         <h5 class="txt-center op-7">Minha Empresa</h5>
         
@@ -82,21 +87,22 @@
         <a mat-list-item href="javascript:;" routerLink="/vagas/abrir">Abrir Vaga</a>
         <a mat-list-item href="javascript:;" routerLink="/candidates">Candidates</a>
         
+        <ng-container *ngIf="userService.userIsCompanyAdmin">
+          <a mat-list-item href="javascript:;" routerLink="/">Usuários</a>
+        </ng-container>
+
       </ng-container>
+    
+      <h5 class="txt-center op-7">Meu Perfil</h5>
+
+      <a mat-list-item href="javascript:;" routerLink="/candidate">Dados Básicos</a>
+      <a mat-list-item href="javascript:;" routerLink="/candidate/perfil">Perfil</a>
+      <a mat-list-item href="javascript:;" routerLink="/candidate/escolaridade">Escolaridade</a>
+      <a mat-list-item href="javascript:;" routerLink="/candidate/certificacoes">Certificações</a>
+      <a mat-list-item href="javascript:;" routerLink="/candidate/habilidades">Habilidades</a>
+      <a mat-list-item href="javascript:;" routerLink="/candidate/experiencias">Experiências</a>
+      <!--a mat-list-item href="javascript:;" routerLink="/candidate/preferencias">Preferências</a-->
       
-      <ng-container *ngIf="userIsCandidate">
-
-        <h5 class="txt-center op-7">Meu Perfil</h5>
-
-        <a mat-list-item href="javascript:;" routerLink="/candidate">Dados Básicos</a>
-        <a mat-list-item href="javascript:;" routerLink="/candidate/perfil">Perfil</a>
-        <a mat-list-item href="javascript:;" routerLink="/candidate/escolaridade">Escolaridade</a>
-        <a mat-list-item href="javascript:;" routerLink="/candidate/certificacoes">Certificações</a>
-        <a mat-list-item href="javascript:;" routerLink="/candidate/habilidades">Habilidades</a>
-        <a mat-list-item href="javascript:;" routerLink="/candidate/experiencias">Experiências</a>
-        <!--a mat-list-item href="javascript:;" routerLink="/candidate/preferencias">Preferências</a-->
-        
-      </ng-container>
       
       <div style="display:block; width: 140px;">&nbsp;</div>
 

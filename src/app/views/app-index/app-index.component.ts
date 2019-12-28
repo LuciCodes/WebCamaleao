@@ -25,22 +25,7 @@ export class AppIndexComponent {
 
     return this.userService.user;
   }
-  
-  get userIsCandidate(): boolean {
-
-    return this.userService.userIsCandidate;
-  }
-
-  get userIsCompany(): boolean {
-
-    return this.userService.userIsCompany;
-  }
-
-  get userIsAdmin(): boolean {
-
-    return this.userService.userIsAdmin;
-  }
-  
+    
   displayNameInitials: string;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)

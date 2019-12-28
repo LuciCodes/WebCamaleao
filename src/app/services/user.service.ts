@@ -13,6 +13,7 @@ import { CandidateEducation } from '../models/candidateEducation';
 import { Experience } from '../models/experience';
 import { UserProfile } from '../models/userProfile';
 import { AngularFireFunctions } from '@angular/fire/functions';
+import { AppConstants } from '../etc/appConstants';
 
 @Injectable()
 export class UserService {
@@ -34,33 +35,35 @@ export class UserService {
 
   get hasUser(): boolean { return this.user != null; }
 
+
   get userRole(): string {
 
-    return this.userToken.claims['userRole'] || 'CANDIDATE';
+    return this.userToken.claims['userRole'] || AppConstants.userRoles.candidate;
   }
 
   get userIsCandidate(): boolean {
 
-    // padronizando type em branco como CANDIDATE também
-    // no cadastro, salvar o user depois com a propriedade type
-    return (this.hasUser && (
-               this.userProfiles.length == 0
-            || this.userProfiles.findIndex(p => p.name == 'CANDIDATE') != -1
-            ));
+    return (this.hasUser && this.userRole == AppConstants.userRoles.candidate);
   }
   
-  get userIsCompany(): boolean {
+  get userIsCompanyStaff(): boolean {
 
-    return (this.hasUser && (
-               this.userProfiles.findIndex(p => p.name == 'COMPANY') != -1
-            ));
+    return (this.hasUser && [AppConstants.userRoles.cadmin, AppConstants.userRoles.cstaff].includes(this.userRole));
   }
 
   get userIsAdmin(): boolean {
 
-    return (this.hasUser && (
-               this.userProfiles.findIndex(p => p.name == 'ADMIN') != -1
-            ));
+    return (this.hasUser && this.userRole == AppConstants.userRoles.admin);
+  }
+
+  get userIsStaff(): boolean {
+
+    return (this.hasUser && [AppConstants.userRoles.staff, AppConstants.userRoles.admin].includes(this.userRole));
+  }
+
+  get userIsCompanyAdmin(): boolean {
+
+    return (this.hasUser && this.userRole == AppConstants.userRoles.cadmin);
   }
 
   constructor(private fireAuth: AngularFireAuth,
@@ -72,6 +75,8 @@ export class UserService {
     this.fireAuth.idTokenResult.subscribe(async (result: firebase.auth.IdTokenResult) => { 
 
       this.userToken = result;
+
+      if (result) console.log('User claim:', this.userToken.claims['userRole']);
 
       if (this.user && (this.userToken && !this.userToken.claims['userRole'])) {
 

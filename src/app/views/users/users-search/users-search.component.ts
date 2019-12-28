@@ -19,7 +19,7 @@ export class UsersSearchComponent  {
 
   flagLoadingData: boolean = false;
 
-  userList: Array<User>;
+  userList: Array<any>;
 
   displayedColumns: string[] = ['uid', 'displayName', 'email', 'phoneNumber', 'providerId'];
 
@@ -53,7 +53,7 @@ export class UsersSearchComponent  {
 
       this.userService.searchUsers(params, this.userService.users).then((list) => {
 
-        this.userList = list;
+        this.userList = list as Array<any>;
 
         console.log('UserList:', this.userList);
 

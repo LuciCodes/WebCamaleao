@@ -15,7 +15,10 @@ import { LoginComponent } from './views/login/login.component';
 import { WebApiService } from './services/webApi.service';
 import { WebApiFirebaseService } from './services/webApi.firebase.service';
 import { WebApiMockService } from './services/webApi.mock.service';
+
 import { UserService } from './services/user.service';
+import { UserFirebaseService } from './services/user.firebase.service';
+import { UserMockService } from './services/user.mock.service';
 
 import { CandidateService } from './services/candidate.service';
 import { CandidateFirebaseService } from './services/candidate.firebase.service';
@@ -71,6 +74,8 @@ import { AngularFireFunctionsModule } from '@angular/fire/functions';
     WebApiFirebaseService,
     WebApiMockService,
     UserService,
+    UserFirebaseService,
+    UserMockService,
     CandidateService,
     CandidateFirebaseService,
     CandidateMockService,

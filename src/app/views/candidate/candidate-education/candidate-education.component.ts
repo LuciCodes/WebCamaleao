@@ -109,7 +109,7 @@ export class CandidateEducationComponent implements OnInit {
       await this.userService.loadUserCandidateEducation();
     }
 
-    this.initForm();
+    this.initForm(this.userService.candidateEducation);
 
     this.flagLoadingData = false;
   }

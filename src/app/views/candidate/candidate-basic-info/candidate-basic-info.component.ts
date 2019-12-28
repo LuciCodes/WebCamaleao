@@ -83,13 +83,9 @@ export class CandidateBasicInfoComponent implements OnInit {
 
     this.flagLoadingData = true;
 
-    if (this.userService.user)
+    if (this.userService.hasUser)
     {
-      if (!this.userService.candidate)
-      {
-  
-        await this.userService.loadUserCandidate();
-      }
+      await this.userService.loadUserCandidate();
   
       this.initForm(this.userService.candidate);
     }

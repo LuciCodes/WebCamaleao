@@ -15,503 +15,321 @@ import { UserProfile } from '../models/userProfile';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { AppConstants } from '../etc/appConstants';
 import { UserSearchParams } from '../models/userSearchParams';
+import { UserMockService } from './user.mock.service';
+import { UserFirebaseService } from './user.firebase.service';
 
 @Injectable()
 export class UserService {
 
-  user: User;
-  userToken: firebase.auth.IdTokenResult;
-  candidate: Candidate;
-  candidateProfile: CandidateProfile;
-  candidateHabilities: CandidateHabilities;
-  candidateEducation: CandidateEducation;
+  get user(): User {
 
-  candidateExperiences: Array<Experience>;
+    if (this.mockAll) { return this.userMock.user; }
+  
+    return this.userFirebase.user;
+  }
+  
+  set user(value: User) {
 
-  loading = false;
+    if (this.mockAll) { this.userMock.user = value; }
+  
+    this.userFirebase.user = value;
+  }
 
-  user$: Observable<User | null>;
+  get userToken(): firebase.auth.IdTokenResult {
+  
+    return this.userFirebase.userToken;
+  }
 
-  userProfiles: Array<UserProfile> = [];
+  get candidate(): Candidate {
+  
+    if (this.mockAll) { return this.userMock.candidate; }
+  
+    return this.userFirebase.candidate;
+  }
+
+  get candidateProfile(): CandidateProfile {
+  
+    if (this.mockAll) { return this.userMock.candidateProfile; }
+  
+    return this.userFirebase.candidateProfile;
+  }
+
+  get candidateHabilities(): CandidateHabilities {
+  
+    if (this.mockAll) { return this.userMock.candidateHabilities; }
+  
+    return this.userFirebase.candidateHabilities;
+  }
+
+  get candidateEducation(): CandidateEducation {
+  
+    if (this.mockAll) { return this.userMock.candidateEducation; }
+  
+    return this.userFirebase.candidateEducation;
+  }
+
+  get candidateExperiences(): Array<Experience> {
+  
+    if (this.mockAll) { return this.userMock.candidateExperiences; }
+  
+    return this.userFirebase.candidateExperiences;
+  }
+
+  get loading(): boolean {
+  
+    if (this.mockAll) { return this.userMock.loading; }
+  
+    return this.userFirebase.loading;
+  }
 
   users: Array<any>;
   
   lastSearchParams?: UserSearchParams;
   lastSearchResults?: Array<any>;
 
+  mockAll: boolean = false;
+  firebaseAll: boolean = true;
+
+  mockFunctions: Array<string> = [];
+  fbFunctions: Array<string> = [];
+
   get hasUser(): boolean { return this.user != null; }
 
+  userForMock(name: string): boolean {
+
+    return (this.mockFunctions.findIndex(f => f == name) != -1);
+  }
+
+  userForFirebase(name: string): boolean {
+
+    return (this.fbFunctions.findIndex(f => f == name) != -1);
+  }
 
   get userRole(): string {
 
-    return this.userToken.claims['userRole'] || AppConstants.userRoles.candidate;
+    if (this.mockAll) { return this.userMock.userRole; }
+  
+    return this.userFirebase.userRole;
   }
 
   get userIsCandidate(): boolean {
 
-    return (this.hasUser && this.userRole == AppConstants.userRoles.candidate);
+    if (this.mockAll) { return this.userMock.userIsCandidate; }
+  
+    return this.userFirebase.userIsCandidate;
   }
   
   get userIsCompanyStaff(): boolean {
 
-    return (this.hasUser && [AppConstants.userRoles.cadmin, AppConstants.userRoles.cstaff].includes(this.userRole));
+    if (this.mockAll) { return this.userMock.userIsCompanyStaff; }
+  
+    return this.userFirebase.userIsCompanyStaff;
   }
 
   get userIsAdmin(): boolean {
 
-    return (this.hasUser && this.userRole == AppConstants.userRoles.admin);
+    if (this.mockAll) { return this.userMock.userIsAdmin; }
+  
+    return this.userFirebase.userIsAdmin;
   }
 
   get userIsStaff(): boolean {
 
-    return (this.hasUser && [AppConstants.userRoles.staff, AppConstants.userRoles.admin].includes(this.userRole));
+    if (this.mockAll) { return this.userMock.userIsStaff; }
+  
+    return this.userFirebase.userIsStaff;
   }
 
   get userIsCompanyAdmin(): boolean {
 
-    return (this.hasUser && this.userRole == AppConstants.userRoles.cadmin);
+    if (this.mockAll) { return this.userMock.userIsCompanyAdmin; }
+  
+    return this.userFirebase.userIsCompanyAdmin;
   }
 
-  constructor(private fireAuth: AngularFireAuth,
-              private fireDb: AngularFirestore,
-              private fbFuncs: AngularFireFunctions) {
+  constructor(private userMock: UserMockService,
+              private userFirebase: UserFirebaseService) {
 
-    this.user$ = this.fireAuth.user;
-
-    this.fireAuth.idTokenResult.subscribe(async (result: firebase.auth.IdTokenResult) => { 
-
-      this.userToken = result;
-
-      if (result) console.log('User claim:', this.userToken.claims['userRole']);
-
-      if (this.user && (this.userToken && !this.userToken.claims['userRole'])) {
-
-        console.log('Getting SetClaims...');
-
-        const setClaims = this.fbFuncs.httpsCallable('setUserClaims');
-
-        console.log('Calling...');
-
-        let funcResult = await setClaims({ userId: this.user.uid }).toPromise();
-
-        console.log('Result:', funcResult);
-      }
-    });
-
-    this.user$.subscribe(async (user: User) => {
-
-      this.user = user;
-
-      if (this.user) {
-
-        await this.loadUserCandidate();
-
-      } else {
-
-        this.candidate = null;
-        this.candidateExperiences = null;
-        this.candidateEducation = null;
-        this.candidateHabilities = null;
-        this.candidateProfile = null;
-      }
-    });
   }
 
   async loadUserCandidate() {
     
-    if (this.user && !this.loading && !this.candidate) {
+    if (this.mockAll || this.userForMock('loadUserCandidate')) {
 
-      this.loading = true;
-
-      let candidateQuery = await this.fireDb.collection('candidates').ref.where('userId', "==", this.user.uid);
-
-      let candidateResult = await candidateQuery.get();
-
-      if (candidateResult.empty) {
-
-        let newCandidateRef = await this.fireDb.collection('candidates').add({ userId: this.user.uid });
-
-        this.candidate = new Candidate({ userId: this.user.uid, id: newCandidateRef.id });
-
-        console.log('Created new user candidate:', this.candidate);
-
-      } else {
-
-        this.candidate = (new Candidate({ id: candidateResult.docs[0], ...candidateResult.docs[0].data() }));
-
-        this.candidate.id = candidateResult.docs[0].id;
-        
-        console.log('Loaded user candidate:', this.candidate);
-      }
-      
-      this.loading = false;
+      return this.userMock.loadUserCandidate();
     }
+    
+    if (this.firebaseAll || this.userForFirebase('loadUserCandidate')) {
+      
+      return this.userFirebase.loadUserCandidate();
+    }
+
+    return null;
   }
 
   async loadUserCandidateProfile() {
     
-    if (this.user) {
+    if (this.mockAll || this.userForMock('loadUserCandidateProfile')) {
 
-      if (!this.candidate) {
-
-        await this.loadUserCandidate();
-      }
-
-      let candidateQuery = await this.fireDb.collection('candidateProfiles').ref.where('candidateId', "==", this.candidate.id);
-
-      let candidateResult = await candidateQuery.get();
-
-      if (candidateResult.empty) {
-
-        let newCandidateProfileRef = await this.fireDb.collection('candidateProfiles').add({ 
-          userId: this.user.uid,
-          candidateId: this.candidate.id
-        });
-
-        this.candidateProfile = new CandidateProfile({
-          userId: this.user.uid,
-          candidateId: this.candidate.id,
-          id: newCandidateProfileRef.id
-        });
-
-        console.log('Created new user candidateProfile:', this.candidateProfile);
-
-      } else {
-
-        this.candidateProfile = new CandidateProfile({ id: candidateResult.docs[0].id, ...candidateResult.docs[0].data() });
-          
-        console.log('Loaded user candidateProfile:', this.candidateProfile);
-      }
+      return this.userMock.loadUserCandidateProfile();
     }
+    
+    if (this.firebaseAll || this.userForFirebase('loadUserCandidateProfile')) {
+      
+      return this.userFirebase.loadUserCandidateProfile();
+    }
+
+    return null;
   }
 
   async loadUserCandidateHabilities() {
     
-    if (this.user) {
+    if (this.mockAll || this.userForMock('loadUserCandidateHabilities')) {
 
-      if (!this.candidate) {
-
-        await this.loadUserCandidate();
-      }
-
-      let candidateQuery = await this.fireDb.collection('candidateHabilities').ref.where('candidateId', "==", this.candidate.id);
-
-      let candidateResult = await candidateQuery.get();
-
-      if (candidateResult.empty) {
-
-        let newCandidateHabilitiesRef = await this.fireDb.collection('candidateHabilities').add({ 
-          userId: this.user.uid,
-          candidateId: this.candidate.id
-        });
-
-        this.candidateHabilities = new CandidateHabilities({
-          userId: this.user.uid,
-          candidateId: this.candidate.id,
-          id: newCandidateHabilitiesRef.id,
-          list: ''
-        });
-
-        console.log('Created new user candidateHabilities:', this.candidateHabilities);
-
-      } else {
-
-        this.candidateHabilities = new CandidateHabilities({ id: candidateResult.docs[0].id, ...candidateResult.docs[0].data() });
-
-        if (!this.candidateHabilities.list) {
-
-          this.candidateHabilities.list = '';
-        }
-
-        console.log('Loaded user candidateHabilities:', this.candidateHabilities);
-      }
+      return this.userMock.loadUserCandidateHabilities();
     }
+    
+    if (this.firebaseAll || this.userForFirebase('loadUserCandidateHabilities')) {
+      
+      return this.userFirebase.loadUserCandidateHabilities();
+    }
+
+    return null;
   }
 
   async loadUserCandidateEducation() {
     
-    if (this.user) {
+    if (this.mockAll || this.userForMock('loadUserCandidateEducation')) {
 
-      if (!this.candidate) {
-
-        await this.loadUserCandidate();
-      }
-
-      let candidateQuery = await this.fireDb.collection('candidateEducation').ref
-                                                 .where('candidateId', "==", this.candidate.id);
-
-      let candidateResult = await candidateQuery.get();
-
-      if (candidateResult.empty) {
-
-        let newCandidateEducationRef = await this.fireDb.collection('candidateEducation').add({ 
-          userId: this.user.uid,
-          candidateId: this.candidate.id
-        });
-
-        this.candidateEducation = new CandidateEducation({
-          userId: this.user.uid,
-          candidateId: this.candidate.id,
-          id: newCandidateEducationRef.id
-        });
-
-        console.log('Created new user candidateEducation:', this.candidateEducation);
-
-      } else {
-
-        this.candidateEducation = new CandidateEducation({ id: candidateResult.docs[0].data, ...candidateResult.docs[0].data() });
-          
-        this.candidateEducation.id = candidateResult.docs[0].id;
-        
-        console.log('Loaded user candidateEducation:', this.candidateEducation);
-      }
+      return this.userMock.loadUserCandidateEducation();
     }
+    
+    if (this.firebaseAll || this.userForFirebase('loadUserCandidateEducation')) {
+      
+      return this.userFirebase.loadUserCandidateEducation();
+    }
+
+    return null;
   }
 
   async loadUsercandidateExperiences() {
     
-    if (this.user) {
+    if (this.mockAll || this.userForMock('loadUsercandidateExperiences')) {
 
-      if (!this.candidate) {
-
-        await this.loadUserCandidate();
-      }
-
-      let candidateQuery = await this.fireDb.collection('candidateExperiences').ref.where('candidateId', "==", this.candidate.id);
-
-      let candidateResult = await candidateQuery.get();
-
-      if (candidateResult.empty) {
-
-        this.candidateExperiences = [];
-
-      } else {
-
-        let experiences = [];
-
-        for (let c = 0; c < candidateResult.docs.length; c++) {
-
-          experiences.push(new Experience({ id: candidateResult.docs[c].id, ...candidateResult.docs[c].data()} ));
-        }
-        
-        this.candidateExperiences = experiences;
-        
-        console.log('Loaded user candidateExperiences:', experiences);
-      }
+      return this.userMock.loadUsercandidateExperiences();
     }
+    
+    if (this.firebaseAll || this.userForFirebase('loadUsercandidateExperiences')) {
+      
+      return this.userFirebase.loadUsercandidateExperiences();
+    }
+
+    return null;
   }
 
   async saveUserCandidate(candidate?: Candidate): Promise<any> {
 
-    candidate.id = this.candidate.id;
-    candidate.userId = this.user.uid;
+    if (this.mockAll || this.userForMock('saveUserCandidate')) {
 
-    candidate.updated = firebase.firestore.Timestamp.fromDate(new Date());
-    candidate.updatedUserId = this.user.uid;
-
-    let saveResult = { msg: 'Dados salvados com sucesso!', success: true };
-
-    try 
-    {
-      await this.fireDb.collection('candidates')
-                                      .doc(candidate.id)
-                                      .set(candidate, { merge: true });
-                                        
-      this.candidate = candidate;
+      return this.userMock.saveUserCandidate(candidate);
     }
-    catch(err) {
-
-      saveResult.msg = 'Erro salvando dados... ' + (err || '');
-      saveResult.success = false;
+    
+    if (this.firebaseAll || this.userForFirebase('saveUserCandidate')) {
+      
+      return this.userFirebase.saveUserCandidate(candidate);
     }
 
-    return saveResult;
+    return null;
   }
   
   async saveUserCandidateProfile(candidateProfile?: CandidateProfile): Promise<any> {
 
-    if (!this.candidate) { await this.loadUserCandidate(); }
+    if (this.mockAll || this.userForMock('saveUserCandidateProfile')) {
 
-    if (!this.candidateProfile) { await this.loadUserCandidateProfile(); }
-
-    candidateProfile.id = this.candidateProfile.id;
-    candidateProfile.userId = this.user.uid;
-    candidateProfile.candidateId = this.candidate.id;
-
-    candidateProfile.updated = firebase.firestore.Timestamp.fromDate(new Date());
-    candidateProfile.updatedUserId = this.user.uid;
-
-    let saveResult = { msg: 'Dados salvados com sucesso!', success: true };
-
-    try 
-    {
-      await this.fireDb.collection('candidateProfiles')
-                                      .doc(candidateProfile.id)
-                                      .set(candidateProfile, { merge: true });
-                                        
-      this.candidateProfile = candidateProfile;
+      return this.userMock.saveUserCandidateProfile(candidateProfile);
     }
-    catch(err) {
-
-      saveResult.msg = 'Erro salvando dados... ' + (err || '');
-      saveResult.success = false;
+    
+    if (this.firebaseAll || this.userForFirebase('saveUserCandidateProfile')) {
+      
+      return this.userFirebase.saveUserCandidateProfile(candidateProfile);
     }
 
-    return saveResult;
+    return null;
   }
   
   async saveUserCandidateHabilities(candidateHabilities?: CandidateHabilities): Promise<any> {
 
-    if (!this.candidate) { await this.loadUserCandidate(); }
+    if (this.mockAll || this.userForMock('saveUserCandidateHabilities')) {
 
-    if (!this.candidateHabilities) { await this.loadUserCandidateHabilities(); }
-
-    candidateHabilities.id = this.candidateHabilities.id;
-    candidateHabilities.userId = this.user.uid;
-    candidateHabilities.candidateId = this.candidate.id;
-
-    candidateHabilities.updated = firebase.firestore.Timestamp.fromDate(new Date());
-    candidateHabilities.updatedUserId = this.user.uid;
-
-    let saveResult = { msg: 'Dados salvados com sucesso!', success: true };
-
-    try 
-    {
-      await this.fireDb.collection('candidateHabilities')
-                                      .doc(candidateHabilities.id)
-                                      .set(candidateHabilities, { merge: true });
-                                        
-      this.candidateHabilities = candidateHabilities;
+      return this.userMock.saveUserCandidateHabilities(candidateHabilities);
     }
-    catch(err) {
-
-      saveResult.msg = 'Erro salvando dados... ' + (err || '');
-      saveResult.success = false;
+    
+    if (this.firebaseAll || this.userForFirebase('saveUserCandidateHabilities')) {
+      
+      return this.userFirebase.saveUserCandidateHabilities(candidateHabilities);
     }
 
-    return saveResult;
+    return null;
   }
   
   async saveUserCandidateEducation(candidateEducation?: CandidateEducation): Promise<any> {
 
-    if (!this.candidate) { await this.loadUserCandidate(); }
+    if (this.mockAll || this.userForMock('saveUserCandidateEducation')) {
 
-    if (!this.candidateEducation) { await this.loadUserCandidateEducation(); }
-
-    candidateEducation.id = this.candidateEducation.id;
-    candidateEducation.userId = this.user.uid;
-    candidateEducation.candidateId = this.candidate.id;
-
-    candidateEducation.updated = firebase.firestore.Timestamp.fromDate(new Date());
-    candidateEducation.updatedUserId = this.user.uid;
-
-    let saveResult = { msg: 'Dados salvados com sucesso!', success: true };
-
-    try 
-    {
-      await this.fireDb.collection('candidateEducation')
-                                      .doc(candidateEducation.id)
-                                      .set(candidateEducation, { merge: true });
-                                        
-      this.candidateEducation = candidateEducation;
+      return this.userMock.saveUserCandidateEducation(candidateEducation);
     }
-    catch(err) {
-
-      saveResult.msg = 'Erro salvando dados... ' + (err || '');
-      saveResult.success = false;
+    
+    if (this.firebaseAll || this.userForFirebase('saveUserCandidateEducation')) {
+      
+      return this.userFirebase.saveUserCandidateEducation(candidateEducation);
     }
 
-    return saveResult;
+    return null;
   }
   
   async removeUsercandidateExperience(experience?: Experience): Promise<any> {
 
-    let expQuery = await this.fireDb.collection('candidateExperiences').ref.where('candidateId', "==", this.candidate.id);
+    if (this.mockAll || this.userForMock('removeUsercandidateExperience')) {
 
-    let expResult = await expQuery.get();
-
-    if (!expResult.empty) {
-
-      let existingExp = expResult.docs.find(d => d.id == experience.id);
-
-      if (existingExp) {
-
-        await this.fireDb.collection('candidateExperiences').doc(existingExp.id).delete();
-      }
+      return this.userMock.removeUsercandidateExperience(experience);
     }
+    
+    if (this.firebaseAll || this.userForFirebase('removeUsercandidateExperience')) {
+      
+      return this.userFirebase.removeUsercandidateExperience(experience);
+    }
+
+    return null;
   }
 
   async saveUsercandidateExperience(experience?: Experience): Promise<any> {
 
-    if (!this.candidate) { await this.loadUserCandidate(); }
+    if (this.mockAll || this.userForMock('saveUsercandidateExperience')) {
 
-    experience = new Experience(experience);
-
-    experience.userId = this.user.uid;
-    experience.candidateId = this.candidate.id;
-
-    experience.updated = firebase.firestore.Timestamp.fromDate(new Date());
-    experience.updatedUserId = this.user.uid;
-
-    let saveResult = { msg: 'Dados salvados com sucesso!', success: true };
-
-    try 
-    {
-      let obj = experience.toDocumentObject();
-
-      let newExpRef = await this.fireDb.collection('candidateExperiences').add(obj);
-
-      experience.id = newExpRef.id;
-
-      this.candidateExperiences.push(experience);
-
+      return this.userMock.saveUsercandidateExperience(experience);
     }
-    catch(err) {
-
-      saveResult.msg = 'Erro salvando dados... ' + (err || '');
-      saveResult.success = false;
+    
+    if (this.firebaseAll || this.userForFirebase('saveUsercandidateExperience')) {
+      
+      return this.userFirebase.saveUsercandidateExperience(experience);
     }
 
-    return saveResult;
+    return null;
   }
 
-  async searchUsers(filterParams?: UserSearchParams, companyList?: Array<any>) {
+  async searchUsers(filterParams?: UserSearchParams, userList?: Array<any>) {
 
-    let filters = {};
+    if (this.mockAll || this.userForMock('searchUsers')) {
 
-    if (filterParams.forceReload) { this.users = null; }
-
-    let results = [];
-
-    let usersResult = await this.fireDb.collection('users').get().toPromise();
-
-    for(let d = 0; d < usersResult.docs.length; d++) {
-
-      results.push({ id: usersResult.docs[d].id, ...usersResult.docs[d].data() });
+      return this.userMock.searchUsers(filterParams, userList);
+    }
+    
+    if (this.firebaseAll || this.userForFirebase('searchUsers')) {
       
-      results[d].id = usersResult.docs[d].id;
+      return this.userFirebase.searchUsers(filterParams, userList);
     }
 
-    this.lastSearchResults = results;
-    
-    /*
-    const searchUsers = this.fbFuncs.httpsCallable('searchUsers');
-
-    console.log('Calling searchUsers...');
-
-    let funcResult = await searchUsers(filterParams).toPromise();  
-    
-    console.log('Result:', funcResult);
-
-    if (funcResult.success) {
-      
-      this.lastSearchResults = funcResult.result.users;
-      this.lastSearchParams = filterParams;
-    }
-
-    */
-    
-    return this.lastSearchResults;
+    return null;
 
   }
 

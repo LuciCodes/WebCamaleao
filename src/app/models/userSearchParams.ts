@@ -3,7 +3,7 @@ export class UserSearchParams {
 
   id: string;
   name: string;
-  roles: Array<any>;
+  email: string;
 
   forceReload: boolean = false;
 

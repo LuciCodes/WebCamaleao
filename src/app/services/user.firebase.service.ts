@@ -4,7 +4,7 @@ import { User } from 'firebase';
 
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, Query, QuerySnapshot } from '@angular/fire/firestore';
 import { Candidate } from '../models/candidate';
 import * as firebase from 'firebase';
 import { CandidateProfile } from '../models/candidateProfile';
@@ -31,6 +31,9 @@ export class UserFirebaseService {
   loading = false;
 
   user$: Observable<User | null>;
+
+  public searchPage = 1;
+  public searchPageSize = 50;
 
   get hasUser(): boolean { return this.user != null; }
 
@@ -482,7 +485,38 @@ export class UserFirebaseService {
 
     let results = [];
 
-    let usersResult = await this.fireDb.collection('users').get().toPromise();
+    let usersRef = this.fireDb.collection("users").ref;
+
+    let usersResult: QuerySnapshot<any>;
+
+    if (filterParams.id) {
+      //search by id
+
+      //search by name
+      usersResult = await usersRef.where('uid', '==', filterParams.id).get();
+
+    } else {
+      
+      if (filterParams.name) {
+        //search by name
+        usersResult = await usersRef.where('displayName', '==', filterParams.name).get();
+
+      } else {
+    
+        if (filterParams.email) {
+          //search by email
+          usersResult = await usersRef.where('email', '==', filterParams.email).get();
+
+        } else {
+      
+          usersResult = await usersRef
+                                .orderBy('uid')
+                                .startAfter((this.searchPage * this.searchPageSize))
+                                .limit(this.searchPageSize)
+                                .get();
+        }
+      }
+    }
 
     for(let d = 0; d < usersResult.docs.length; d++) {
 

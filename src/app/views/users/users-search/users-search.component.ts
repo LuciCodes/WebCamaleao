@@ -23,6 +23,26 @@ export class UsersSearchComponent  {
 
   displayedColumns: string[] = ['uid', 'displayName', 'email', 'phoneNumber', 'providerId'];
 
+  get currentPageIdx() {
+
+    return (this.userService.searchPage - 1);
+  }
+  
+  set currentPageIdx(value: number) {
+
+    this.userService.searchPage = value + 1;
+  }
+  
+  get searchPageSize() {
+
+    return (this.userService.searchPageSize);
+  }
+  
+  set searchPageSize(value: number) {
+
+    this.userService.searchPageSize = value;
+  }
+
   get roleList(): Array<any> {
 
     return AppConstants.userRoles.list;
@@ -31,7 +51,9 @@ export class UsersSearchComponent  {
   initForm(obj: any = {}) {
 
     this.frmSearch = this.fb.group({
-      nameOrEmail: [obj.nameOrEmail],
+      id: [obj.id],
+      name: [obj.name],
+      email: [obj.email],
       roles: [obj.roles]
     });
   }

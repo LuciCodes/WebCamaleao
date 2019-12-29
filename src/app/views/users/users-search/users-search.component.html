@@ -10,14 +10,28 @@
         <mat-card-content>
 
           <div fxLayout="row" fxLayoutGap="1%">
-            <div fxFlex="50%">
+            <div fxFlex>
             
               <mat-form-field class="full-width">
-                <input matInput placeholder="Nome ou Email" formControlName="nameOrEmail">
+                <input matInput placeholder="ID" formControlName="id">
               </mat-form-field>
               
             </div>
-            <div fxFlex="50%">
+            <div fxFlex>
+            
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Nome" formControlName="name">
+              </mat-form-field>
+              
+            </div>
+            <div fxFlex>
+            
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Email" formControlName="email">
+              </mat-form-field>
+              
+            </div>
+            <div fxFlex="50%" style="display: none">
 
               <mat-form-field class="full-width">
 
@@ -144,7 +158,12 @@
 
             </table>
 
-            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+            <!--mat-paginator
+              [pageSizeOptions]="[5, 10, 20]"
+              [pageIndex]="currentPageIdx"
+              [pageSize]="searchPageSize"
+              showFirstLastButtons
+            ></mat-paginator-->
 
           </div>
         </div>

@@ -82,6 +82,34 @@ export class UserService {
     return this.userFirebase.loading;
   }
 
+  get searchPage(): number {
+
+    if (this.mockAll) { return this.userMock.searchPage; }
+  
+    return this.userFirebase.searchPage;
+  }
+  
+  set searchPage(value: number) {
+
+    if (this.mockAll) { this.userMock.searchPage = value; return; }
+  
+    this.userFirebase.searchPage = value;
+  }
+
+  get searchPageSize(): number {
+
+    if (this.mockAll) { return this.userMock.searchPageSize; }
+  
+    return this.userFirebase.searchPageSize;
+  }
+  
+  set searchPageSize(value: number) {
+
+    if (this.mockAll) { this.userMock.searchPageSize = value; return; }
+  
+    this.userFirebase.searchPageSize = value;
+  }
+
   users: Array<any>;
   
   lastSearchParams?: UserSearchParams;

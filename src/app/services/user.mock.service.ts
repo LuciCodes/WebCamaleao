@@ -37,6 +37,9 @@ export class UserMockService {
   lastSearchParams?: UserSearchParams;
   lastSearchResults?: Array<any>;
 
+  public searchPage = 1;
+  public searchPageSize = 5;
+  
   get hasUser(): boolean { return this.user != null; }
 
   get userRole(): string {

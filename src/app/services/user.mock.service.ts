@@ -16,6 +16,7 @@ import { AngularFireFunctions } from '@angular/fire/functions';
 import { AppConstants } from '../etc/appConstants';
 import { UserSearchParams } from '../models/userSearchParams';
 import { AppUser } from '../models/appUser';
+import { OperationResult } from '../models/operationResult';
 
 @Injectable()
 export class UserMockService {
@@ -94,6 +95,26 @@ export class UserMockService {
 
   async loadUsercandidateExperiences() {
     
+  }
+
+  async getUser(userId: string): Promise<AppUser> {
+    
+    return new AppUser();
+  }
+
+  async saveUser(user?: AppUser): Promise<OperationResult> {
+
+    return new OperationResult(true, null, new AppUser());
+  }
+
+  async saveUserRoleName(uid: string, roleName: string): Promise<OperationResult> {
+
+    return new OperationResult();
+  }
+  
+  async saveUserRoleNameClaim(uid: string, roleName: string) : Promise<OperationResult> {
+
+    return new OperationResult();
   }
 
   async saveUserCandidate(candidate?: Candidate): Promise<any> {

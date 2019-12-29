@@ -11,44 +11,50 @@
 
     <h1 class="m-t-20">
 
-      <a href="javascript:;" routerLink="/empresas/buscar" style="text-decoration: none; color: #333">
+      <a href="javascript:;" routerLink="/usuarios/buscar" style="text-decoration: none; color: #333">
         &lt;
       </a>
 
       <span *ngIf="flagNewCompany">
-        Incluir Empresa
+        Incluir Usuário
       </span>
       <span *ngIf="!flagNewCompany && editingObj">
-        Editar <small>{{ editingObj.name }}</small>
+        Editar <small>{{ editingObj.displayName }}</small>
       </span>
     </h1>
 
-    <form [formGroup]="frmCompany" novalidate>
+    <form [formGroup]="frmUser" novalidate>
       <mat-card class="default-card">
         <mat-card-content>
 
           <div fxLayout="row" fxLayoutGap="1%">
-            
-            <div fxFlex="14%" style="padding: 0em 1em 1em 1em">
-
-              <img [src]="displayLogo" [title]="displayLogo" style="width: 100%" alt="">
-
-            </div>
-            
-            <div fxFlex="43%">
+            <div fxFlex>
 
               <mat-form-field class="full-width">
                 
-                <mat-label>Empresa</mat-label>
+                <mat-label>Nome</mat-label>
                 <input
                   matInput
-                  placeholder="Nome da empresa"
-                  formControlName="name"
+                  placeholder="Nome do usuário"
+                  formControlName="displayName"
                 >
               </mat-form-field>
 
             </div>
-            <div fxFlex="43%">
+            <div fxFlex title="Não é possível alterar o email dos usuários">
+
+              <mat-form-field class="full-width">
+                
+                <mat-label>Email</mat-label>
+                <input
+                  matInput
+                  placeholder="Email do usuário"
+                  formControlName="email"
+                >
+              </mat-form-field>
+
+            </div>
+            <!--div fxFlex="43%">
 
               <mat-form-field class="full-width">
                 <mat-label>Logo</mat-label>
@@ -70,7 +76,7 @@
               >
                 Usar Padrão
               </button>
-            </div>
+            </div-->
             
           </div>
 
@@ -78,14 +84,43 @@
             <div fxFlex>
 
               <mat-form-field class="full-width">
-
-                <mat-label>Descrição</mat-label>
-                <textarea
+                
+                <mat-label>Telefone</mat-label>
+                <input
                   matInput
-                  formControlName="description"
-                  style="height:14em"
-                ></textarea>
+                  placeholder="Telefone do usuário"
+                  formControlName="phoneNumber"
+                >
+              </mat-form-field>
 
+            </div>
+            <div fxFlex>
+
+              <mat-form-field class="full-width">
+                
+                <mat-label>Tipo</mat-label>
+                <mat-select
+                  placeholder="Tipo"
+                  formControlName="roleName"
+                >
+                  <mat-option *ngFor="let role of roleList" [value]="role.value">
+                    {{ role.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+            </div>
+            <div fxFlex>
+
+              <mat-form-field class="full-width">
+                
+                <mat-label>Empresa</mat-label>
+                <mat-select placeholder="Empresa" formControlName="companyId">
+                  <mat-option [value]="null">Nehuma Associação</mat-option>
+                  <mat-option *ngFor="let company of companies" [value]="company.id">
+                    {{ company.name }}
+                  </mat-option>
+                </mat-select>
               </mat-form-field>
 
             </div>
@@ -100,7 +135,7 @@
             (click)="save()"
           >
             <i class="fa fa-save"></i>
-            Salvar Empresa
+            Salvar Usuário
           </button>
         </mat-card-actions>
       </mat-card>

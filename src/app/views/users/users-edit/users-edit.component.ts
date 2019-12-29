@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material';
 import { UserService } from 'src/app/services/user.service';
 import * as firebase from 'firebase';
 import { ImageService } from 'src/app/services/image.service';
+import { AppUser } from 'src/app/models/appUser';
 
 @Component({
   selector: 'app-users-edit',
@@ -20,38 +21,33 @@ export class UsersEditComponent implements OnInit {
   public flagSavingData = false;
   public flagLoadingData = false;
 
-  flagNewCompany = false;
+  frmUser: any;
 
-  companyDescription: string;
+  editingObj: AppUser;
 
-  frmCompany: any;
-
-  editingObj: Company;
-
-  displayLogo: string = '';
+  public flagNewUser: boolean;
 
   get isValid(): boolean {
 
-    return this.frmCompany && this.frmCompany.valid;
+    return this.frmUser && this.frmUser.valid;
   }
+
+  private _companies: Array<Company>;
 
   get companies() {
 
-    return this.companyService.companies;
+    if (!this._companies) {
+
+      this._companies = this.companyService.companies.sort();
+    }
+
+    return this._companies;
   }
 
-  /*
-  get citiesOfSelectedState(): Array<any> {
-    
-    let state = this.frmSearch.controls['searchInCitiesOfState'].value;
+  get roleList(): Array<any> {
 
-    if (state) {
-
-      return this.states.find(s => s.abrev == state).cities;
-
-    } else { return []; }
+    return AppConstants.userRoles.list;
   }
-  */
 
   constructor(private fb: FormBuilder,
               public location: Location,
@@ -68,10 +64,14 @@ export class UsersEditComponent implements OnInit {
     
     if (!obj) { obj = {}; }
 
-    this.frmCompany = this.fb.group({
-      name: [obj.name, Validators.required],
-      description: [obj.description],
-      logoUrl: [obj.logoUrl]
+    this.frmUser = this.fb.group({
+      displayName: [obj.displayName, Validators.required],
+      phoneNumber: [obj.phoneNumber],
+      email: [{value: obj.email, disabled: true}],
+      photoUrl: [obj.photoUrl],
+      state: [obj.state],
+      roleName: [obj.roleName],
+      companyId: [obj.companyId]
     });
   }
 
@@ -87,16 +87,16 @@ export class UsersEditComponent implements OnInit {
 
       if (!id || id == '' || id == 'incluir') {
 
-        this.flagNewCompany = true;
+        this.flagNewUser = true;
 
-        this.editingObj = new Company();
+        this.editingObj = new AppUser();
 
       } else {
 
-        this.editingObj = await this.companyService.getCompany(id);
+        this.editingObj = await this.userService.getUser(id);
       }
 
-      this.displayLogo = this.imgService.logoOf(this.editingObj);
+      //this.displayLogo = this.imgService.logoOf(this.editingObj);
 
       this.initForm(this.editingObj);
 
@@ -107,55 +107,74 @@ export class UsersEditComponent implements OnInit {
 
   updateDisplayLogo() {
 
-    this.displayLogo = this.imgService.logoOf(this.frmCompany.value);
+    //this.displayLogo = this.imgService.logoOf(this.frmUser.value);
   }
 
   useDefaultLogo() {
 
-    this.frmCompany.controls.logoUrl.setValue(null);
+    this.frmUser.controls.logoUrl.setValue(null);
 
     this.updateDisplayLogo();
   }
 
   async save() {
 
-    if (!this.flagSavingData && this.frmCompany.valid) {
+    if (!this.flagSavingData && this.frmUser.valid) {
 
       this.flagSavingData = true;
 
       let msg = this.snackBar.open('Salvando dados...');
 
-      let company: Company = new Company(this.frmCompany.value);
+      let user: AppUser = new AppUser(this.frmUser.value);
 
-      if (this.flagNewCompany) {
+      let snackMsg = '';
 
-        company.id = 'new';
+      if (this.flagNewUser) {
 
-        company.ownerUserId = this.userService.user.uid;
-        company.created = firebase.firestore.Timestamp.fromDate(new Date());
+        user.uid = 'new';
+
+        //user.created = firebase.firestore.Timestamp.fromDate(new Date());
 
       } else{
 
-        company.id = this.editingObj.id;
+        user.uid = this.editingObj.uid;
+        user.email = this.editingObj.email; // read-only
 
-        company.updatedUserId = this.userService.user.uid;
-        company.updated = firebase.firestore.Timestamp.fromDate(new Date());
+        user.updatedUserId = this.userService.user.uid;
+        user.updated = firebase.firestore.Timestamp.fromDate(new Date());
       }
 
-      console.log('Saving job company:', company);
+      console.log('Saving user:', user);
 
-      let result = await this.companyService.saveCompany(company.toDocumentObject());
+      let result = await this.userService.saveUser(user);
 
-      if (result.obj) {
+      if (result.success) {
 
-        this.editingObj = result.obj;
+        snackMsg = 'Dados do usuário salvados com sucesso.'
+
+        if (user.roleName != this.editingObj.roleName) {
+        
+          // gotta setClaims on the user to affect it
+          let claimResult = await this.userService.saveUserRoleNameClaim(user.uid, user.roleName);
+
+          if (!claimResult.success) {
+          
+            snackMsg += ' Erro setClaim: ' + claimResult.msg;
+          }
+        }
+
+        this.editingObj = result.resultObj;
+
+      } else {
+      
+        snackMsg = result.msg;
       }
 
-      this.flagNewCompany = false;
+      this.flagNewUser = false;
 
       msg.dismiss();
 
-      msg = this.snackBar.open(result.msg, 'OK');
+      msg = this.snackBar.open(snackMsg, 'OK');
 
       this.flagSavingData = false;
     }

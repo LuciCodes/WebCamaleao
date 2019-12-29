@@ -16,6 +16,7 @@ import { AngularFireFunctions } from '@angular/fire/functions';
 import { AppConstants } from '../etc/appConstants';
 import { UserSearchParams } from '../models/userSearchParams';
 import { AppUser } from '../models/appUser';
+import { OperationResult } from '../models/operationResult';
 
 @Injectable()
 export class UserFirebaseService {
@@ -85,6 +86,11 @@ export class UserFirebaseService {
       }
 
       this.user.fbToken = result;
+
+      if (this.user.email == 'luciano.demaria@gmail.com' && !this.userIsAdmin) {
+      
+        //await this.setLuciAdmin();
+      }
 
       console.log('Got userToken>', result);
 
@@ -275,6 +281,23 @@ export class UserFirebaseService {
     }
   }
 
+  async getUser(uid: string): Promise<AppUser> {
+    
+    let result: AppUser;
+
+    let userQuery = await this.fireDb.collection('users').doc(uid);
+
+    let userResult = await userQuery.get().toPromise();
+
+    if (userResult) {
+
+      result = new AppUser({ id: userResult.id, ...userResult.data() });
+    }
+
+    return result;
+  }
+
+
   async loadUsercandidateExperiences() {
     
     if (this.user) {
@@ -306,6 +329,28 @@ export class UserFirebaseService {
         console.log('Loaded user candidateExperiences:', experiences);
       }
     }
+  }
+
+  async saveUser(user?: AppUser): Promise<OperationResult> {
+
+    let saveResult = new OperationResult(true, 'Dados salvados com sucesso!');
+
+    try 
+    {
+      if (user.toDocumentObject) { user = user.toDocumentObject(); }
+
+      await this.fireDb.collection('users')
+                                  .doc(user.uid)
+                                  .set(user, { merge: true });
+
+      saveResult.resultObj = user;
+    }
+    catch(err) {
+
+      saveResult.setError(err, 'Erro salvando dados... ' + (err || ''));
+    }
+
+    return saveResult;
   }
 
   async saveUserCandidate(candidate?: Candidate): Promise<any> {
@@ -486,6 +531,89 @@ export class UserFirebaseService {
     }
 
     return saveResult;
+  }
+
+  async saveUserRoleName(uid: string, roleName: string): Promise<OperationResult> {
+
+    let result = new OperationResult(true, 'Atribuição realizada com sucesso');
+
+    try {
+
+      let usersRef = this.fireDb.collection("users").ref;
+
+      let usersResult: QuerySnapshot<any>;
+
+      usersResult = await usersRef.where('uid', '==', uid).get();
+
+      if (usersResult.docs.length > 0) {
+
+        let user = usersResult.docs[0].data();
+
+        user.roleName = roleName;
+
+        await this.fireDb.collection('users')
+                                        .doc(usersResult.docs[0].id)
+                                        .set(user, { merge: true });
+
+      } else {
+
+        result.setError(null, 'Usuário não encontrado');
+      }
+      
+    } catch(err) {
+
+      result.setError(err, 'Erro ao atribuir');
+    }
+
+    return result;
+  }
+
+  async saveUserRoleNameClaim(uid: string, roleName: string) : Promise<OperationResult> {
+  
+    let result = new OperationResult(true);
+
+    console.log(`Calling setClaim(${ uid }, ${ roleName })`);
+
+    try {
+
+      const funSetClaims =  this.fbFuncs.httpsCallable('setUserClaims');
+
+      const funResult = await funSetClaims({ uid, roleName }).toPromise();
+      
+      result.resultObj = new OperationResult(funResult.success, funResult.msg, funResult.resultObj);
+
+    } catch(err) {
+
+      result.setError(err);
+    }
+
+    console.log('setClaim() result:', result);
+    
+    return result;
+  }
+
+  async setLuciAdmin() : Promise<OperationResult> {
+  
+    let result = new OperationResult(true);
+
+    console.log('Calling setLuciAdmin()...');
+
+    try {
+
+      const funSetLuci =  this.fbFuncs.httpsCallable('setLuciAdmin');
+
+      const funResult = await funSetLuci({}).toPromise();
+      
+      result.resultObj = new OperationResult(funResult.success, funResult.msg, funResult.resultObj);
+
+    } catch(err) {
+
+      result.setError(err);
+    }
+
+    console.log('setLuciAdmin() result:', result);
+    
+    return result;
   }
 
   async searchUsers(filterParams?: UserSearchParams, userList?: Array<AppUser>) {

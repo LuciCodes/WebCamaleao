@@ -11,6 +11,7 @@ import { UserSearchParams } from '../models/userSearchParams';
 import { UserMockService } from './user.mock.service';
 import { UserFirebaseService } from './user.firebase.service';
 import { AppUser } from '../models/appUser';
+import { OperationResult } from '../models/operationResult';
 
 @Injectable()
 export class UserService {
@@ -244,6 +245,66 @@ export class UserService {
     if (this.firebaseAll || this.userForFirebase('loadUsercandidateExperiences')) {
       
       return this.userFirebase.loadUsercandidateExperiences();
+    }
+
+    return null;
+  }
+
+  async getUser(uid: string): Promise<AppUser> {
+    
+    if (this.mockAll || this.userForMock('getUser')) {
+
+      return this.userMock.getUser(uid);
+    }
+
+    if (this.firebaseAll || this.userForFirebase('getUser')) {
+      
+      return this.userFirebase.getUser(uid);
+    }
+
+    return null;
+  }
+
+  async saveUser(user?: AppUser): Promise<OperationResult> {
+
+    if (this.mockAll || this.userForMock('saveUser')) {
+
+      return this.userMock.saveUser(user);
+    }
+
+    if (this.firebaseAll || this.userForFirebase('saveUser')) {
+      
+      return this.userFirebase.saveUser(user);
+    }
+
+    return null;
+  }
+
+  async saveUserRoleName(uid: string, roleName: string): Promise<OperationResult> {
+  
+    if (this.mockAll || this.userForMock('saveUserRoleName')) {
+
+      return this.userMock.saveUserRoleName(uid, roleName);
+    }
+
+    if (this.firebaseAll || this.userForFirebase('saveUserRoleName')) {
+      
+      return this.userFirebase.saveUserRoleName(uid, roleName);
+    }
+
+    return null;
+  }
+
+  async saveUserRoleNameClaim(uid: string, roleName: string) : Promise<OperationResult> {
+  
+    if (this.mockAll || this.userForMock('saveUserRoleNameClaim')) {
+
+      return this.userMock.saveUserRoleNameClaim(uid, roleName);
+    }
+
+    if (this.firebaseAll || this.userForFirebase('saveUserRoleNameClaim')) {
+      
+      return this.userFirebase.saveUserRoleNameClaim(uid, roleName);
     }
 
     return null;

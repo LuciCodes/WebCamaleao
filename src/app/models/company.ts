@@ -32,4 +32,9 @@ export class Company {
 
     return result;
   }
+
+  public toString() {
+  
+    return this.name || this.id;
+  }
 }

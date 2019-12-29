@@ -21,7 +21,7 @@ export class UsersSearchComponent  {
 
   userList: Array<any>;
 
-  displayedColumns: string[] = ['uid', 'displayName', 'email', 'phoneNumber', 'providerId'];
+  displayedColumns: string[] = ['uid', 'roleName', 'displayName', 'email', 'phoneNumber', 'providerId'];
 
   get currentPageIdx() {
 

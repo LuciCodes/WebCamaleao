@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AppConstants } from 'src/app/etc/appConstants';
 import { WebApiService } from 'src/app/services/webApi.service';
-import { User } from 'src/app/models/user';
+import { AppUser } from 'src/app/models/appUser';
 import { UserSearchParams } from 'src/app/models/userSearchParams';
 import { UserService } from 'src/app/services/user.service';
 

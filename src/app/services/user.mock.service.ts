@@ -15,12 +15,13 @@ import { UserProfile } from '../models/userProfile';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { AppConstants } from '../etc/appConstants';
 import { UserSearchParams } from '../models/userSearchParams';
+import { AppUser } from '../models/appUser';
 
 @Injectable()
 export class UserMockService {
 
-  user: any = {};
-  userToken: any = {};
+  user: AppUser;
+  
   candidate: Candidate = new Candidate();
   candidateProfile: CandidateProfile = new CandidateProfile();
   candidateHabilities: CandidateHabilities = new CandidateHabilities();
@@ -44,7 +45,7 @@ export class UserMockService {
 
   get userRole(): string {
 
-    return this.userToken.claims['userRole'] || AppConstants.userRoles.candidate;
+    return this.user.fbToken.claims['userRole'] || AppConstants.userRoles.candidate;
   }
 
   get userIsCandidate(): boolean {

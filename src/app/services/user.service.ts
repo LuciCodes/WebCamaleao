@@ -1,34 +1,28 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from 'firebase';
 
-import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { Candidate } from '../models/candidate';
 import * as firebase from 'firebase';
 import { CandidateProfile } from '../models/candidateProfile';
 import { CandidateHabilities } from '../models/candidateHabilities';
 import { CandidateEducation } from '../models/candidateEducation';
 import { Experience } from '../models/experience';
-import { UserProfile } from '../models/userProfile';
-import { AngularFireFunctions } from '@angular/fire/functions';
-import { AppConstants } from '../etc/appConstants';
 import { UserSearchParams } from '../models/userSearchParams';
 import { UserMockService } from './user.mock.service';
 import { UserFirebaseService } from './user.firebase.service';
+import { AppUser } from '../models/appUser';
 
 @Injectable()
 export class UserService {
 
-  get user(): User {
+  get user(): AppUser {
 
     if (this.mockAll) { return this.userMock.user; }
   
     return this.userFirebase.user;
   }
   
-  set user(value: User) {
+  set user(value: AppUser) {
 
     if (this.mockAll) { this.userMock.user = value; return; }
   
@@ -37,7 +31,7 @@ export class UserService {
 
   get userToken(): firebase.auth.IdTokenResult {
   
-    return this.userFirebase.userToken;
+    return this.userFirebase.user.fbToken;
   }
 
   get candidate(): Candidate {
@@ -110,10 +104,10 @@ export class UserService {
     this.userFirebase.searchPageSize = value;
   }
 
-  users: Array<any>;
+  users: Array<AppUser>;
   
   lastSearchParams?: UserSearchParams;
-  lastSearchResults?: Array<any>;
+  lastSearchResults?: Array<AppUser>;
 
   mockAll: boolean = false;
   firebaseAll: boolean = true;

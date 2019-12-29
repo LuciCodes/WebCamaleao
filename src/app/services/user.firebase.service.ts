@@ -11,16 +11,17 @@ import { CandidateProfile } from '../models/candidateProfile';
 import { CandidateHabilities } from '../models/candidateHabilities';
 import { CandidateEducation } from '../models/candidateEducation';
 import { Experience } from '../models/experience';
-import { UserProfile } from '../models/userProfile';
+
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { AppConstants } from '../etc/appConstants';
 import { UserSearchParams } from '../models/userSearchParams';
+import { AppUser } from '../models/appUser';
 
 @Injectable()
 export class UserFirebaseService {
 
-  user: User;
-  userToken: firebase.auth.IdTokenResult;
+  user: AppUser;
+
   candidate: Candidate;
   candidateProfile: CandidateProfile;
   candidateHabilities: CandidateHabilities;
@@ -40,7 +41,7 @@ export class UserFirebaseService {
 
   get userRole(): string {
 
-    return this.userToken.claims['userRole'] || AppConstants.userRoles.candidate;
+    return this.user.fbToken.claims['userRole'] || AppConstants.userRoles.candidate;
   }
 
   get userIsCandidate(): boolean {
@@ -76,11 +77,11 @@ export class UserFirebaseService {
 
     this.fireAuth.idTokenResult.subscribe(async (result: firebase.auth.IdTokenResult) => { 
 
-      this.userToken = result;
+      this.user.fbToken = result;
 
       console.log('Got userToken>', result);
 
-      if (result) console.log('User claim:', this.userToken.claims['userRole']);
+      if (result) console.log('User claim:', this.user.fbToken.claims['userRole']);
 
     });
 
@@ -88,14 +89,13 @@ export class UserFirebaseService {
 
       console.log('Got user>', user);
 
-      this.user = user;
+      if (user) {
 
-      if (this.user) {
-
-        //await this.loadUserCandidate();
+        this.user = new AppUser({ fbUser: user });
 
       } else {
 
+        this.user = null;
         this.candidate = null;
         this.candidateExperiences = null;
         this.candidateEducation = null;
@@ -481,7 +481,7 @@ export class UserFirebaseService {
     return saveResult;
   }
 
-  async searchUsers(filterParams?: UserSearchParams, userList?: Array<any>) {
+  async searchUsers(filterParams?: UserSearchParams, userList?: Array<AppUser>) {
 
     let results = [];
 
@@ -520,9 +520,7 @@ export class UserFirebaseService {
 
     for(let d = 0; d < usersResult.docs.length; d++) {
 
-      results.push({ id: usersResult.docs[d].id, ...usersResult.docs[d].data() });
-      
-      results[d].id = usersResult.docs[d].id;
+      results.push(new AppUser({ id: usersResult.docs[d].id, ...usersResult.docs[d].data() }));
     }
     
     /*

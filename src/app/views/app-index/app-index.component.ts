@@ -8,6 +8,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { MatDialog } from '@angular/material';
 import { LinkMenuItem } from 'ngx-auth-firebaseui';
 import { UserService } from 'src/app/services/user.service';
+import { AppUser } from 'src/app/models/appUser';
 
 @Component({
   selector: 'app-app-index',
@@ -15,13 +16,14 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./app-index.component.css']
 })
 export class AppIndexComponent {
+
   @Input()
   canLogout = true;
 
   @Input()
   links: LinkMenuItem[];
 
-  get user(): User {
+  get user(): AppUser {
 
     return this.userService.user;
   }
@@ -36,8 +38,8 @@ export class AppIndexComponent {
 
   constructor(public afa: AngularFireAuth,
               public dialog: MatDialog,
-              private userService: UserService,
-              private breakpointObserver: BreakpointObserver) {
+              public userService: UserService,
+              public breakpointObserver: BreakpointObserver) {
   }
 
   ngOnInit() {

@@ -53,8 +53,8 @@ export class CandidatePanelBasicInfoEditComponent implements OnInit {
     this.initFormCandidateProfile(this.candidateProfile);
   }
 
-  flagLoadingData = false;
-  flagSavingData = false;
+  public flagLoadingData = false;
+  public flagSavingData = false;
 
   public frmCandidate: FormGroup;
   public frmCandidateProfile: FormGroup;

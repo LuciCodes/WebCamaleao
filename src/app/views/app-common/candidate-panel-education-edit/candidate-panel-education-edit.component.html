@@ -11,7 +11,7 @@
           color="accent"
           class="w-100"
           mat-flat-button
-          (click)="save($event)"
+          (click)="save()"
         > 
           <i class="fa fa-save"></i>
           Salvar
@@ -176,7 +176,7 @@
                 class="w-100"
                 mat-flat-button
                 [disabled]="!newCourseFormValid || flagSavingData"
-                (click)="addCourse($event)"
+                (click)="addCourse()"
               >
                 Adicionar Curso
               </button>
@@ -347,7 +347,7 @@
                 class="w-100"
                 mat-flat-button
                 [disabled]="!newCertificationFormValid || flagSavingData"
-                (click)="addCertification($event)"
+                (click)="addCertification()"
               >
                 Adicionar Certificação
               </button>

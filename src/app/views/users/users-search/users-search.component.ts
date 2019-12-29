@@ -17,7 +17,7 @@ export class UsersSearchComponent  {
 
   frmSearch: FormGroup;
 
-  flagLoadingData: boolean = false;
+  public flagLoadingData: boolean = false;
 
   userList: Array<any>;
 

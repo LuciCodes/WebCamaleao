@@ -24,16 +24,26 @@ export class CandidatesEditComponent implements OnInit {
   public frmCandidateHabilities: FormGroup;
   public frmcandidateExperiences: FormGroup;
 
-  private flagLoadingData = false;
-  private flagSavingData = false;
+  public flagLoadingData = false;
+  public flagSavingData = false;
 
-  get ptBrDateMask() { return AppConstants.ptBrDateMask; }
-  get cpfMask() { return AppConstants.cpfMask; }
-  get phoneMask() { return AppConstants.phoneMask; }
+  public get ptBrDateMask() { return AppConstants.ptBrDateMask; }
+  public get cpfMask() { return AppConstants.cpfMask; }
+  public get phoneMask() { return AppConstants.phoneMask; }
 
-  get states(): Array<any> {
+  public get states(): Array<any> {
 
     return AppConstants.brazilianStates;
+  }
+
+  public get flagNewCandidate(): boolean {
+  
+    if (!this.candidateDetails || !this.candidateDetails.candidate) {
+
+      return true;
+    }
+
+    return (this.candidateDetails.candidate.id == null || this.candidateDetails.candidate.id == '');
   }
 
   constructor(private candidateService: CandidateService,

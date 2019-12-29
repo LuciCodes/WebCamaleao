@@ -19,8 +19,8 @@ import { ImageService } from 'src/app/services/image.service';
 })
 export class CompaniesDetailComponent implements OnInit {
 
-  flagSavingData = false;
-  flagLoadingData = false;
+  public flagSavingData = false;
+  public flagLoadingData = false;
 
   offerDescription: string;
 

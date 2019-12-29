@@ -42,7 +42,7 @@
         </div>
       </div>
 
-      <h2>Cursos Acadêmicos <small>({{ cursosDescription }})</small></h2>
+      <h2>Cursos Acadêmicos <small>({{ coursesDescription }})</small></h2>
 
       <p>
         Adicione abaixo um ou mais cursos acadêmicos que você tenha realizado.<br>
@@ -169,7 +169,7 @@
             class="w-100"
             mat-flat-button
             [disabled]="!newCourseFormValid && !flagSavingData"
-            (click)="addCourse($event)"
+            (click)="addCourse()"
           >
             Adicionar Curso
           </button>

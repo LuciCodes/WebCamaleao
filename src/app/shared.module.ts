@@ -9,7 +9,6 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { AngularFireFunctionsModule } from '@angular/fire/functions';
 import { AngularFireAuthModule } from '@angular/fire/auth';
  
 import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
@@ -55,6 +54,10 @@ import { CommonModule } from '@angular/common';
 
 import { CompanyCardComponent } from './views/app-common/company-card/company-card.component';
 
+export function loadCamaleao() {
+   return 'camaleao';
+}
+
 @NgModule({
   declarations: [
     CompanyCardComponent,
@@ -73,7 +76,7 @@ import { CompanyCardComponent } from './views/app-common/company-card/company-ca
   imports: [
     //AngularFireModule.initializeApp(environment.firebase),
     NgxAuthFirebaseUIModule.forRoot(environment.firebase,
-      () => 'camaleao',
+      loadCamaleao,
      {
        enableFirestoreSync: true, // enable/disable autosync users with firestore
        toastMessageOnAuthSuccess: true, // whether to open/show a snackbar message on auth success - default : true

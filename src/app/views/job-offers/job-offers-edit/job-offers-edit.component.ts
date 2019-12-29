@@ -18,8 +18,8 @@ import * as firebase from 'firebase';
 })
 export class JobOffersEditComponent implements OnInit {
 
-  flagSavingData = false;
-  flagLoadingData = false;
+  public flagSavingData = false;
+  public flagLoadingData = false;
 
   flagNewJobOffer = false;
 

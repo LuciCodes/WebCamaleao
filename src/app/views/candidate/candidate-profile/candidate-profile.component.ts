@@ -15,8 +15,8 @@ export class CandidateProfileComponent implements OnInit {
 
   public frmCandidateProfile: FormGroup;
 
-  private flagLoadingData = false;
-  private flagSavingData = false;
+  public flagLoadingData = false;
+  public flagSavingData = false;
 
   get isValid(): boolean {
 

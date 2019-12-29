@@ -17,8 +17,8 @@ import { ImageService } from 'src/app/services/image.service';
 })
 export class UsersEditComponent implements OnInit {
 
-  flagSavingData = false;
-  flagLoadingData = false;
+  public flagSavingData = false;
+  public flagLoadingData = false;
 
   flagNewCompany = false;
 

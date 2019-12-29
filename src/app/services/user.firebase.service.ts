@@ -41,6 +41,8 @@ export class UserFirebaseService {
 
   get userRole(): string {
 
+    if (!this.user || !this.user.fbToken || !this.user.fbToken.claims) { return AppConstants.userRoles.candidate; }
+
     return this.user.fbToken.claims['userRole'] || AppConstants.userRoles.candidate;
   }
 
@@ -76,6 +78,11 @@ export class UserFirebaseService {
     this.user$ = this.fireAuth.user;
 
     this.fireAuth.idTokenResult.subscribe(async (result: firebase.auth.IdTokenResult) => { 
+
+      if (!this.user) {
+      
+        this.user = new AppUser();
+      }
 
       this.user.fbToken = result;
 

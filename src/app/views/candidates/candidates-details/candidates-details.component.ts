@@ -21,8 +21,8 @@ export class CandidatesDetailsComponent implements OnInit {
   
   public frmCandidateBasicInfo: FormGroup;
 
-  private flagLoadingData = false;
-  private flagSavingData = false;
+  public flagLoadingData = false;
+  public flagSavingData = false;
 
   get ptBrDateMask() { return AppConstants.ptBrDateMask; }
   get cpfMask() { return AppConstants.cpfMask; }
@@ -107,5 +107,8 @@ export class CandidatesDetailsComponent implements OnInit {
       this.flagSavingData = false;
       */
     }
+  }
+
+  printPreview(evtObj) {
   }
 }

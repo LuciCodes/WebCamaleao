@@ -16,7 +16,7 @@ export class JobOffersSearchComponent implements OnInit {
 
   get cepMask() { return AppConstants.cepMask; }
 
-  flagLoadingData: boolean = false;
+  public flagLoadingData: boolean = false;
 
   jobOffers: Array<any>;
 

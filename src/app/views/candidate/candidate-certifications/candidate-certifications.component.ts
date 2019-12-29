@@ -14,8 +14,8 @@ import { Certification } from 'src/app/models/certification';
 })
 export class CandidateCertificationsComponent implements OnInit {
 
-  private flagLoadingData = false;
-  private flagSavingData = false;
+  public flagLoadingData = false;
+  public flagSavingData = false;
 
   public frmCandidateCertification: FormGroup;
 

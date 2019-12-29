@@ -16,10 +16,10 @@ export class CandidateHabilitiesComponent implements OnInit {
 
   public frmCandidateHabilities: FormGroup;
 
-  private flagLoadingData = false;
-  private flagSavingData = false;
+  public flagLoadingData = false;
+  public flagSavingData = false;
 
-  private categoryCounts: any = {};
+  public categoryCounts: any = {};
 
   private saveTimeout: any;
 

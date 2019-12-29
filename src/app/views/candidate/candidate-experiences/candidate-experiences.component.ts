@@ -12,8 +12,8 @@ import { CandidateEducation } from 'src/app/models/candidateEducation';
 })
 export class CandidateExperiencesComponent implements OnInit {
 
-  private flagLoadingData = false;
-  private flagSavingData = false;
+  public flagLoadingData = false;
+  public flagSavingData = false;
 
   public frmcandidateExperiences: FormGroup;
 

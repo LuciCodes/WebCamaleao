@@ -15,8 +15,8 @@ export class MatchesHomeComponent implements OnInit {
 
   public frmMatchProfile: FormGroup;
 
-  private flagLoadingData = false;
-  private flagSavingData = false;
+  public flagLoadingData = false;
+  public flagSavingData = false;
 
   get isValid(): boolean {
 

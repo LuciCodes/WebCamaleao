@@ -15,13 +15,13 @@ import { CandidateDetails } from 'src/app/models/candidateDetails';
 })
 export class CandidatePanelHabilitiesEditComponent implements OnInit {
 
-  flagSavingData = false;
+  public flagSavingData = false;
 
-  private categoryCounts: any = {};
+  public categoryCounts: any = {};
 
   private _habilitiesByCategory: any = null;
 
-  get habilitiesByCategory(): any {
+  public get habilitiesByCategory(): any {
 
     if (this._habilitiesByCategory == null) {
 
@@ -33,7 +33,7 @@ export class CandidatePanelHabilitiesEditComponent implements OnInit {
     return this._habilitiesByCategory;
   }
 
-  get categories(): Array<string> {
+  public get categories(): Array<string> {
 
     return AppConstants.basicSkillsCategories;
   }

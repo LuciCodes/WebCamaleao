@@ -34,12 +34,12 @@ export class CandidatePanelEducationEditComponent implements OnInit {
     return this.candidateService.editingCandidate.candidateEducation;
   }
   
-  private flagSavingData = false;
+  public flagSavingData = false;
 
   frmCandidateEducation: FormGroup;
   frmCandidateCertification: FormGroup;
 
-  flagLoadingData = false;
+  public flagLoadingData = false;
 
   public get educationalLevels(): Array<any> {
 

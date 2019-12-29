@@ -14,7 +14,7 @@ export class CompaniesSearchComponent  {
 
   get cepMask() { return AppConstants.cepMask; }
 
-  flagLoadingData: boolean = false;
+  public flagLoadingData: boolean = false;
 
   companies: Array<any>;
 

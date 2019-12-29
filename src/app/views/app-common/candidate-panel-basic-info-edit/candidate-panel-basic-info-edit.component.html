@@ -8,7 +8,7 @@
         color="accent"
         class="w-100"
         mat-flat-button
-        (click)="saveBasicInfo($event)"
+        (click)="saveBasicInfo()"
       > 
         <i class="fa fa-save"></i>
         Salvar
@@ -246,7 +246,7 @@
         </mat-form-field>
 
       </div>
-      <div fxFlex="23%" fxFlexOffset="2%" [title]="pne">
+      <div fxFlex="23%" fxFlexOffset="2%" title="Pessoa com necessidades especiais?">
 
         <mat-radio-group
           aria-label="Pne?"
@@ -262,7 +262,7 @@
           <mat-radio-button [value]="false">Não</mat-radio-button>
         </mat-radio-group>
         
-        <div fxLayout="row" *ngIf="pne == true">
+        <div fxLayout="row" *ngIf="frmCandidateProfile.controls.pcd.value == true">
           <div fxFlex>
 
             <mat-form-field class="full-width">

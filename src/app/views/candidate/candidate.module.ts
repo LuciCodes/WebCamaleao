@@ -6,6 +6,7 @@ import { SharedModule } from 'src/app/shared.module';
 import { CandidateRoutingModule } from './candidate.routing.module';
 
 import { CandidateIndexComponent } from './candidate-index/candidate-index.component';
+import { CandidateCvComponent } from './candidate-cv/candidate-cv.component';
 import { CandidateProfileComponent } from './candidate-profile/candidate-profile.component';
 import { CandidateExperiencesComponent } from './candidate-experiences/candidate-experiences.component';
 import { CandidateHabilitiesComponent } from './candidate-habilities/candidate-habilities.component';
@@ -18,6 +19,7 @@ import { CandidateCertificationsComponent } from './candidate-certifications/can
 @NgModule({
   declarations: [
     CandidateIndexComponent,
+    CandidateCvComponent,
     CandidateProfileComponent,
     CandidateExperiencesComponent,
     CandidateHabilitiesComponent,

@@ -12,6 +12,7 @@ import { UserMockService } from './user.mock.service';
 import { UserFirebaseService } from './user.firebase.service';
 import { AppUser } from '../models/appUser';
 import { OperationResult } from '../models/operationResult';
+import { CandidateDetails } from '../models/candidateDetails';
 
 @Injectable()
 export class UserService {
@@ -260,6 +261,21 @@ export class UserService {
     if (this.firebaseAll || this.userForFirebase('getUser')) {
       
       return this.userFirebase.getUser(uid);
+    }
+
+    return null;
+  }
+
+  async getUserCandidateDetails(): Promise<CandidateDetails> {
+    
+    if (this.mockAll || this.userForMock('getUserCandidateDetails')) {
+
+      return this.userMock.getUserCandidateDetails();
+    }
+
+    if (this.firebaseAll || this.userForFirebase('getUserCandidateDetails')) {
+      
+      return this.userFirebase.getUserCandidateDetails();
     }
 
     return null;

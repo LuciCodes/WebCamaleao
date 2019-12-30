@@ -17,6 +17,7 @@ import { AppConstants } from '../etc/appConstants';
 import { UserSearchParams } from '../models/userSearchParams';
 import { AppUser } from '../models/appUser';
 import { OperationResult } from '../models/operationResult';
+import { CandidateDetails } from '../models/candidateDetails';
 
 @Injectable()
 export class UserMockService {
@@ -100,6 +101,13 @@ export class UserMockService {
   async getUser(userId: string): Promise<AppUser> {
     
     return new AppUser();
+  }
+
+  async getUserCandidateDetails(): Promise<CandidateDetails> {
+
+    let result = new CandidateDetails();
+
+    return result;
   }
 
   async saveUser(user?: AppUser): Promise<OperationResult> {

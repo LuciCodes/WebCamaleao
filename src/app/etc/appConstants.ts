@@ -73,11 +73,18 @@ export class AppConstants {
   ];
   
   static sexes = [
-    { value: 'ASSEXUAL', name:'Assexual' },
+    { value: 'LESBICA', name:'Lésbica' },
+    { value: 'GAY', name:'Gay' },
     { value: 'BISSEXUAL', name:'Bissexual' },
-    { value: 'DEMISSEXUAL', name:'Demissexual' },
-    { value: 'HOMOSSEXUAL', name:'Homossexual' },
+    { value: 'HETEROSSEXUAL', name:'Heterossexual' },
     { value: 'PANSSEXUAL', name:'Panssexual' },
+    { value: 'DEMISSEXUAL', name:'Demissexual' },
+    { value: 'ASSEXUAL', name:'Assexual' },
+    { value: 'DEMISSEXUAL', name:'Demissexual' },
+    { value: 'ANDROSEXUAL', name:'Androsexual' },
+    { value: 'POLIAMOROSO', name:'Poliamoroso' },
+    { value: 'POLISEXUAL', name:'Polisexual' },
+    { value: 'SEXUALMENTE_FLUIDO', name:'Sexualmente fluído' },
     { value: 'OUTRA', name:'Outra' },
     { value: 'SEM_IDENTIFICACAO', name:'Não desejo  me identificar' }
   ];
@@ -91,12 +98,26 @@ export class AppConstants {
   ];
 
   static genders = [
-    { value: 'MULHER', name: 'Mulher' },
-    { value: 'HOMEM', name: 'Homem' },
+    { value: 'HOMEM_CIS', name: 'Homem cisgênero' },
+    { value: 'MULHER_CIS', name: 'Mulher cisgênera' },
+    { value: 'HOMEM_TRANS', name: 'Homem trans' },
+    { value: 'MULHER_TRANS', name: 'Mulher trans' },
     { value: 'NB', name: 'Não-binário' },
     { value: 'QUEER', name: 'Queer' },
+    { value: 'TRAVESTI', name: 'Travesti' },
+    { value: 'TRANS', name: 'Transexual' },
+    { value: 'AGENERO', name: 'Agênero' },
+    { value: 'BIGENERO', name: 'Bigênero' },
+    { value: 'GENERO_FLUIDO', name: 'Gênero fluído' },
+    { value: 'GENDER_QUEER', name: 'Genderqueer' },
+    { value: 'PAN', name: 'Pangênero' },
+    { value: 'TERCEIRO', name: 'Terceiro gênero' },
+    { value: 'DEMI', name: 'Demigênero' },
+    { value: 'TRANS_FEM', name: 'Transfeminino' },
+    { value: 'TRANS_MASC', name: 'Transmasculino' },
+    { value: 'NEUTRO', name: 'Neutro' },
     { value: 'OUTRA', name: 'Outra' },
-    { value: 'SEM_IDENTIFICACAO', name:'Não desejo  me identificar' }
+    { value: 'SEM_IDENTIFICACAO', name:'Prefiro não me identificar' }
   ];
 
   static jobOfferTypes = [

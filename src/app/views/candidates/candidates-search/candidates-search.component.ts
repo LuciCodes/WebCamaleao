@@ -99,5 +99,7 @@ export class CandidatesSearchComponent  {
   clearParams() {
 
     this.candidateService.clearSearchParams();
+
+    this.initForm({});
   }
 }

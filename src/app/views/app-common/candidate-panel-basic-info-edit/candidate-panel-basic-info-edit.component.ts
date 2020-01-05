@@ -202,8 +202,7 @@ export class CandidatePanelBasicInfoEditComponent implements OnInit {
     if (this.frmCandidate.valid
      && this.candidateService.editingCandidate) {
 
-      debugger;
-      this.candidateService.editingCandidate.candidate[propertyName] = evtObj.value;
+      this.candidateService.editingCandidate.candidateProfile[propertyName] = evtObj.value;
     }
   }
 }

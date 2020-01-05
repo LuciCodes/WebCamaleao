@@ -34,6 +34,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -107,6 +108,7 @@ export function loadCamaleao() {
     MatDatepickerModule,
     MatTableModule,
     MatPaginatorModule,
+    MatAutocompleteModule,
     MatMomentDateModule,
     LayoutModule,
     MatToolbarModule,
@@ -140,6 +142,7 @@ export function loadCamaleao() {
     MatMomentDateModule,
     MatTableModule,
     MatPaginatorModule,
+    MatAutocompleteModule,
     LayoutModule,
     MatToolbarModule,
     MatTabsModule,

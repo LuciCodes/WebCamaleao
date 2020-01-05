@@ -85,17 +85,36 @@
         <div fxFlex>
 
           <mat-radio-group
-            aria-label="Pessoa com deficiência?"
+            aria-label="Você é uma pessoa com deficiência?"
             formControlName="pne"
           >
             <mat-label>
-              Você é uma pessoa portadora de necesidades especiais?
+              Você é uma pessoa com deficiência?
             </mat-label>
             <br>
-            <mat-radio-button value="true">Sim</mat-radio-button>
+            <mat-radio-button [value]="true">Sim</mat-radio-button>
             &nbsp;&nbsp;
-            <mat-radio-button value="false">Não</mat-radio-button>
+            <mat-radio-button [value]="false">Não</mat-radio-button>
           </mat-radio-group>
+          
+          <div fxLayout="row" *ngIf="frmCandidateProfile.controls.pne.value == true">
+            <div fxFlex>
+
+              <mat-form-field class="full-width">
+                <input type="text" placeholder="Por favor descreva" matInput formControlName="pneNote" [matAutocomplete]="auto">
+              </mat-form-field>
+
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option value="Física">Física</mat-option>
+                <mat-option value="Intelectual">Intelectual</mat-option>
+                <mat-option value="Visual">Visual</mat-option>
+                <mat-option value="Auditiva">Auditiva</mat-option>
+                <mat-option value="Sem Identificação">Prefiro não identificar</mat-option>
+                <mat-option value="Outra">Outra</mat-option>
+              </mat-autocomplete>
+              
+            </div>
+          </div>
 
         </div>
       </div>

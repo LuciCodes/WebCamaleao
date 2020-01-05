@@ -27,6 +27,14 @@
             <div fxFlex="33%">
 
               <mat-form-field class="full-width">
+                <input type="text" placeholder="Área de Trabalho" matInput formControlName="searchInProfessions" [matAutocomplete]="auto">
+              </mat-form-field>
+
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let prof of professions" [value]="prof">{{ prof }}</mat-option>
+              </mat-autocomplete>
+
+              <!--mat-form-field class="full-width">
 
                 <mat-select placeholder="Área de Trabalho" formControlName="searchInProfessions" multiple>
                   <mat-option *ngFor="let prof of professions" [value]="prof">
@@ -34,7 +42,7 @@
                   </mat-option>
                 </mat-select>
 
-              </mat-form-field>
+              </mat-form-field-->
 
             </div>
           </div>
@@ -44,12 +52,13 @@
 
               <mat-form-field class="full-width">
 
-                <mat-select placeholder="Em qualquer lugar" formControlName="locationType">
-                  <mat-option value="any">Em qualquer lugar </mat-option>
+                <mat-select placeholder="Em qual localidade" formControlName="locationType">
+                  <mat-option value="any">Em qualquer localidade</mat-option>
                   <mat-option value="near">Próximos a um CEP</mat-option>
                   <mat-option value="state">Em um estado</mat-option>
                   <mat-option value="city">Em uma cidade</mat-option>
                   <mat-option value="international">Internacionais</mat-option>
+                  <mat-option value="brasil">Em todo Brasil</mat-option>
                   <mat-option value="remote">Remotos (de casa)</mat-option>
                 </mat-select>
 

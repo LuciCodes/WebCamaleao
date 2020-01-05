@@ -246,15 +246,15 @@
         </mat-form-field>
 
       </div>
-      <div fxFlex="23%" fxFlexOffset="2%" title="Pessoa com necessidades especiais?">
+      <div fxFlex="23%" fxFlexOffset="2%" [title]="frmCandidateProfile.controls.pne.value">
 
         <mat-radio-group
-          aria-label="Pne?"
+          aria-label="Você é uma pessoa com deficiência?"
           formControlName="pne"
           (change)="updateProfileValue('pne', $event)"
         >
           <mat-label>
-            Pne?
+            Você é uma pessoa com deficiência?
           </mat-label>
           <br>
           <mat-radio-button [value]="true">Sim</mat-radio-button>
@@ -262,19 +262,21 @@
           <mat-radio-button [value]="false">Não</mat-radio-button>
         </mat-radio-group>
         
-        <div fxLayout="row" *ngIf="frmCandidateProfile.controls.pcd.value == true">
+        <div fxLayout="row" *ngIf="frmCandidateProfile.controls.pne.value == true">
           <div fxFlex>
 
             <mat-form-field class="full-width">
-                
-              <mat-label>Obs</mat-label>
-              <input
-                matInput
-                placeholder="Obs"
-                formControlName="pneNote"
-                (change)="updateProfileValue('pneNote', $event)"
-              >
+              <input type="text" placeholder="Tipo" matInput formControlName="pneNote" [matAutocomplete]="auto">
             </mat-form-field>
+
+            <mat-autocomplete #auto="matAutocomplete">
+                <mat-option value="Física">Física</mat-option>
+                <mat-option value="Intelectual">Intelectual</mat-option>
+                <mat-option value="Visual">Visual</mat-option>
+                <mat-option value="Auditiva">Auditiva</mat-option>
+                <mat-option value="Sem Identificação">Prefiro não identificar</mat-option>
+                <mat-option value="Outra">Outra</mat-option>
+            </mat-autocomplete>
 
           </div>
         </div>

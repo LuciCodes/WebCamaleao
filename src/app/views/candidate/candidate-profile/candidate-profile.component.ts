@@ -59,7 +59,7 @@ export class CandidateProfileComponent implements OnInit {
       gender: [obj.gender],
       sex: [obj.sex],
       ethnicity: [obj.ethnicity],
-      pne: [obj.pne],
+      pne: [(obj.pne == true)],
       pneNote: [obj.pneNote],
     });
   }

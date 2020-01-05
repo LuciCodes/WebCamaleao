@@ -18,8 +18,8 @@
       <span *ngIf="flagNewJobOffer">
         Incluir Vaga
       </span>
-      <span *ngIf="!flagNewJobOffer && editingObj">
-        Editar Vaga <small>{{ editingObj.id }}</small>
+      <span *ngIf="!flagNewJobOffer && editingObj" title="ID da vaga: {{ editingObj.id }}">
+        Editar Vaga
       </span>
     </h1>
 
@@ -140,6 +140,7 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
+              
 
             </div>
           </div>

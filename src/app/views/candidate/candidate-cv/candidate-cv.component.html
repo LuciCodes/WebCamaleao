@@ -1,0 +1,28 @@
+
+<h1>Dados Básicos</h1>
+<form [formGroup]="frmCandidateBasicInfo">
+
+    <mat-card class="default-card">
+      <mat-card-content *ngIf="flagLoadingData">
+  
+        <div
+          fxLayout="row"
+          class="loader-panel"
+          style="padding-left: 48%; padding-top: 2.6em"
+        >
+  
+          <fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon>
+          
+        </div>
+  
+      </mat-card-content>
+      
+      <mat-card-content *ngIf="!flagLoadingData">
+
+        
+
+      </mat-card-content>
+      
+    </mat-card>
+    
+  </form>

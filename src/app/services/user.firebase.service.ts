@@ -17,6 +17,7 @@ import { AppConstants } from '../etc/appConstants';
 import { UserSearchParams } from '../models/userSearchParams';
 import { AppUser } from '../models/appUser';
 import { OperationResult } from '../models/operationResult';
+import { CandidateDetails } from '../models/candidateDetails';
 
 @Injectable()
 export class UserFirebaseService {
@@ -297,6 +298,24 @@ export class UserFirebaseService {
     return result;
   }
 
+  async getUserCandidateDetails(): Promise<CandidateDetails> {
+
+    let result = new CandidateDetails();
+
+    if (!this.candidate) { await this.loadUserCandidate(); }
+    if (!this.candidateEducation) { await this.loadUserCandidateEducation(); }
+    if (!this.candidateExperiences) { await this.loadUsercandidateExperiences(); }
+    if (!this.candidateHabilities) { await this.loadUserCandidateHabilities(); }
+    if (!this.candidateProfile) { await this.loadUserCandidateProfile(); }
+
+    result.candidate = this.candidate;
+    result.candidateEducation = this.candidateEducation;
+    result.candidateExperience = this.candidateExperiences;
+    result.candidateHabilities = this.candidateHabilities;
+    result.candidateProfile = this.candidateProfile;
+
+    return result;
+  }
 
   async loadUsercandidateExperiences() {
     
